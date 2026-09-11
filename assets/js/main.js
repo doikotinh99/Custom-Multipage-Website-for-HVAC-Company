@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  initStickyHeader();
   initScrollProgressBar();
   initMobileNav();
   initAccordions();
@@ -316,3 +317,20 @@ function initBackToTop() {
     });
   });
 }
+
+function initStickyHeader() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  function updateSticky() {
+    if (window.scrollY > 20) {
+      header.classList.add('is-sticky');
+    } else {
+      header.classList.remove('is-sticky');
+    }
+  }
+
+  window.addEventListener('scroll', updateSticky, { passive: true });
+  updateSticky();
+}
+
