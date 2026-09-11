@@ -53,13 +53,13 @@ html {
   line-height: 1.6;
   color: var(--text-light);
   background-color: var(--rich-blue-midnight);
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
   width: 100%;
 }
 
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
