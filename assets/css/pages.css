@@ -1055,7 +1055,7 @@
 
 .child-accordion-header {
   width: 100%;
-  padding: 16px 20px;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1065,8 +1065,46 @@
   cursor: pointer;
   text-align: left;
   color: #ffffff;
+}
+
+.child-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.child-menu-tag {
+  background: rgba(255, 101, 80, 0.14);
+  color: var(--electric-salmon);
+  border: 1px solid rgba(255, 101, 80, 0.35);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.child-menu-name {
+  color: #ffffff;
   font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.child-menu-location {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.child-menu-location .svg-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--rich-blue-electric);
 }
 
 .child-toggle-icon {
@@ -1096,35 +1134,40 @@
 }
 
 .child-inner-box {
-  padding: 8px 18px 20px 18px;
+  padding: 4px 18px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+}
+
+.partner-contact-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .partner-call-card {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  background: linear-gradient(135deg, rgba(255, 101, 80, 0.12), rgba(255, 42, 133, 0.06));
-  border: 1.5px solid rgba(255, 101, 80, 0.35);
-  border-radius: 14px;
-  padding: 16px 20px;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(255, 101, 80, 0.16), rgba(255, 42, 133, 0.08));
+  border: 1.5px solid rgba(255, 101, 80, 0.4);
+  border-radius: 12px;
+  padding: 12px 18px;
   text-decoration: none;
   transition: all 0.25s ease;
 }
 
 .partner-call-card:hover {
-  background: linear-gradient(135deg, rgba(255, 101, 80, 0.2), rgba(255, 42, 133, 0.12));
+  background: linear-gradient(135deg, rgba(255, 101, 80, 0.24), rgba(255, 42, 133, 0.16));
   border-color: var(--electric-salmon);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 101, 80, 0.25);
+  box-shadow: 0 4px 16px rgba(255, 101, 80, 0.3);
 }
 
 .partner-call-icon {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--electric-salmon);
   color: #ffffff;
@@ -1132,12 +1175,12 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 0 15px rgba(255, 101, 80, 0.4);
+  box-shadow: 0 0 12px rgba(255, 101, 80, 0.4);
 }
 
 .partner-call-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   fill: currentColor;
 }
 
@@ -1147,7 +1190,7 @@
 
 .partner-call-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   color: #cbd5e1;
@@ -1155,148 +1198,40 @@
 }
 
 .partner-call-number {
-  font-size: 1.45rem;
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
   font-weight: 800;
   color: #ffffff;
   line-height: 1.2;
-}
-
-.partner-info-card {
-  background: #161822;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 14px;
-  padding: 18px 20px;
-}
-
-.partner-card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.partner-card-badge-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(255, 101, 80, 0.14);
-  color: var(--electric-salmon);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.partner-card-badge-icon svg {
-  width: 17px;
-  height: 17px;
-  fill: currentColor;
-}
-
-.partner-card-header-text .tag-label {
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--electric-salmon);
-  margin-bottom: 2px;
-}
-
-.partner-card-header-text .card-title {
-  font-size: 1.12rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-}
-
-.partner-brands-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.partner-brand-pill {
-  background: #252834;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
-  padding: 6px 14px;
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: #ffffff;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.partner-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--electric-salmon);
-  box-shadow: 0 0 6px rgba(255, 101, 80, 0.6);
-}
-
-.partner-card-desc {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.partner-checklist {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.partner-check-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.92rem;
-  color: #e2e8f0;
-}
-
-.partner-check-circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--electric-salmon);
-  color: #ffffff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 0.72rem;
-  font-weight: 900;
 }
 
 .partner-email-card {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: #161822;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #181c28;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 14px 18px;
+  padding: 12px 18px;
   text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .partner-email-card:hover {
   border-color: rgba(255, 101, 80, 0.4);
-  background: #212532;
+  background: #222736;
+  transform: translateY(-2px);
 }
 
 .partner-email-card .email-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 101, 80, 0.14);
   color: var(--electric-salmon);
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .partner-email-card .email-icon svg {
@@ -1315,9 +1250,143 @@
 }
 
 .partner-email-card .email-address {
-  font-size: 0.95rem;
+  font-size: clamp(0.82rem, 1.5vw, 0.95rem);
   font-weight: 600;
   color: #ffffff;
+  word-break: break-all;
+  line-height: 1.2;
+}
+
+.partner-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.partner-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.partner-info-card {
+  background: #161822;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.partner-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.partner-card-badge-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255, 101, 80, 0.14);
+  color: var(--electric-salmon);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.partner-card-badge-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.partner-card-header-text .tag-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--electric-salmon);
+  margin-bottom: 2px;
+}
+
+.partner-card-header-text .card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.partner-brands-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.partner-brand-pill {
+  background: #252834;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.partner-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--electric-salmon);
+  box-shadow: 0 0 6px rgba(255, 101, 80, 0.6);
+}
+
+.partner-card-desc {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.partner-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.partner-check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  line-height: 1.35;
+}
+
+.partner-check-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--electric-salmon);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 900;
 }
 
 .nested-info-grid {
@@ -1327,7 +1396,9 @@
 }
 
 @media (max-width: 640px) {
-  .nested-info-grid {
+  .nested-info-grid,
+  .partner-contact-strip,
+  .partner-details-grid {
     grid-template-columns: 1fr;
   }
   .master-accordion-header {
@@ -1337,10 +1408,10 @@
     padding: 0 16px 20px 16px;
   }
   .child-accordion-header {
-    padding: 14px 16px;
+    padding: 12px 14px;
   }
   .child-inner-box {
-    padding: 6px 14px 16px 14px;
+    padding: 4px 12px 14px 12px;
   }
 }
 
@@ -1413,50 +1484,50 @@
   .master-inner-box {
     padding: 0 14px 18px 14px;
   }
-  .child-accordion-header {
-    padding: 12px 14px;
-    font-size: 0.92rem;
+  .child-header-left {
+    gap: 6px;
   }
-  .child-inner-box {
-    padding: 6px 12px 14px 12px;
+  .child-menu-tag {
+    font-size: 0.7rem;
+    padding: 2px 7px;
+  }
+  .child-menu-name {
+    font-size: 0.95rem;
+  }
+  .child-menu-location {
+    font-size: 0.78rem;
+    width: 100%;
+  }
+  .partner-call-card,
+  .partner-email-card {
+    padding: 10px 14px;
     gap: 10px;
   }
-  .partner-call-card {
-    padding: 12px 14px;
-    gap: 12px;
-  }
-  .partner-call-icon {
-    width: 38px;
-    height: 38px;
-  }
-  .partner-call-icon svg {
-    width: 18px;
-    height: 18px;
+  .partner-call-icon,
+  .partner-email-card .email-icon {
+    width: 36px;
+    height: 36px;
   }
   .partner-call-number {
-    font-size: clamp(1.15rem, 5vw, 1.35rem);
+    font-size: clamp(1.1rem, 4.5vw, 1.3rem);
   }
   .partner-info-card {
-    padding: 14px 16px;
+    padding: 12px 14px;
   }
   .partner-card-header-text .card-title {
-    font-size: 1rem;
+    font-size: 0.96rem;
   }
   .partner-check-item {
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     gap: 8px;
   }
-  .partner-email-card {
-    padding: 12px 14px;
-    gap: 10px;
-  }
   .partner-email-card .email-address {
-    font-size: clamp(0.78rem, 3.8vw, 0.92rem);
+    font-size: clamp(0.78rem, 3.5vw, 0.88rem);
     word-break: break-all;
   }
   .partner-brand-pill {
-    padding: 4px 10px;
-    font-size: 0.78rem;
+    padding: 3px 8px;
+    font-size: 0.74rem;
   }
 }
 
