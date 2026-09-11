@@ -1074,17 +1074,6 @@
   flex-wrap: wrap;
 }
 
-.child-menu-tag {
-  background: rgba(255, 101, 80, 0.14);
-  color: var(--electric-salmon);
-  border: 1px solid rgba(255, 101, 80, 0.35);
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
 
 .child-menu-name {
   color: #ffffff;
@@ -1486,10 +1475,6 @@
   }
   .child-header-left {
     gap: 6px;
-  }
-  .child-menu-tag {
-    font-size: 0.7rem;
-    padding: 2px 7px;
   }
   .child-menu-name {
     font-size: 0.95rem;
