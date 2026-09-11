@@ -53,10 +53,13 @@ html {
   line-height: 1.6;
   color: var(--text-light);
   background-color: var(--rich-blue-midnight);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
   overflow-x: hidden;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -83,6 +86,10 @@ button, input, select, textarea {
   font-size: inherit;
   outline: none;
   border: none;
+}
+
+input, select, textarea {
+  font-size: 16px;
 }
 
 button {
@@ -931,11 +938,11 @@ button {
   .mobile-toggle {
     display: flex;
   }
-  .grid-2, .grid-3 {
+  .grid-2, .grid-3, .grid-4 {
     grid-template-columns: 1fr;
   }
   .section {
-    padding: 55px 0;
+    padding: 50px 0;
   }
   .section-title {
     font-size: 1.85rem;
@@ -951,8 +958,100 @@ button {
     text-align: center;
     gap: 6px;
   }
+  .floating-hotline {
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    right: max(16px, env(safe-area-inset-right, 16px));
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
   .floating-hotline span.hotline-label {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .section {
+    padding: 40px 0;
+  }
+  .section-title {
+    font-size: 1.55rem;
+  }
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+  .card {
+    padding: 20px 16px;
+  }
+  .btn {
+    padding: 12px 18px;
+    font-size: 0.94rem;
+    white-space: normal;
+    text-align: center;
+  }
+  .btn-lg {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+  .top-bar {
+    font-size: 0.78rem;
+    padding: 6px 0;
+  }
+  .top-bar-info {
+    gap: 8px;
+    justify-content: center;
+  }
+  .accordion-header {
+    padding: 14px 16px;
+    font-size: 0.96rem;
+    gap: 10px;
+  }
+  .accordion-inner {
+    padding: 16px;
+    font-size: 0.92rem;
+  }
+  .accordion-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 0.95rem;
+  }
+  .trust-item {
+    gap: 12px;
+  }
+  .trust-item-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.3rem;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .logo-brand {
+    gap: 8px;
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+  .logo-text h1 {
+    font-size: 1.12rem;
+  }
+  .logo-text span {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+  .floating-hotline {
+    padding: 8px 14px;
+    font-size: 0.82rem;
   }
 }
 

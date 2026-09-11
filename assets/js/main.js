@@ -48,6 +48,11 @@ function initMobileNav() {
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
   if (backdrop) backdrop.addEventListener('click', closeDrawer);
 
+  const drawerLinks = drawer.querySelectorAll('a');
+  drawerLinks.forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('open')) {
       closeDrawer();
