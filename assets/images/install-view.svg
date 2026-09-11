@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ductGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="50%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="glowLine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff6550"/>
+      <stop offset="50%" stop-color="#ff2a85"/>
+      <stop offset="100%" stop-color="#00d4ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="480" fill="#091326"/>
+
+  <line x1="0" y1="420" x2="400" y2="420" stroke="#1e293b" stroke-width="3"/>
+  <rect x="0" y="420" width="400" height="60" fill="#070c18"/>
+
+  <rect x="80" y="20" width="130" height="150" fill="url(#ductGrad)" stroke="#334155" stroke-width="2"/>
+  <rect x="40" y="50" width="210" height="45" fill="url(#ductGrad)" stroke="#334155" stroke-width="2"/>
+
+  <path d="M 145 110 L 145 60" stroke="#ff6550" stroke-width="4" stroke-dasharray="6,4"/>
+  <polygon points="145,50 138,65 152,65" fill="#ff6550"/>
+
+  <rect x="75" y="170" width="140" height="75" fill="#14213d" stroke="#00d4ff" stroke-width="2"/>
+  <text x="145" y="212" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#00d4ff" text-anchor="middle">A-COIL CASING</text>
+
+  <rect x="70" y="245" width="150" height="175" rx="6" fill="#0f172a" stroke="#ff6550" stroke-width="2"/>
+  <rect x="85" y="260" width="120" height="70" rx="4" fill="#1e293b"/>
+  <circle cx="145" cy="295" r="14" fill="#ff6550" opacity="0.8"/>
+  <circle cx="145" cy="295" r="6" fill="#ffd166"/>
+
+  <path d="M 20 310 L 70 310" stroke="#eab308" stroke-width="8"/>
+  <circle cx="45" cy="310" r="8" fill="#e11d48"/>
+
+  <rect x="250" y="40" width="90" height="340" fill="url(#ductGrad)" stroke="#334155" stroke-width="2"/>
+  <rect x="220" y="340" width="40" height="80" fill="#1e293b" stroke="#00d4ff" stroke-width="1.5"/>
+  <text x="240" y="385" font-family="system-ui, sans-serif" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle" transform="rotate(-90 240 385)">MERV 16</text>
+
+  <path d="M 250 380 L 220 380" stroke="url(#ductGrad)" stroke-width="38"/>
+
+  <path d="M 295 100 L 295 280" stroke="#00d4ff" stroke-width="4" stroke-dasharray="6,4"/>
+  <polygon points="295,295 288,280 302,280" fill="#00d4ff"/>
+
+  <path d="M 220 280 L 250 280 L 250 210 L 360 210" fill="none" stroke="url(#glowLine)" stroke-width="3"/>
+  <rect x="340" y="195" width="30" height="40" rx="4" fill="#081126" stroke="#ff2a85" stroke-width="2"/>
+  <circle cx="355" cy="215" r="5" fill="#10b981"/>
+
+  <rect x="90" y="435" width="220" height="26" rx="6" fill="rgba(255, 101, 80, 0.2)" stroke="#ff6550" stroke-width="1"/>
+  <text x="200" y="452" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">CHICAGO CODE COMPLIANT INSTALL</text>
+</svg>

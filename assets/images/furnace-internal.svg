@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="heatCoil" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff6550"/>
+      <stop offset="50%" stop-color="#ff2a85"/>
+      <stop offset="100%" stop-color="#ffd166"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="460" rx="140" ry="14" fill="#000000" opacity="0.5"/>
+
+  <rect x="70" y="30" width="260" height="420" rx="14" fill="#0b1329" stroke="#00d4ff" stroke-width="2"/>
+
+  <rect x="85" y="45" width="230" height="190" rx="8" fill="#111c38" stroke="#334155" stroke-width="1.5"/>
+
+  <g fill="none" stroke="url(#heatCoil)" stroke-width="8" stroke-linecap="round">
+    <path d="M 120 70 C 180 60, 220 80, 280 70"/>
+    <path d="M 120 105 C 180 95, 220 115, 280 105"/>
+    <path d="M 120 140 C 180 130, 220 150, 280 140"/>
+    <path d="M 120 175 C 180 165, 220 185, 280 175"/>
+  </g>
+
+  <circle cx="200" cy="205" r="22" fill="url(#metalGrad)" stroke="#ff6550" stroke-width="2"/>
+  <circle cx="200" cy="205" r="8" fill="#ff6550"/>
+
+  <rect x="80" y="240" width="240" height="12" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+
+  <rect x="85" y="255" width="230" height="180" rx="8" fill="#111c38" stroke="#334155" stroke-width="1.5"/>
+
+  <circle cx="200" cy="345" r="65" fill="#1e293b" stroke="#00d4ff" stroke-width="2"/>
+  <circle cx="200" cy="345" r="45" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="200" cy="345" r="18" fill="#ff2a85"/>
+
+  <g stroke="#64748b" stroke-width="2">
+    <line x1="200" y1="285" x2="200" y2="305"/>
+    <line x1="200" y1="385" x2="200" y2="405"/>
+    <line x1="140" y1="345" x2="160" y2="345"/>
+    <line x1="240" y1="345" x2="260" y2="345"/>
+    <line x1="158" y1="303" x2="172" y2="317"/>
+    <line x1="228" y1="373" x2="242" y2="387"/>
+    <line x1="158" y1="387" x2="172" y2="373"/>
+    <line x1="228" y1="317" x2="242" y2="303"/>
+  </g>
+
+  <rect x="110" y="420" width="180" height="20" rx="4" fill="#00d4ff" opacity="0.9"/>
+  <text x="200" y="434" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#081126" text-anchor="middle">STAINLESS STEEL HEAT CORE</text>
+</svg>

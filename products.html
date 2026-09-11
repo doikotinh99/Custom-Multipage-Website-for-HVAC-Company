@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HVAC Products Catalog &amp; Interactive Specs | Best Comfort Chicago</title>
+  <meta name="description" content="Explore high-efficiency furnaces, inverter air conditioners, heat pumps and IAQ systems. Featuring interactive multi-angle image viewer, technical specifications, and ComEd rebates.">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script src="assets/js/icons.js"></script>
+</head>
+<body>
+  <svg id="svgSpriteDefs" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="icon-fire" viewBox="0 0 24 24"><path d="M12 23c-4.97 0-9-4.03-9-9 0-4.12 2.76-7.86 5.86-10.37.78-.63 1.93-.15 2.06.85.22 1.69 1.08 3.19 2.08 4.26.17-2.19 1.13-4.22 2.72-5.74.83-.8 2.2-.28 2.3.87.28 3.09 1.76 5.13 2.98 6.42C22.04 12.43 23 14.15 23 16c0 3.86-3.14 7-7 7h-4zm0-2c3.87 0 7-3.13 7-7 0-1.42-.72-2.77-1.63-3.73-1.47-1.56-2.58-3.69-2.84-6.32-1.07 1.34-1.78 3.03-1.87 4.88-.06 1.1-.92 1.98-2.02 2.03-1.22.06-2.29-.86-2.39-2.08-.03-.39-.12-.76-.24-1.12-2.13 2.03-4.01 4.79-4.01 7.34 0 3.87 3.13 7 7 7zm-1-3c-1.66 0-3-1.34-3-3 0-1.31.84-2.41 2-2.83.55-.2 1.13.25 1.09.83-.07 1.07.78 1.98 1.86 2 .46.01.83.38.83.84 0 1.19-.88 2.16-2.04 2.16h-.74z"/></symbol>
+      <symbol id="icon-snowflake" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93M12 6l2-2m-4 0l2 2m0 12l2 2m-4 0l2-2m-6-6l-2-2m0 4l2-2m12 0l2-2m0 4l-2-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-bolt" viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.88 0-1.33-1.06-.71-1.69L14.5 3h1l-1 7h3.5c.88 0 1.33 1.06.71 1.69L11 21z"/></symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.25 14.25l-3.75-3.75 1.41-1.41 2.34 2.34 5.34-5.34 1.41 1.41-6.75 6.75z"/></symbol>
+      <symbol id="icon-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69zm0 3.83L8.05 10.46a5.5 5.5 0 1 0 7.78 0L12 6.52z"/></symbol>
+      <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4zm7 13l1.2 2.8L23 19l-2.8 1.2L19 23l-1.2-2.8L15 19l2.8-1.2zM5 16l1 2.5L8.5 19.5 6 20.5 5 23l-1-2.5L1.5 19.5 4 18.5z"/></symbol>
+      <symbol id="icon-tools" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.35 8.5 5.16 8.5 3.93 8.5 3.42 8.08 3 7.57 3H4.06C3.55 3 3 3.42 3 3.93 3 13.36 10.64 21 20.01 21c.51 0 .99-.55.99-1.06v-3.56c0-.51-.42-.99-.99-.99z"/></symbol>
+      <symbol id="icon-map-pin" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="12,7 12,12 15.5,14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.5L20.25 19H3.75L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></symbol>
+      <symbol id="icon-home" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+      <symbol id="icon-package" viewBox="0 0 24 24"><path d="M21 16.5l-9 5.2-9-5.2V7.5l9-5.2 9 5.2v9z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="3.27,6.96 12,12.01 20.73,6.96" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="22.08" x2="12" y2="12" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-tag" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></symbol>
+      <symbol id="icon-smartphone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><line x1="10" y1="5" x2="14" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="1" fill="currentColor"/></symbol>
+      <symbol id="icon-dollar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 6v12M15 9.5c0-1.38-1.34-2.5-3-2.5s-3 1.12-3 2.5 1.34 2.5 3 2.5 3 1.12 3 2.5-1.34 2.5-3 2.5-3-1.12-3-2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="8.21,13.89 7,22 12,19 17,22 15.79,13.88" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-volume" viewBox="0 0 24 24"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19" fill="currentColor"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l6.73-5.19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-13 4 5.24 3.73 7 7 7 7s-3-1-6-1c-1 0-2 .1-3 .3C3.5 12 6.5 8 17 8z"/></symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="currentColor"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-wind" viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-plug" viewBox="0 0 24 24"><path d="M9 2v6m6-6v6M6 8h12v5a6 6 0 0 1-12 0V8zm6 11v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-ruler" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="6" y1="7" x2="6" y2="12" stroke="currentColor" stroke-width="2"/><line x1="10" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="2"/><line x1="14" y1="7" x2="14" y2="12" stroke="currentColor" stroke-width="2"/><line x1="18" y1="7" x2="18" y2="10" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></symbol>
+      <symbol id="icon-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="8,12 11,15 16,9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-brand-flame-ice" viewBox="0 0 32 32">
+        <path d="M11 5c-.3 1.2-1 2.2-1.7 3.2C8.3 9.7 7.6 11.2 7.6 13.1c0 3.5 2.9 6.4 6.4 6.4s6.4-2.9 6.4-6.4c0-2.6-1.3-4.6-2.8-6.1-.2 1-.7 2-1.4 2.7-.9.9-1.5 2.5-1.5 4.1 0 2.2-1.8 4-4 4s-4-1.8-4-4c0-1.4.6-2.6 1.6-3.6.5-.6 1-1.2 1.4-1.9.5-1.1.6-2.2.3-3.3z" fill="#ffffff"/>
+        <path d="M22 13v12m-6-6h12m-9-4l6 8m-6 0l6-8" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <aside class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-info">
+        <div class="top-bar-item">
+          <span class="emergency-pulse"></span>
+          <strong>24/7 HVAC Replacement &amp; Repair Hotline</strong>
+        </div>
+        <div class="top-bar-item">
+          <span><svg class="svg-icon" style="color:var(--rich-blue-electric);"><use href="#icon-map-pin"></use></svg> Joliet, Plainfield, Naperville &amp; Chicagoland</span>
+        </div>
+      </div>
+      <div class="top-bar-item">
+        <span>Questions about rebates?</span>
+        <a href="tel:8155560660" class="top-phone-link">
+          <svg class="svg-icon"><use href="#icon-phone"></use></svg> (815) 556-0660
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-brand">
+        <div class="logo-icon">
+          <svg class="svg-icon"><use href="#icon-brand-flame-ice"></use></svg>
+        </div>
+        <div class="logo-text">
+          <h1>BEST COMFORT</h1>
+          <span>HEATING &amp; COOLING • CHICAGO</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="products.html" class="nav-link active">Products Catalog</a>
+        <a href="about.html" class="nav-link">Why Best Comfort</a>
+        <a href="contact.html" class="nav-link">Schedule Service</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-salmon btn-sm">Book Online</a>
+        <button class="mobile-toggle" aria-label="Toggle Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-backdrop"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-drawer-header">
+      <div class="logo-text">
+        <h2 style="font-size:1.15rem; color:#fff; font-weight:800;">BEST COMFORT</h2>
+        <span style="color:var(--rich-blue-electric); font-size:0.75rem;">HVAC SPECIALISTS</span>
+      </div>
+      <button class="mobile-close-btn">&times;</button>
+    </div>
+    <div class="mobile-menu-list">
+      <a href="index.html" class="nav-link"><svg class="svg-icon"><use href="#icon-home"></use></svg> Home</a>
+      <a href="services.html" class="nav-link"><svg class="svg-icon"><use href="#icon-tools"></use></svg> Heating &amp; AC Services</a>
+      <a href="products.html" class="nav-link active"><svg class="svg-icon"><use href="#icon-package"></use></svg> Products &amp; Specs</a>
+      <a href="about.html" class="nav-link"><svg class="svg-icon"><use href="#icon-star"></use></svg> About Us &amp; Guarantees</a>
+      <a href="contact.html" class="nav-link"><svg class="svg-icon"><use href="#icon-calendar"></use></svg> Book Appointment</a>
+    </div>
+    <div style="margin-top:auto;">
+      <a href="tel:8155560660" class="btn btn-pink" style="width:100%; text-align:center;">
+        <svg class="svg-icon"><use href="#icon-phone"></use></svg> Call (815) 556-0660
+      </a>
+    </div>
+  </div>
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="badge-pill badge-salmon">Interactive Product Showcase</div>
+      <h1>Certified Chicago Climate-Grade HVAC Equipment</h1>
+      <p>
+        Select any equipment below to inspect in our interactive multi-angle viewer. Compare efficiencies, browse technical specifications, and examine dynamic placeholder data.
+      </p>
+    </div>
+  </section>
+
+  <main class="section section-navy" id="productShowcaseSection">
+    <div class="container">
+      <section class="product-showcase-box" aria-label="Featured Product Showcase">
+        <div class="showcase-grid">
+          <div class="primary-image-container">
+            <div class="primary-image-box" id="primaryImageBox">
+              <span class="badge-view-status" id="currentViewStatus">
+                <svg class="svg-icon"><use href="#icon-eye"></use></svg> View: Exterior &bull; <span style="color:#fff; font-weight:normal; margin-left:4px;">Full Front Casing &amp; Touch Display</span>
+              </span>
+              <img src="assets/images/furnace-main.svg" id="primaryProductImg" alt="Best Comfort ArcticPro 98 Gas Furnace">
+              <span class="efficiency-badge" id="showcaseEfficiencyBadge">98.7% AFUE</span>
+            </div>
+
+            <div class="thumbnail-gallery-row" id="showcaseThumbnailsRow" aria-label="Thumbnail Image Selector">
+              <button type="button" class="thumbnail-box active" data-img-src="assets/images/furnace-main.svg" data-view-label="Exterior" data-caption="Full Front Casing &amp; Touch Display">
+                <img src="assets/images/furnace-main.svg" alt="Exterior Angle">
+                <span class="thumbnail-caption">Exterior</span>
+              </button>
+
+              <button type="button" class="thumbnail-box" data-img-src="assets/images/furnace-internal.svg" data-view-label="Heat Core" data-caption="Stainless Steel Secondary Heat Exchanger">
+                <img src="assets/images/furnace-internal.svg" alt="Heat Core View">
+                <span class="thumbnail-caption">Heat Core</span>
+              </button>
+
+              <button type="button" class="thumbnail-box" data-img-src="assets/images/smart-thermostat.svg" data-view-label="Smart UI" data-caption="Communicating Wi-Fi Comfort Control">
+                <img src="assets/images/smart-thermostat.svg" alt="Smart Thermostat Interface">
+                <span class="thumbnail-caption">Smart UI</span>
+              </button>
+
+              <button type="button" class="thumbnail-box" data-img-src="assets/images/install-view.svg" data-view-label="Installed" data-caption="Basement Clean-Fit Chicago Installation">
+                <img src="assets/images/install-view.svg" alt="Real Installed Basement View">
+                <span class="thumbnail-caption">Installed</span>
+              </button>
+            </div>
+            <p style="font-size:0.8rem; color:var(--text-muted); text-align:center;">
+              <em>Click any of the 4 thumbnails to change angles &amp; internal views in the primary image box.</em>
+            </p>
+          </div>
+
+          <div class="product-details-content">
+            <div class="badge-pill badge-pink animate-float" style="margin-bottom:8px;">
+              <svg class="svg-icon"><use href="#icon-star"></use></svg> Chicago Top Seller
+            </div>
+            <h2 id="showcaseProductTitle">Best Comfort ArcticPro™ 98 Gas Furnace</h2>
+            <div class="product-meta-sub" id="showcaseProductMeta">
+              Category: <strong>GAS FURNACES</strong> &bull; Chicago Tested Model: <strong>FURNACE-PRO-98</strong>
+            </div>
+            <p style="color:var(--text-light); font-size:0.96rem; line-height:1.6; margin-bottom:14px;">
+              Designed specifically for extreme Midwestern freezes, the ArcticPro 98 automatically modulates fuel output between 40% and 100%, delivering whisper-quiet, even warmth without energy spikes.
+            </p>
+
+            <div class="placeholder-fields-container" aria-label="Dynamic Field Placeholders">
+              <div style="font-size:0.82rem; font-weight:700; color:var(--rich-blue-electric); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">
+                <svg class="svg-icon"><use href="#icon-bolt"></use></svg> Dynamic Field Bindings (Ready for Application Conversion):
+              </div>
+
+              <div class="placeholder-field-item">
+                <span class="placeholder-key">
+                  <svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-tag"></use></svg> TextPlaceHolder1:
+                </span>
+                <span class="placeholder-value" id="textPlaceHolder1">
+                  Energy Star Most Efficient 2026 - Up to 98.7% AFUE Variable Speed Modulating
+                </span>
+              </div>
+
+              <div class="placeholder-field-item">
+                <span class="placeholder-key">
+                  <svg class="svg-icon" style="color:var(--rich-blue-electric);"><use href="#icon-snowflake"></use></svg> TextPlaceHolder2:
+                </span>
+                <span class="placeholder-value" id="textPlaceHolder2">
+                  Chicago Winter Cold Climate Rated down to -30°F with Dual Fuel Backup Ready
+                </span>
+              </div>
+
+              <div class="placeholder-field-item">
+                <span class="placeholder-key">
+                  <svg class="svg-icon" style="color:var(--vibrant-pink);"><use href="#icon-shield"></use></svg> TextPlaceHolder3:
+                </span>
+                <span class="placeholder-value" id="textPlaceHolder3">
+                  Lifetime Heat Exchanger Limited Warranty + 10-Year Unit Replacement Guarantee
+                </span>
+              </div>
+
+              <div class="placeholder-field-item">
+                <span class="placeholder-key">
+                  <svg class="svg-icon" style="color:var(--rich-blue-bright);"><use href="#icon-smartphone"></use></svg> TextPlaceHolder4:
+                </span>
+                <span class="placeholder-value" id="textPlaceHolder4">
+                  Smart Wi-Fi Communicating Diagnostic Hub with Auto Filter Alert System
+                </span>
+              </div>
+            </div>
+
+            <div class="product-action-bar">
+              <button type="button" class="btn btn-salmon btn-request-quote" data-product-name="Best Comfort ArcticPro™ 98 Gas Furnace" id="btnShowcaseQuote">
+                <svg class="svg-icon"><use href="#icon-dollar"></use></svg> Get Instant Rebate &amp; Price Quote
+              </button>
+              <a href="contact.html" class="btn btn-outline" id="btnShowcaseSchedule">
+                <svg class="svg-icon"><use href="#icon-calendar"></use></svg> Schedule Free Home Sizing
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:36px; border-top:1px solid rgba(255,255,255,0.1); padding-top:24px;">
+          <h3 style="font-size:1.25rem; color:#fff; font-weight:800; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-ruler"></use></svg>
+            <span>Technical Specifications &amp; Engineering Specs</span>
+          </h3>
+          <div class="accordion-wrapper" data-single-open="true">
+            <div class="accordion-item active">
+              <button class="accordion-header" id="specHeader1">
+                <div class="accordion-header-title">
+                  <span class="icon-tag"><svg class="svg-icon"><use href="#icon-bolt"></use></svg></span>
+                  <span>Blower Motor &amp; Electrical Specs</span>
+                </div>
+                <span class="accordion-icon">&#9662;</span>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <div class="grid-2" style="gap:16px;">
+                    <div><strong>Motor Type:</strong> Constant-CFM Variable Speed ECM (Electronically Commutated)</div>
+                    <div><strong>Operating Decibels:</strong> 52 dBA Ultra-Quiet Sound Blanket</div>
+                    <div><strong>Voltage / Circuit:</strong> 115V / 60Hz / 15 Amp Dedicated Circuit</div>
+                    <div><strong>Duct Static Pressure:</strong> Up to 0.8" w.g. External Static Tolerance</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header" id="specHeader2">
+                <div class="accordion-header-title">
+                  <span class="icon-tag"><svg class="svg-icon"><use href="#icon-ruler"></use></svg></span>
+                  <span>Dimensions, Venting &amp; Weight</span>
+                </div>
+                <span class="accordion-icon">&#9662;</span>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <div class="grid-2" style="gap:16px;">
+                    <div><strong>Cabinet Size:</strong> 34" Height x 21" Width x 29.5" Depth</div>
+                    <div><strong>Venting Requirements:</strong> 2" or 3" Schedule 40 PVC/CPVC Side or Roof Vent</div>
+                    <div><strong>Gas Supply Connection:</strong> 1/2" NPT Left or Right Knockout</div>
+                    <div><strong>Net Weight:</strong> 142 lbs. Heavy-Gauge Galvanized Steel</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header" id="specHeader3">
+                <div class="accordion-header-title">
+                  <span class="icon-tag"><svg class="svg-icon"><use href="#icon-shield"></use></svg></span>
+                  <span>Warranty &amp; Chicago Rebate Qualifications</span>
+                </div>
+                <span class="accordion-icon">&#9662;</span>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <div class="grid-2" style="gap:16px;">
+                    <div><strong>Nicor Gas Rebate:</strong> Up to $400 Instant Furnace Rebate</div>
+                    <div><strong>Heat Exchanger:</strong> Limited Lifetime Warranty Coverage</div>
+                    <div><strong>Functional Parts:</strong> 10-Year Limited Warranty with Registration</div>
+                    <div><strong>Labor Protection:</strong> 1-Year 100% Best Comfort Satisfaction Guarantee</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-header" style="margin-top:70px; margin-bottom:30px;">
+        <div class="badge-pill badge-blue">Complete Lineup</div>
+        <h2 class="section-title">Explore All Heating, Cooling &amp; IAQ Equipment</h2>
+        <p class="section-subtitle">
+          Filter by category or click <strong>"Inspect in Main Viewer"</strong> on any unit to load its 4 thumbnail angles and data placeholders above.
+        </p>
+      </div>
+
+      <nav class="filter-tabs-nav" aria-label="Product Categories">
+        <button type="button" class="filter-btn active" data-filter="all">
+          <svg class="svg-icon"><use href="#icon-star"></use></svg> All Systems
+        </button>
+        <button type="button" class="filter-btn" data-filter="furnace">
+          <svg class="svg-icon"><use href="#icon-fire"></use></svg> Gas Furnaces
+        </button>
+        <button type="button" class="filter-btn" data-filter="ac">
+          <svg class="svg-icon"><use href="#icon-snowflake"></use></svg> Air Conditioners
+        </button>
+        <button type="button" class="filter-btn" data-filter="heatpump">
+          <svg class="svg-icon"><use href="#icon-bolt"></use></svg> Inverter Heat Pumps
+        </button>
+        <button type="button" class="filter-btn" data-filter="boiler">
+          <svg class="svg-icon"><use href="#icon-droplet"></use></svg> Hydronic Boilers
+        </button>
+        <button type="button" class="filter-btn" data-filter="iaq">
+          <svg class="svg-icon"><use href="#icon-sparkles"></use></svg> Clean Air &amp; IAQ
+        </button>
+      </nav>
+
+      <div class="grid-3" id="productsCatalogGrid">
+        <article class="product-card" data-category="furnace">
+          <div class="product-card-thumb">
+            <span class="card-tag tag-salmon">98.7% AFUE</span>
+            <img src="assets/images/furnace-main.svg" alt="ArcticPro 98 Gas Furnace">
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-title">ArcticPro™ 98 Gas Furnace</h3>
+            <p class="product-card-desc">
+              Modulating variable-speed furnace designed to conquer Chicago blizzards with maximum gas savings.
+            </p>
+            <div class="product-card-fields">
+              <div><strong>TextPlaceHolder1:</strong> Energy Star Most Efficient 2026</div>
+              <div><strong>TextPlaceHolder2:</strong> Sub-zero rated to -30°F</div>
+            </div>
+            <div class="product-card-footer">
+              <button type="button" class="btn btn-outline btn-sm btn-inspect-product" data-product-id="furnace-pro-98">
+                <svg class="svg-icon"><use href="#icon-search"></use></svg> Inspect in Viewer
+              </button>
+              <button type="button" class="btn btn-salmon btn-sm btn-request-quote" data-product-name="ArcticPro™ 98 Gas Furnace">
+                Quote
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="ac">
+          <div class="product-card-thumb">
+            <span class="card-tag tag-blue">24.5 SEER2</span>
+            <img src="assets/images/ac-main.svg" alt="ChillMaster 24 AC">
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-title">ChillMaster™ 24 Inverter AC</h3>
+            <p class="product-card-desc">
+              Whisper-quiet 54 dBA inverter compressor engineered to strip humidity out of hot Midwestern summers.
+            </p>
+            <div class="product-card-fields">
+              <div><strong>TextPlaceHolder1:</strong> 24.5 SEER2 High Efficiency Inverter</div>
+              <div><strong>TextPlaceHolder2:</strong> ComEd $500 Clean Energy Rebate</div>
+            </div>
+            <div class="product-card-footer">
+              <button type="button" class="btn btn-outline btn-sm btn-inspect-product" data-product-id="ac-breeze-24">
+                <svg class="svg-icon"><use href="#icon-search"></use></svg> Inspect in Viewer
+              </button>
+              <button type="button" class="btn btn-blue btn-sm btn-request-quote" data-product-name="ChillMaster™ 24 Inverter AC">
+                Quote
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="heatpump">
+          <div class="product-card-thumb">
+            <span class="card-tag tag-pink">Hybrid All-Season</span>
+            <img src="assets/images/heatpump-main.svg" alt="PolarFlex Inverter Heat Pump">
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-title">PolarFlex™ Inverter Heat Pump</h3>
+            <p class="product-card-desc">
+              All-season heat pump operating down to -22°F. Seamlessly switches with gas furnace for dual-fuel cost savings.
+            </p>
+            <div class="product-card-fields">
+              <div><strong>TextPlaceHolder1:</strong> 100% Heating at -5°F Cold Climate</div>
+              <div><strong>TextPlaceHolder2:</strong> Up to $2,000 Federal &amp; Utility Rebates</div>
+            </div>
+            <div class="product-card-footer">
+              <button type="button" class="btn btn-outline btn-sm btn-inspect-product" data-product-id="heatpump-dual-22">
+                <svg class="svg-icon"><use href="#icon-search"></use></svg> Inspect in Viewer
+              </button>
+              <button type="button" class="btn btn-pink btn-sm btn-request-quote" data-product-name="PolarFlex™ Inverter Heat Pump">
+                Quote
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="boiler">
+          <div class="product-card-thumb">
+            <span class="card-tag tag-salmon">95.5% AFUE</span>
+            <img src="assets/images/furnace-internal.svg" alt="HydroMax Condensing Boiler">
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-title">HydroMax™ Condensing Boiler</h3>
+            <p class="product-card-desc">
+              Wall-hung condensing boiler for historic Chicago radiator homes and modern in-floor radiant heating systems.
+            </p>
+            <div class="product-card-fields">
+              <div><strong>TextPlaceHolder1:</strong> 10:1 Turndown Ratio Hydronic Core</div>
+              <div><strong>TextPlaceHolder2:</strong> Compact Stainless Steel Construction</div>
+            </div>
+            <div class="product-card-footer">
+              <button type="button" class="btn btn-outline btn-sm btn-inspect-product" data-product-id="boiler-titan-95">
+                <svg class="svg-icon"><use href="#icon-search"></use></svg> Inspect in Viewer
+              </button>
+              <button type="button" class="btn btn-salmon btn-sm btn-request-quote" data-product-name="HydroMax™ Condensing Boiler">
+                Quote
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="iaq">
+          <div class="product-card-thumb">
+            <span class="card-tag tag-blue">MERV 16 + UV</span>
+            <img src="assets/images/smart-thermostat.svg" alt="PureAir Whole-Home IAQ System">
+          </div>
+          <div class="product-card-body">
+            <h3 class="product-card-title">PureAir™ Whole-Home IAQ System</h3>
+            <p class="product-card-desc">
+              Hospital-grade air purifier with germicidal UV-C light and carbon odor scrubbers to remove 99.9% of airborne particles.
+            </p>
+            <div class="product-card-fields">
+              <div><strong>TextPlaceHolder1:</strong> Hospital-Grade Viral &amp; Mold Scrubber</div>
+              <div><strong>TextPlaceHolder2:</strong> Zero Ozone Generation Certified</div>
+            </div>
+            <div class="product-card-footer">
+              <button type="button" class="btn btn-outline btn-sm btn-inspect-product" data-product-id="iaq-purifier-uv">
+                <svg class="svg-icon"><use href="#icon-search"></use></svg> Inspect in Viewer
+              </button>
+              <button type="button" class="btn btn-blue btn-sm btn-request-quote" data-product-name="PureAir™ Whole-Home IAQ System">
+                Quote
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div style="margin-top:80px;">
+        <div class="section-header">
+          <div class="badge-pill badge-pink">Helpful Advice</div>
+          <h2 class="section-title">Equipment Buying &amp; Sizing FAQ</h2>
+          <p class="section-subtitle">
+            How we calculate the right tonnage, AFUE rating, and ductwork compatibility for your home.
+          </p>
+        </div>
+
+        <div class="accordion-wrapper" style="max-width:860px; margin:0 auto;" data-single-open="true">
+          <div class="accordion-item active">
+            <button class="accordion-header">
+              <div class="accordion-header-title">
+                <span class="icon-tag"><svg class="svg-icon"><use href="#icon-ruler"></use></svg></span>
+                <span>Why is Manual J Sizing crucial before buying a furnace or AC?</span>
+              </div>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                An oversized unit will short-cycle, spiking electric bills and failing to dehumidify Chicago’s sticky summer air. An undersized unit will run constantly on sub-zero winter nights without reaching your thermostat setpoint. We calculate precise Manual J load formulas considering window orientation, insulation R-values, and square footage.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <div class="accordion-header-title">
+                <span class="icon-tag"><svg class="svg-icon"><use href="#icon-dollar"></use></svg></span>
+                <span>What is the difference between SEER and new SEER2 testing standards?</span>
+              </div>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                As of 2023, the U.S. Department of Energy enacted SEER2 (Seasonal Energy Efficiency Ratio 2). SEER2 tests equipment under realistic higher static duct pressures (0.5" w.g. vs 0.1" w.g.), providing an accurate reflection of how your AC performs in a real home duct system.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <div class="accordion-header-title">
+                <span class="icon-tag"><svg class="svg-icon"><use href="#icon-bolt"></use></svg></span>
+                <span>How do utility rebates from ComEd and Nicor Gas get applied?</span>
+              </div>
+              <span class="accordion-icon">&#9662;</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                As an accredited Illinois Trade Ally, Best Comfort can apply approved instant discounts directly at purchase or assist you with instant online portal submission. High-efficiency furnaces qualify for Nicor rebates, while inverter heat pumps qualify for ComEd incentives up to $2,000!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="quoteModal">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close" id="closeQuoteModal">&times;</button>
+      <div style="margin-bottom:20px;">
+        <span class="badge-pill badge-salmon">Instant Quote Request</span>
+        <h3 style="font-size:1.6rem; color:#fff; font-weight:800; margin-top:8px;" id="modalProductName">Selected HVAC Unit</h3>
+        <p style="color:var(--text-muted); font-size:0.92rem;">
+          Get our upfront transparent pricing and verify available Illinois utility rebates.
+        </p>
+      </div>
+
+      <form id="modalQuoteForm">
+        <input type="hidden" id="modalProductField" name="product_name">
+        <div class="form-group">
+          <label for="quoteCustomerName">Your Name</label>
+          <input type="text" id="quoteCustomerName" class="form-control" placeholder="John Smith" required>
+        </div>
+        <div class="form-group">
+          <label for="quoteCustomerPhone">Phone Number</label>
+          <input type="tel" id="quoteCustomerPhone" class="form-control" placeholder="(815) 555-0144" required>
+        </div>
+        <div class="form-group">
+          <label for="quoteCustomerEmail">Email Address (To Receive Written Estimate)</label>
+          <input type="email" id="quoteCustomerEmail" class="form-control" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="quoteHomeSize">Approximate Home Square Footage</label>
+          <select id="quoteHomeSize" class="form-control">
+            <option value="under-1500">Under 1,500 sq ft</option>
+            <option value="1500-2500" selected>1,500 - 2,500 sq ft</option>
+            <option value="2500-3500">2,500 - 3,500 sq ft</option>
+            <option value="over-3500">3,500+ sq ft / Multi-Zone</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-salmon" style="width:100%; margin-top:10px;">
+          Submit Free Quote Request
+        </button>
+        <div class="form-alert"></div>
+      </form>
+    </div>
+  </div>
+
+  <a href="tel:8155560660" class="floating-hotline">
+    <div class="floating-hotline-icon">
+      <svg class="svg-icon"><use href="#icon-phone"></use></svg>
+    </div>
+    <div>
+      <span class="hotline-label" style="font-size:0.75rem; text-transform:uppercase; display:block; opacity:0.9;">24/7 Urgent Dispatch</span>
+      <span>(815) 556-0660</span>
+    </div>
+  </a>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo-brand">
+            <div class="logo-icon">
+              <svg class="svg-icon"><use href="#icon-brand-flame-ice"></use></svg>
+            </div>
+            <div class="logo-text">
+              <h2 style="font-size:1.25rem; font-weight:800; color:#fff;">BEST COMFORT</h2>
+              <span>HEATING &amp; COOLING</span>
+            </div>
+          </div>
+          <p>
+            Authentic, licensed HVAC specialists serving Joliet, Will County, and the greater Chicago metro. 24/7 heating and air conditioning repair, installations, boilers, and indoor air purification.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Equipment Lines</h3>
+          <div class="footer-links">
+            <a href="products.html"><svg class="svg-icon"><use href="#icon-fire"></use></svg> ArcticPro™ Furnaces</a>
+            <a href="products.html"><svg class="svg-icon"><use href="#icon-snowflake"></use></svg> ChillMaster™ AC</a>
+            <a href="products.html"><svg class="svg-icon"><use href="#icon-bolt"></use></svg> PolarFlex™ Heat Pumps</a>
+            <a href="products.html"><svg class="svg-icon"><use href="#icon-droplet"></use></svg> HydroMax™ Boilers</a>
+            <a href="products.html"><svg class="svg-icon"><use href="#icon-sparkles"></use></svg> PureAir™ Clean Air</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <div class="footer-links">
+            <a href="index.html"><svg class="svg-icon"><use href="#icon-home"></use></svg> Home</a>
+            <a href="services.html"><svg class="svg-icon"><use href="#icon-tools"></use></svg> Services</a>
+            <a href="about.html"><svg class="svg-icon"><use href="#icon-star"></use></svg> Why Chicago Chooses Us</a>
+            <a href="contact.html"><svg class="svg-icon"><use href="#icon-calendar"></use></svg> Book Service</a>
+            <a href="tel:8155560660"><svg class="svg-icon"><use href="#icon-phone"></use></svg> 24/7 Hotline</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="footer-contact-item">
+            <span><svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-map-pin"></use></svg></span>
+            <div>
+              <strong>Headquarters:</strong><br>
+              1504 Essington Rd, Joliet, IL 60435
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span><svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-phone"></use></svg></span>
+            <div>
+              <strong>Phone:</strong><br>
+              <a href="tel:8155560660" style="color:var(--electric-salmon); font-weight:700;">(815) 556-0660</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Best Comfort Heating &amp; Cooling. All rights reserved. Hand-built Vanilla HTML, CSS &amp; JS.</p>
+        <p style="color:var(--electric-salmon);">Product specifications ready for dynamic application conversion.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/products.js"></script>
+</body>
+</html>

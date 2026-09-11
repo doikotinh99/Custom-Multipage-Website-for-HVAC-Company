@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091428"/>
+      <stop offset="50%" stop-color="#050b14"/>
+      <stop offset="100%" stop-color="#14061a"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6550"/>
+      <stop offset="50%" stop-color="#ff2a85"/>
+      <stop offset="100%" stop-color="#00d4ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="50" y="40" width="300" height="400" rx="36" fill="#1e293b" stroke="#334155" stroke-width="4"/>
+
+  <rect x="62" y="52" width="276" height="376" rx="28" fill="url(#glassGrad)" stroke="url(#ringGrad)" stroke-width="3"/>
+
+  <text x="90" y="90" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#94a3b8">CHICAGO, IL</text>
+  <text x="90" y="106" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">OUTDOOR: 28°F</text>
+  <g stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round">
+    <line x1="185" y1="99" x2="185" y2="107"/>
+    <line x1="181" y1="103" x2="189" y2="103"/>
+    <line x1="182" y1="100" x2="188" y2="106"/>
+    <line x1="182" y1="106" x2="188" y2="100"/>
+  </g>
+
+  <circle cx="290" cy="95" r="4" fill="#00d4ff"/>
+  <path d="M 282 88 A 12 12 0 0 1 298 88" stroke="#00d4ff" stroke-width="2" fill="none"/>
+  <path d="M 278 83 A 18 18 0 0 1 302 83" stroke="#00d4ff" stroke-width="2" fill="none"/>
+
+  <circle cx="200" cy="225" r="95" fill="none" stroke="#1e293b" stroke-width="12"/>
+  <circle cx="200" cy="225" r="95" fill="none" stroke="url(#ringGrad)" stroke-width="12" stroke-dasharray="420" stroke-dashoffset="110" stroke-linecap="round"/>
+
+  <text x="200" y="215" font-family="system-ui, sans-serif" font-size="58" font-weight="900" fill="#ffffff" text-anchor="middle">72°</text>
+  <text x="200" y="250" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#ff6550" text-anchor="middle">HEATING TO 72°</text>
+  <text x="200" y="272" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">HUMIDITY: 45%</text>
+
+  <rect x="85" y="345" width="65" height="55" rx="12" fill="rgba(255, 101, 80, 0.15)" stroke="#ff6550" stroke-width="1.5"/>
+  <path d="M 117 358 C 114 362 112 365 112 368 C 112 372 114.5 374 117 374 C 119.5 374 122 372 122 368 C 122 364 118 360 117 358 Z" fill="#ff6550"/>
+  <text x="117" y="390" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#ff6550" text-anchor="middle">HEAT</text>
+
+  <rect x="167" y="345" width="65" height="55" rx="12" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="1.5"/>
+  <g stroke="#00d4ff" stroke-width="1.8" stroke-linecap="round">
+    <line x1="200" y1="358" x2="200" y2="374"/>
+    <line x1="192" y1="366" x2="208" y2="366"/>
+    <line x1="194" y1="360" x2="206" y2="372"/>
+    <line x1="194" y1="372" x2="206" y2="360"/>
+  </g>
+  <text x="200" y="390" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#00d4ff" text-anchor="middle">COOL</text>
+
+  <rect x="250" y="345" width="65" height="55" rx="12" fill="rgba(255, 42, 133, 0.1)" stroke="#ff2a85" stroke-width="1.5"/>
+  <path d="M 287 358 C 280 360 277 364 275 373 C 283 373 289 367 289 360 C 289 359 288 358 287 358 Z" fill="#ff2a85"/>
+  <text x="282" y="390" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#ff2a85" text-anchor="middle">ECO</text>
+</svg>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HVAC Services: Heating, Cooling &amp; Boilers | Best Comfort Chicago</title>
+  <meta name="description" content="Comprehensive HVAC services in Joliet and Chicago metro: furnace repair, central AC installation, radiant boiler systems, ductless mini-splits, and 24/7 emergency repair.">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script src="assets/js/icons.js"></script>
+</head>
+<body>
+  <svg id="svgSpriteDefs" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="icon-fire" viewBox="0 0 24 24"><path d="M12 23c-4.97 0-9-4.03-9-9 0-4.12 2.76-7.86 5.86-10.37.78-.63 1.93-.15 2.06.85.22 1.69 1.08 3.19 2.08 4.26.17-2.19 1.13-4.22 2.72-5.74.83-.8 2.2-.28 2.3.87.28 3.09 1.76 5.13 2.98 6.42C22.04 12.43 23 14.15 23 16c0 3.86-3.14 7-7 7h-4zm0-2c3.87 0 7-3.13 7-7 0-1.42-.72-2.77-1.63-3.73-1.47-1.56-2.58-3.69-2.84-6.32-1.07 1.34-1.78 3.03-1.87 4.88-.06 1.1-.92 1.98-2.02 2.03-1.22.06-2.29-.86-2.39-2.08-.03-.39-.12-.76-.24-1.12-2.13 2.03-4.01 4.79-4.01 7.34 0 3.87 3.13 7 7 7zm-1-3c-1.66 0-3-1.34-3-3 0-1.31.84-2.41 2-2.83.55-.2 1.13.25 1.09.83-.07 1.07.78 1.98 1.86 2 .46.01.83.38.83.84 0 1.19-.88 2.16-2.04 2.16h-.74z"/></symbol>
+      <symbol id="icon-snowflake" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93M12 6l2-2m-4 0l2 2m0 12l2 2m-4 0l2-2m-6-6l-2-2m0 4l2-2m12 0l2-2m0 4l-2-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-bolt" viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.88 0-1.33-1.06-.71-1.69L14.5 3h1l-1 7h3.5c.88 0 1.33 1.06.71 1.69L11 21z"/></symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.25 14.25l-3.75-3.75 1.41-1.41 2.34 2.34 5.34-5.34 1.41 1.41-6.75 6.75z"/></symbol>
+      <symbol id="icon-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69zm0 3.83L8.05 10.46a5.5 5.5 0 1 0 7.78 0L12 6.52z"/></symbol>
+      <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4zm7 13l1.2 2.8L23 19l-2.8 1.2L19 23l-1.2-2.8L15 19l2.8-1.2zM5 16l1 2.5L8.5 19.5 6 20.5 5 23l-1-2.5L1.5 19.5 4 18.5z"/></symbol>
+      <symbol id="icon-tools" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-2.2 2.2a15.05 15.05 0 0 1-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.35 8.5 5.16 8.5 3.93 8.5 3.42 8.08 3 7.57 3H4.06C3.55 3 3 3.42 3 3.93 3 13.36 10.64 21 20.01 21c.51 0 .99-.55.99-1.06v-3.56c0-.51-.42-.99-.99-.99z"/></symbol>
+      <symbol id="icon-map-pin" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="12,7 12,12 15.5,14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.5L20.25 19H3.75L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></symbol>
+      <symbol id="icon-home" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+      <symbol id="icon-package" viewBox="0 0 24 24"><path d="M21 16.5l-9 5.2-9-5.2V7.5l9-5.2 9 5.2v9z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="3.27,6.96 12,12.01 20.73,6.96" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="22.08" x2="12" y2="12" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-tag" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></symbol>
+      <symbol id="icon-smartphone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><line x1="10" y1="5" x2="14" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="1" fill="currentColor"/></symbol>
+      <symbol id="icon-dollar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 6v12M15 9.5c0-1.38-1.34-2.5-3-2.5s-3 1.12-3 2.5 1.34 2.5 3 2.5 3 1.12 3 2.5-1.34 2.5-3 2.5-3-1.12-3-2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="8.21,13.89 7,22 12,19 17,22 15.79,13.88" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-volume" viewBox="0 0 24 24"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19" fill="currentColor"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l6.73-5.19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-13 4 5.24 3.73 7 7 7 7s-3-1-6-1c-1 0-2 .1-3 .3C3.5 12 6.5 8 17 8z"/></symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="currentColor"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-wind" viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-plug" viewBox="0 0 24 24"><path d="M9 2v6m6-6v6M6 8h12v5a6 6 0 0 1-12 0V8zm6 11v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-ruler" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="6" y1="7" x2="6" y2="12" stroke="currentColor" stroke-width="2"/><line x1="10" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="2"/><line x1="14" y1="7" x2="14" y2="12" stroke="currentColor" stroke-width="2"/><line x1="18" y1="7" x2="18" y2="10" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></symbol>
+      <symbol id="icon-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="8,12 11,15 16,9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-brand-flame-ice" viewBox="0 0 32 32">
+        <path d="M11 5c-.3 1.2-1 2.2-1.7 3.2C8.3 9.7 7.6 11.2 7.6 13.1c0 3.5 2.9 6.4 6.4 6.4s6.4-2.9 6.4-6.4c0-2.6-1.3-4.6-2.8-6.1-.2 1-.7 2-1.4 2.7-.9.9-1.5 2.5-1.5 4.1 0 2.2-1.8 4-4 4s-4-1.8-4-4c0-1.4.6-2.6 1.6-3.6.5-.6 1-1.2 1.4-1.9.5-1.1.6-2.2.3-3.3z" fill="#ffffff"/>
+        <path d="M22 13v12m-6-6h12m-9-4l6 8m-6 0l6-8" fill="none" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <aside class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-info">
+        <div class="top-bar-item">
+          <span class="emergency-pulse"></span>
+          <strong>24/7 Emergency HVAC Repairs</strong>
+        </div>
+        <div class="top-bar-item">
+          <span><svg class="svg-icon" style="color:var(--rich-blue-electric);"><use href="#icon-map-pin"></use></svg> Joliet, Plainfield, Naperville &amp; Chicagoland</span>
+        </div>
+      </div>
+      <div class="top-bar-item">
+        <span>Emergency Service Call:</span>
+        <a href="tel:8155560660" class="top-phone-link">
+          <svg class="svg-icon"><use href="#icon-phone"></use></svg> (815) 556-0660
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-brand">
+        <div class="logo-icon">
+          <svg class="svg-icon"><use href="#icon-brand-flame-ice"></use></svg>
+        </div>
+        <div class="logo-text">
+          <h1>BEST COMFORT</h1>
+          <span>HEATING &amp; COOLING • CHICAGO</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link active">Services</a>
+        <a href="products.html" class="nav-link">Products Catalog</a>
+        <a href="about.html" class="nav-link">Why Best Comfort</a>
+        <a href="contact.html" class="nav-link">Schedule Service</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-salmon btn-sm">Book Online</a>
+        <button class="mobile-toggle" aria-label="Toggle Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-backdrop"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-drawer-header">
+      <div class="logo-text">
+        <h2 style="font-size:1.15rem; color:#fff; font-weight:800;">BEST COMFORT</h2>
+        <span style="color:var(--rich-blue-electric); font-size:0.75rem;">HVAC SPECIALISTS</span>
+      </div>
+      <button class="mobile-close-btn">&times;</button>
+    </div>
+    <div class="mobile-menu-list">
+      <a href="index.html" class="nav-link"><svg class="svg-icon"><use href="#icon-home"></use></svg> Home</a>
+      <a href="services.html" class="nav-link active"><svg class="svg-icon"><use href="#icon-tools"></use></svg> Heating &amp; AC Services</a>
+      <a href="products.html" class="nav-link"><svg class="svg-icon"><use href="#icon-package"></use></svg> Products &amp; Specs</a>
+      <a href="about.html" class="nav-link"><svg class="svg-icon"><use href="#icon-star"></use></svg> About Us &amp; Guarantees</a>
+      <a href="contact.html" class="nav-link"><svg class="svg-icon"><use href="#icon-calendar"></use></svg> Book Appointment</a>
+    </div>
+    <div style="margin-top:auto;">
+      <a href="tel:8155560660" class="btn btn-pink" style="width:100%; text-align:center;">
+        <svg class="svg-icon"><use href="#icon-phone"></use></svg> Call (815) 556-0660
+      </a>
+    </div>
+  </div>
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="badge-pill badge-salmon">Complete Residential &amp; Commercial Services</div>
+      <h1>Expert Heating, Cooling &amp; Hydronics in Greater Chicago</h1>
+      <p>
+        Licensed, bonded, and certified NATE technicians equipped with fully stocked trucks for same-day repairs, replacements, and routine tune-ups.
+      </p>
+    </div>
+  </section>
+
+  <main class="section section-navy">
+    <div class="container">
+      <section id="heating" style="margin-bottom:80px;">
+        <div class="section-header" style="text-align:left; max-width:100%; margin-bottom:30px;">
+          <div class="badge-pill badge-salmon">
+            <svg class="svg-icon"><use href="#icon-fire"></use></svg> Heating Solutions
+          </div>
+          <h2 class="section-title">Furnaces, Boilers &amp; Emergency Heating Repairs</h2>
+          <p class="section-subtitle">
+            When the thermometer plunges below zero in Chicago, our rapid heating dispatch team ensures you're never left in the cold.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card card-glowing-salmon">
+            <div class="service-icon-box icon-box-salmon">
+              <svg class="svg-icon"><use href="#icon-fire"></use></svg>
+            </div>
+            <h3 style="font-size:1.4rem; color:#fff; margin-bottom:14px;">Full Spectrum Heating Services</h3>
+            <p style="color:var(--text-light); margin-bottom:16px;">
+              From century-old Victorian boiler radiators in historic Chicago neighborhoods to high-efficiency two-stage variable-speed furnaces in newer Joliet and Naperville subdivisions.
+            </p>
+            <ul class="bullet-list bullet-salmon">
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-fire"></use></svg></span> <strong>Emergency 24/7 Furnace Repairs:</strong> Rapid igniter, flame sensor, and blower fixes.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-shield"></use></svg></span> <strong>Heat Exchanger Inspection:</strong> Precision digital carbon monoxide safety checks.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-droplet"></use></svg></span> <strong>Hydronic &amp; Steam Boilers:</strong> Circulator pumps, expansion tanks, and bleeding radiator pipes.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-bolt"></use></svg></span> <strong>High-Efficiency Conversions:</strong> Upgrading 80% atmospheric units to 98% condensing systems.</li>
+            </ul>
+            <div style="margin-top:20px;">
+              <a href="contact.html" class="btn btn-salmon btn-sm">Schedule Heating Service &rarr;</a>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size:1.3rem; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
+              <svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-tools"></use></svg>
+              <span>Common Heating Problems We Solve</span>
+            </h3>
+            <div class="accordion-wrapper" data-single-open="true">
+              <div class="accordion-item active">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-alert"></use></svg></span>
+                    <span>Furnace Blows Cold Air or Won't Turn On</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Commonly caused by dirty flame sensors, cracked hot-surface silicon nitride igniters, or tripped high-limit safety switches due to clogged air filters. Our trucks carry universal replacement igniters and control boards for instant same-day repair.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-volume"></use></svg></span>
+                    <span>Loud Banging, Rattling or Squealing Noises</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Banging at ignition suggests delayed ignition where gas builds up before lighting. Squealing indicates a failing ECM blower motor bearing or slipping blower belt. We perform precise vibration diagnostics to prevent complete motor seizure.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-refresh"></use></svg></span>
+                    <span>Short Cycling (Turning On &amp; Off Rapidly)</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Short cycling creates tremendous wear on gas valves and control boards. It is usually caused by restricted airflow causing the heat exchanger to overheat, or a faulty anticipator setting on an outdated thermostat.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cooling" style="margin-bottom:80px;">
+        <div class="section-header" style="text-align:left; max-width:100%; margin-bottom:30px;">
+          <div class="badge-pill badge-blue">
+            <svg class="svg-icon"><use href="#icon-snowflake"></use></svg> Cooling Solutions
+          </div>
+          <h2 class="section-title">Central Air Conditioning &amp; Ductless Mini-Splits</h2>
+          <p class="section-subtitle">
+            Keep your interior crisp and dry during Chicago’s humid summer heatwaves with peak-performance cooling.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <h3 style="font-size:1.3rem; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
+              <svg class="svg-icon" style="color:var(--rich-blue-electric);"><use href="#icon-snowflake"></use></svg>
+              <span>Air Conditioning Diagnostics &amp; Tune-Ups</span>
+            </h3>
+            <div class="accordion-wrapper" data-single-open="true">
+              <div class="accordion-item variant-blue active">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-snowflake"></use></svg></span>
+                    <span>AC Unit Freezing Up with Ice on Copper Lines</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Ice buildup on outdoor suction lines or evaporator coils indicates severe low refrigerant pressure (Freon/Puron leak) or zero airflow through choked air filters. Never chip the ice! Call us to safely thaw and electronically pinpoint leaks with nitrogen pressure tests.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item variant-blue">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-bolt"></use></svg></span>
+                    <span>Outdoor AC Buzzing but Fan Not Spinning</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    This is almost always a swollen or discharged dual-run capacitor. The capacitor delivers the initial 400V boost to kickstart the compressor and condenser fan motor. We replace failing capacitors with heavy-duty American-made components.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item variant-blue">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-wind"></use></svg></span>
+                    <span>High Indoor Humidity &amp; Musty Odors</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Single-stage oversized air conditioners cool a room too fast without running long enough to wring humidity out of the air. We recalibrate CFM blower speeds or install variable-speed inverter systems that run low and continuous for maximum dehumidification.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-glowing-blue">
+            <div class="service-icon-box icon-box-blue">
+              <svg class="svg-icon"><use href="#icon-snowflake"></use></svg>
+            </div>
+            <h3 style="font-size:1.4rem; color:#fff; margin-bottom:14px;">Cooling Specialties &amp; Capabilities</h3>
+            <p style="color:var(--text-light); margin-bottom:16px;">
+              We install and service all leading brands of central AC, heat pumps, and ductless systems with certified EPA Section 608 Universal technicians.
+            </p>
+            <ul class="bullet-list bullet-blue">
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-snowflake"></use></svg></span> <strong>Inverter AC Replacements:</strong> Up to 24.5 SEER2 for minimal electric bills.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-tools"></use></svg></span> <strong>21-Point Spring Tune-Up:</strong> Condenser coil washing, amps draw check, contactor cleaning.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-package"></use></svg></span> <strong>Ductless Mini-Splits:</strong> Ideal for home additions, sunrooms, and houses without ductwork.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-dollar"></use></svg></span> <strong>ComEd Smart Thermostat Rebates:</strong> Instant discounts on qualifying systems.</li>
+            </ul>
+            <div style="margin-top:20px;">
+              <a href="contact.html" class="btn btn-blue btn-sm">Schedule AC Service &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="iaq" style="margin-bottom:60px;">
+        <div class="section-header" style="text-align:left; max-width:100%; margin-bottom:30px;">
+          <div class="badge-pill badge-pink">
+            <svg class="svg-icon"><use href="#icon-leaf"></use></svg> Air Quality &amp; Maintenance Club
+          </div>
+          <h2 class="section-title">Indoor Air Purification &amp; VIP Comfort Membership</h2>
+          <p class="section-subtitle">
+            Extend equipment life, avoid emergency breakdowns, and breathe allergen-free air in your home.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card card-glowing-pink">
+            <div class="service-icon-box icon-box-pink">
+              <svg class="svg-icon"><use href="#icon-leaf"></use></svg>
+            </div>
+            <h3 style="font-size:1.35rem; color:#fff; margin-bottom:12px;">Whole-Home Indoor Air Quality (IAQ)</h3>
+            <p style="color:var(--text-light); margin-bottom:14px;">
+              During Chicago winters, closed windows trap pet dander, viruses, and dry static air. Our IAQ upgrades integrate directly into your central HVAC ductwork.
+            </p>
+            <ul class="bullet-list bullet-pink">
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-sparkles"></use></svg></span> <strong>Hospital-Grade MERV 16 Filtration:</strong> Traps micro-particles down to 0.3 microns.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-sun"></use></svg></span> <strong>Germicidal UV-C Lamps:</strong> Sterilizes mold spores and airborne bacteria inside coils.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-droplet"></use></svg></span> <strong>Whole-Home Steam Humidifiers:</strong> Prevents dry skin, static shock, and wood floor shrinkage.</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-shield"></use></svg></span> <strong>Carbon Monoxide Alarm Placement:</strong> Strategic detection for complete peace of mind.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 style="font-size:1.3rem; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
+              <svg class="svg-icon" style="color:var(--vibrant-pink);"><use href="#icon-star"></use></svg>
+              <span>VIP Best Comfort Club Perks</span>
+            </h3>
+            <div class="accordion-wrapper" data-single-open="true">
+              <div class="accordion-item variant-pink active">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-award"></use></svg></span>
+                    <span>Two Comprehensive Annual Precision Tune-Ups</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Includes one complete 28-point heating audit in the Fall and one 21-point AC optimization in the Spring. Keeps manufacturer warranty requirements valid and restores factory efficiency.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item variant-pink">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-alert"></use></svg></span>
+                    <span>Front-of-the-Line Priority Emergency Scheduling</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    When winter blizzards trigger hundreds of emergency service calls across Joliet and Naperville, VIP Club members are automatically moved to the very front of our dispatch queue for immediate response.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item variant-pink">
+                <button class="accordion-header">
+                  <div class="accordion-header-title">
+                    <span class="icon-tag"><svg class="svg-icon"><use href="#icon-dollar"></use></svg></span>
+                    <span>15% Discount on All Repairs &amp; No Overtime Fees</span>
+                  </div>
+                  <span class="accordion-icon">&#9662;</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-inner">
+                    Save 15% on any parts or labor required during the year. Plus, zero extra diagnostic fees or weekend holiday surcharges—ever.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-top:70px;">
+        <div class="section-header">
+          <div class="badge-pill badge-salmon">Value &amp; Savings</div>
+          <h2 class="section-title">Standard 80% vs. High-Efficiency 98.7% Modulating</h2>
+          <p class="section-subtitle">
+            See how much you can save every heating season in Northern Illinois.
+          </p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature / Metric</th>
+                <th>Outdated 80% Standard Furnace</th>
+                <th>Modern 92%-96% 2-Stage Furnace</th>
+                <th style="color:var(--electric-salmon);">Best Comfort ArcticPro™ 98.7% Modulating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Annual Heating Efficiency</strong></td>
+                <td>80% (20¢ of every dollar wasted)</td>
+                <td>92% - 96% AFUE</td>
+                <td style="color:var(--electric-salmon); font-weight:bold;">98.7% (Under 1.3¢ lost)</td>
+              </tr>
+              <tr>
+                <td><strong>Burner Technology</strong></td>
+                <td>Single-Stage (Full blast or OFF)</td>
+                <td>Two-Stage (Low / High flame)</td>
+                <td style="color:var(--electric-salmon); font-weight:bold;">Fully Modulating 40% - 100% Micro-steps</td>
+              </tr>
+              <tr>
+                <td><strong>Blower Motor Type</strong></td>
+                <td>Standard PSC (High power consumption)</td>
+                <td>Constant Torque ECM</td>
+                <td style="color:var(--electric-salmon); font-weight:bold;">Variable Speed Inverter ECM (Ultra Quiet)</td>
+              </tr>
+              <tr>
+                <td><strong>Temperature Fluctuation</strong></td>
+                <td>±4°F Hot / Cold swings</td>
+                <td>±2°F Comfortable</td>
+                <td style="color:var(--electric-salmon); font-weight:bold;">±0.5°F Constant Perfect Balance</td>
+              </tr>
+              <tr>
+                <td><strong>Rebates Available</strong></td>
+                <td>None</td>
+                <td>$200 Nicor Gas Rebate</td>
+                <td style="color:var(--electric-salmon); font-weight:bold;">Up to $400 Nicor + Federal Tax Credits</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <a href="tel:8155560660" class="floating-hotline">
+    <div class="floating-hotline-icon">
+      <svg class="svg-icon"><use href="#icon-phone"></use></svg>
+    </div>
+    <div>
+      <span class="hotline-label" style="font-size:0.75rem; text-transform:uppercase; display:block; opacity:0.9;">24/7 Urgent Dispatch</span>
+      <span>(815) 556-0660</span>
+    </div>
+  </a>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo-brand">
+            <div class="logo-icon">
+              <svg class="svg-icon"><use href="#icon-brand-flame-ice"></use></svg>
+            </div>
+            <div class="logo-text">
+              <h2 style="font-size:1.25rem; font-weight:800; color:#fff;">BEST COMFORT</h2>
+              <span>HEATING &amp; COOLING</span>
+            </div>
+          </div>
+          <p>
+            Authentic, licensed HVAC specialists serving Joliet, Will County, and the greater Chicago metro. 24/7 heating and air conditioning repair, installations, boilers, and indoor air purification.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Services</h3>
+          <div class="footer-links">
+            <a href="services.html#heating"><svg class="svg-icon"><use href="#icon-fire"></use></svg> Furnace Repair</a>
+            <a href="services.html#cooling"><svg class="svg-icon"><use href="#icon-snowflake"></use></svg> Central Air Conditioning</a>
+            <a href="services.html#heating"><svg class="svg-icon"><use href="#icon-droplet"></use></svg> Boilers &amp; Radiators</a>
+            <a href="services.html#cooling"><svg class="svg-icon"><use href="#icon-bolt"></use></svg> Heat Pump Inverters</a>
+            <a href="services.html#iaq"><svg class="svg-icon"><use href="#icon-sparkles"></use></svg> Air Purifiers &amp; Filters</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <div class="footer-links">
+            <a href="index.html"><svg class="svg-icon"><use href="#icon-home"></use></svg> Home</a>
+            <a href="products.html"><svg class="svg-icon"><use href="#icon-package"></use></svg> Products &amp; Specs</a>
+            <a href="about.html"><svg class="svg-icon"><use href="#icon-star"></use></svg> Why Chicago Chooses Us</a>
+            <a href="contact.html"><svg class="svg-icon"><use href="#icon-calendar"></use></svg> Book Service</a>
+            <a href="tel:8155560660"><svg class="svg-icon"><use href="#icon-phone"></use></svg> 24/7 Hotline</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="footer-contact-item">
+            <span><svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-map-pin"></use></svg></span>
+            <div>
+              <strong>Headquarters:</strong><br>
+              1504 Essington Rd, Joliet, IL 60435
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span><svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-phone"></use></svg></span>
+            <div>
+              <strong>24/7 Phone:</strong><br>
+              <a href="tel:8155560660" style="color:var(--electric-salmon); font-weight:700;">(815) 556-0660</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Best Comfort Heating &amp; Cooling. All rights reserved. Hand-built Vanilla HTML, CSS &amp; JS.</p>
+        <p style="color:var(--electric-salmon);">Comprehensive HVAC solutions for Illinois homeowners &amp; commercial properties.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
