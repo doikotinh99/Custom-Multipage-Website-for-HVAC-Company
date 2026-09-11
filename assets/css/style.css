@@ -53,13 +53,15 @@ html {
   line-height: 1.6;
   color: var(--text-light);
   background-color: var(--rich-blue-midnight);
-  overflow-x: clip;
+  overflow-x: hidden;
+  max-width: 100%;
   width: 100%;
 }
 
 body {
-  overflow-x: clip;
+  overflow-x: hidden;
   width: 100%;
+  max-width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
