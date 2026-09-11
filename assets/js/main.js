@@ -56,52 +56,88 @@ function initMobileNav() {
 }
 
 function initAccordions() {
-  const accordionItems = document.querySelectorAll('.accordion-item');
+  const allItems = document.querySelectorAll('.accordion-item');
 
-  accordionItems.forEach(item => {
-    const header = item.querySelector('.accordion-header');
-    const content = item.querySelector('.accordion-content');
+  function updateAncestors(childItem) {
+    let parent = childItem.parentElement ? childItem.parentElement.closest('.accordion-content') : null;
+    while (parent) {
+      if (parent.parentElement.classList.contains('active')) {
+        parent.style.maxHeight = 'none';
+      }
+      parent = parent.parentElement.parentElement ? parent.parentElement.parentElement.closest('.accordion-content') : null;
+    }
+  }
+
+  allItems.forEach(item => {
+    const header = item.querySelector(':scope > .accordion-header');
+    const content = item.querySelector(':scope > .accordion-content');
+    const toggleIcon = item.querySelector(':scope > .accordion-header .accordion-icon, :scope > .accordion-header .master-toggle-btn, :scope > .accordion-header .child-toggle-icon');
 
     if (!header || !content) return;
 
     if (item.classList.contains('active')) {
-      content.style.maxHeight = content.scrollHeight + 'px';
+      content.style.maxHeight = 'none';
       header.setAttribute('aria-expanded', 'true');
+      if (toggleIcon) toggleIcon.innerHTML = '&minus;';
     } else {
+      content.style.maxHeight = null;
       header.setAttribute('aria-expanded', 'false');
+      if (toggleIcon) toggleIcon.innerHTML = '+';
     }
 
-    header.addEventListener('click', () => {
+    header.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isAlreadyActive = item.classList.contains('active');
-      const parentWrapper = item.closest('.accordion-wrapper');
+      const parentWrapper = item.closest('.accordion-wrapper, .child-accordion-wrapper, .master-accordion-wrapper');
 
       if (parentWrapper && parentWrapper.dataset.singleOpen === 'true') {
-        parentWrapper.querySelectorAll('.accordion-item').forEach(sibling => {
+        const siblings = Array.from(parentWrapper.querySelectorAll('.accordion-item')).filter(
+          sib => sib.closest('.accordion-wrapper, .child-accordion-wrapper, .master-accordion-wrapper') === parentWrapper
+        );
+        siblings.forEach(sibling => {
           if (sibling !== item && sibling.classList.contains('active')) {
             sibling.classList.remove('active');
-            const sibContent = sibling.querySelector('.accordion-content');
-            const sibHeader = sibling.querySelector('.accordion-header');
-            if (sibContent) sibContent.style.maxHeight = null;
+            const sibContent = sibling.querySelector(':scope > .accordion-content');
+            const sibHeader = sibling.querySelector(':scope > .accordion-header');
+            const sibIcon = sibling.querySelector(':scope > .accordion-header .accordion-icon, :scope > .accordion-header .master-toggle-btn, :scope > .accordion-header .child-toggle-icon');
+            if (sibContent) {
+              sibContent.style.maxHeight = sibContent.scrollHeight + 'px';
+              sibContent.offsetHeight;
+              sibContent.style.maxHeight = null;
+            }
             if (sibHeader) sibHeader.setAttribute('aria-expanded', 'false');
+            if (sibIcon) sibIcon.innerHTML = '+';
           }
         });
       }
 
       if (isAlreadyActive) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        content.offsetHeight;
         item.classList.remove('active');
         content.style.maxHeight = null;
         header.setAttribute('aria-expanded', 'false');
+        if (toggleIcon) toggleIcon.innerHTML = '+';
       } else {
         item.classList.add('active');
         content.style.maxHeight = content.scrollHeight + 'px';
         header.setAttribute('aria-expanded', 'true');
+        if (toggleIcon) toggleIcon.innerHTML = '&minus;';
+
+        setTimeout(() => {
+          if (item.classList.contains('active')) {
+            content.style.maxHeight = 'none';
+            updateAncestors(item);
+          }
+        }, 320);
       }
+      updateAncestors(item);
     });
   });
 
   window.addEventListener('resize', () => {
-    document.querySelectorAll('.accordion-item.active .accordion-content').forEach(content => {
-      content.style.maxHeight = content.scrollHeight + 'px';
+    document.querySelectorAll('.accordion-item.active > .accordion-content').forEach(c => {
+      c.style.maxHeight = 'none';
     });
   });
 }

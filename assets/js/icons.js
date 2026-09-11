@@ -141,6 +141,9 @@ const SVG_ICONS_SPRITE = `
 
       <path d="M22 12v12m-6-6h12m-9-4l6 8m-6 0l6-8" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round"/>
     </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="icon-diamond" viewBox="0 0 24 24"><polygon points="12,2 22,12 12,22 2,12" fill="currentColor"/></symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/></symbol>
   </defs>
 </svg>
 `;
