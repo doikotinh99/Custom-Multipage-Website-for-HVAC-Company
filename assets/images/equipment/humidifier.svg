@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 280" width="100%" height="100%">
+  <ellipse cx="160" cy="265" rx="100" ry="12" fill="#000" opacity="0.5"/>
+  <!-- Galvanized Duct Mounting -->
+  <rect x="40" y="40" width="70" height="210" fill="#334155" stroke="#475569" stroke-width="2"/>
+  <!-- Humidifier Cabinet -->
+  <rect x="110" y="65" width="150" height="160" rx="10" fill="#0f172a" stroke="#00d4ff" stroke-width="2"/>
+  <!-- Water Vapor Pad Louvers -->
+  <rect x="125" y="85" width="120" height="100" rx="6" fill="#06122c" stroke="#38bdf8" stroke-width="1.5"/>
+  <g stroke="#38bdf8" stroke-width="2" opacity="0.6">
+    <line x1="135" y1="105" x2="235" y2="105"/><line x1="135" y1="120" x2="235" y2="120"/>
+    <line x1="135" y1="135" x2="235" y2="135"/><line x1="135" y1="150" x2="235" y2="150"/>
+    <line x1="135" y1="165" x2="235" y2="165"/>
+  </g>
+  <!-- Water Droplet Moisture Icon -->
+  <circle cx="185" cy="135" r="18" fill="#0284c7"/>
+  <path d="M185 120 Q193 135 185 145 Q177 135 185 120 Z" fill="#38bdf8"/>
+  <!-- Solenoid Valve on Top -->
+  <rect x="175" y="45" width="20" height="20" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
+  <line x1="185" y1="30" x2="185" y2="45" stroke="#38bdf8" stroke-width="3"/>
+</svg>

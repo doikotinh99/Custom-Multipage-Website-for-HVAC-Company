@@ -173,10 +173,6 @@ button {
   line-height: 1.6;
 }
 
-.text-salmon { color: var(--electric-salmon); }
-.text-pink { color: var(--vibrant-pink); }
-.text-cyan { color: var(--rich-blue-electric); }
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -409,6 +405,255 @@ button {
   height: 2px;
   background: linear-gradient(90deg, var(--electric-salmon), var(--vibrant-pink));
   border-radius: 2px;
+}
+
+.nav-item-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.dropdown-arrow {
+  transition: transform 0.25s ease;
+  fill: currentColor;
+}
+
+.nav-item-dropdown:hover .dropdown-arrow,
+.nav-item-dropdown:focus-within .dropdown-arrow {
+  transform: rotate(180deg);
+  color: var(--electric-salmon);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: 480px;
+  background: rgba(8, 15, 33, 0.97);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 255, 0.22);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 212, 255, 0.12);
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  transition-delay: 0.12s;
+  z-index: 1000;
+}
+
+.dropdown-menu::after {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  background: transparent;
+  display: block;
+  z-index: 1;
+}
+
+.nav-item-dropdown:hover .dropdown-menu,
+.nav-item-dropdown:focus-within .dropdown-menu,
+.dropdown-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: 0s;
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: rgba(8, 15, 33, 0.97);
+  border-left: 1px solid rgba(0, 212, 255, 0.22);
+  border-top: 1px solid rgba(0, 212, 255, 0.22);
+  z-index: 2;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rich-blue-electric);
+}
+
+.dropdown-view-all {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--electric-salmon);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.dropdown-view-all:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.dropdown-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.dropdown-link:hover, .dropdown-link.active {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.dropdown-link-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dropdown-link-icon .svg-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-residential { background: rgba(255, 107, 107, 0.15); color: var(--electric-salmon); }
+.icon-commercial { background: rgba(0, 212, 255, 0.15); color: var(--rich-blue-electric); }
+.icon-light-ind { background: rgba(236, 72, 153, 0.15); color: var(--vibrant-pink); }
+.icon-industrial { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.icon-churches { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+.icon-medical { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.icon-educational { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+
+.dropdown-link-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-link-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.2;
+}
+
+.dropdown-link:hover .dropdown-link-title {
+  color: var(--rich-blue-electric);
+}
+
+.dropdown-link-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.mobile-dropdown-item {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mobile-dropdown-trigger .nav-link {
+  border-bottom: none;
+  flex: 1;
+}
+
+.mobile-sub-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-white);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.mobile-sub-toggle.active {
+  transform: rotate(180deg);
+  background: var(--rich-blue-electric);
+  color: #0b1329;
+}
+
+.mobile-sub-menu {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 0 14px 16px;
+  border-left: 2px solid rgba(0, 212, 255, 0.3);
+  margin-left: 10px;
+  margin-top: 4px;
+}
+
+.mobile-sub-menu.open {
+  display: flex;
+}
+
+.mobile-sub-link {
+  font-size: 0.92rem;
+  color: var(--text-light);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.mobile-sub-link:hover, .mobile-sub-link.active {
+  color: var(--electric-salmon);
+  transform: translateX(4px);
 }
 
 .nav-actions {
@@ -1180,10 +1425,6 @@ button {
   animation: floatSlow 4s ease-in-out infinite;
 }
 
-.animate-float-delay {
-  animation: floatSlow 4.5s ease-in-out 1.2s infinite;
-}
-
 @keyframes floatSlow {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-7px); }
@@ -1305,7 +1546,6 @@ button {
 .delay-200 { transition-delay: 0.2s; }
 .delay-300 { transition-delay: 0.3s; }
 .delay-400 { transition-delay: 0.4s; }
-.delay-500 { transition-delay: 0.5s; }
 
 .trust-item:hover .trust-item-icon {
   transform: scale(1.12) rotate(6deg);

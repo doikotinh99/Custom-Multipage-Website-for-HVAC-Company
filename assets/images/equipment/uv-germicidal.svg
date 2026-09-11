@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 280" width="100%" height="100%">
+  <ellipse cx="160" cy="265" rx="100" ry="12" fill="#000" opacity="0.4"/>
+  <!-- Duct Mounting Base Flange -->
+  <rect x="60" y="125" width="200" height="30" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <!-- Electronic Ballast Box -->
+  <rect x="100" y="155" width="120" height="70" rx="8" fill="#0b1329" stroke="#a855f7" stroke-width="2"/>
+  <circle cx="130" cy="190" r="5" fill="#34d399"/>
+  <text x="165" y="194" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#a855f7" text-anchor="middle">UV-C 254nm</text>
+  <!-- Dual Glowing Quartz UV Tubes -->
+  <g filter="drop-shadow(0px 0px 8px #a855f7)">
+    <rect x="115" y="30" width="20" height="95" rx="8" fill="#e9d5ff" stroke="#a855f7" stroke-width="2"/>
+    <rect x="185" y="30" width="20" height="95" rx="8" fill="#e9d5ff" stroke="#a855f7" stroke-width="2"/>
+  </g>
+  <!-- Ultraviolet Germicidal Glow Aura -->
+  <circle cx="125" cy="75" r="28" fill="#a855f7" opacity="0.2"/>
+  <circle cx="195" cy="75" r="28" fill="#a855f7" opacity="0.2"/>
+  <!-- Shield germ-free badge -->
+  <path d="M160 85 L145 95 L145 110 Q160 125 160 125 Q160 125 175 110 L175 95 Z" fill="#00d4ff"/>
+</svg>

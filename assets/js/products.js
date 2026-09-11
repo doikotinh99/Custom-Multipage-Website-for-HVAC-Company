@@ -1,276 +1,220 @@
-const HVAC_PRODUCTS = [
-  {
-    id: 'furnace-pro-98',
-    name: 'Best Comfort ArcticPro™ 98 Gas Furnace',
-    category: 'furnace',
-    tag: 'Ultra Heating',
-    tagClass: 'tag-salmon',
-    efficiency: '98.7% AFUE',
-    primaryImage: 'assets/images/furnace-main.svg',
-    primaryCaption: 'Front Exterior View',
-    thumbnails: [
-      { img: 'assets/images/furnace-main.svg', label: 'Exterior', caption: 'Full Front Casing & Touch Display' },
-      { img: 'assets/images/furnace-internal.svg', label: 'Heat Core', caption: 'Stainless Steel Secondary Heat Exchanger' },
-      { img: 'assets/images/smart-thermostat.svg', label: 'Smart UI', caption: 'Communicating Wi-Fi Comfort Control' },
-      { img: 'assets/images/install-view.svg', label: 'Installed', caption: 'Basement Clean-Fit Chicago Installation' }
-    ],
-    placeholders: {
-      TextPlaceHolder1: 'Energy Star Most Efficient 2026 - Up to 98.7% AFUE Variable Speed Modulating',
-      TextPlaceHolder2: 'Chicago Winter Cold Climate Rated down to -30°F with Dual Fuel Backup Ready',
-      TextPlaceHolder3: 'Lifetime Heat Exchanger Limited Warranty + 10-Year Unit Replacement Guarantee',
-      TextPlaceHolder4: 'Smart Wi-Fi Communicating Diagnostic Hub with Auto Filter Alert System'
-    },
-    specs: {
-      airflow: 'Variable-Speed ECM Blower Motor',
-      soundLevel: 'Whisper-Quiet 52 dBA Operating Level',
-      stages: 'Fully Modulating Gas Valve (40% to 100% Capacity)',
-      dimensions: '34" H x 21" W x 29.5" D'
-    }
-  },
-  {
-    id: 'ac-breeze-24',
-    name: 'Best Comfort ChillMaster™ 24 Inverter AC',
-    category: 'ac',
-    tag: 'Max Cooling',
-    tagClass: 'tag-blue',
-    efficiency: '24.5 SEER2',
-    primaryImage: 'assets/images/ac-main.svg',
-    primaryCaption: 'Outdoor Condenser View',
-    thumbnails: [
-      { img: 'assets/images/ac-main.svg', label: 'Condenser', caption: 'Heavy-Gauge Louvered Steel Outdoor Unit' },
-      { img: 'assets/images/ac-compressor.svg', label: 'Compressor', caption: 'Inverter Twin-Rotary Variable Compressor' },
-      { img: 'assets/images/smart-thermostat.svg', label: 'Smart App', caption: 'Real-Time Chicago Peak-Energy Management' },
-      { img: 'assets/images/install-view.svg', label: 'Yard Mount', caption: 'Anti-Vibration Composite Base Pad Install' }
-    ],
-    placeholders: {
-      TextPlaceHolder1: 'Ultra-High Efficiency 24.5 SEER2 Inverter Cooling for Extreme Humid Summers',
-      TextPlaceHolder2: 'Twin-Rotary Variable Speed Compressor Operating as Low as 54 dBA',
-      TextPlaceHolder3: '10-Year Compressor & Functional Parts Warranty with On-Site Chicago Service',
-      TextPlaceHolder4: 'Integrated Dehumidification Sensor & Next-Gen Smart Home Voice Control'
-    },
-    specs: {
-      airflow: 'Swept-Wing High-Velocity Fan Blade',
-      soundLevel: '54 dBA Quiet Performance',
-      stages: 'Variable Speed Inverter Capacity 25% - 100%',
-      dimensions: '42" H x 35" W x 35" D'
-    }
-  },
-  {
-    id: 'heatpump-dual-22',
-    name: 'Best Comfort PolarFlex™ Inverter Heat Pump',
-    category: 'heatpump',
-    tag: 'Year-Round Hybrid',
-    tagClass: 'tag-pink',
-    efficiency: '22 SEER2 / 10 HSPF2',
-    primaryImage: 'assets/images/heatpump-main.svg',
-    primaryCaption: 'PolarFlex All-Season Heat Pump',
-    thumbnails: [
-      { img: 'assets/images/heatpump-main.svg', label: 'Overview', caption: 'Heavy-Duty Anti-Corrosion Galvanized Casing' },
-      { img: 'assets/images/ac-compressor.svg', label: 'Inverter', caption: 'Enhanced Vapor Injection Low-Temp Compressor' },
-      { img: 'assets/images/smart-thermostat.svg', label: 'Dual-Fuel', caption: 'Auto-Switching Hybrid Thermostat Interface' },
-      { img: 'assets/images/install-view.svg', label: 'Wall Bracket', caption: 'Elevated Snow-Clearance Bracket Mounting' }
-    ],
-    placeholders: {
-      TextPlaceHolder1: '100% Heating Capacity at -5°F, Operational down to -22°F for Midwest Freezes',
-      TextPlaceHolder2: 'State of Illinois Clean Energy & ComEd Heat Pump Rebate Qualified (Up to $2,000)',
-      TextPlaceHolder3: '12-Year Unit Replacement Warranty Included with Annual Comfort Membership',
-      TextPlaceHolder4: 'Smart Multi-Zone Temperature Sync with Humidity and IAQ Monitoring'
-    },
-    specs: {
-      airflow: 'Brushless DC High-Efficiency Motor',
-      soundLevel: '56 dBA Sound-Dampening Blanket',
-      stages: 'Full Range Inverter Modulating',
-      dimensions: '38" H x 36" W x 36" D'
-    }
-  },
-  {
-    id: 'boiler-titan-95',
-    name: 'Best Comfort HydroMax™ Condensing Boiler',
-    category: 'boiler',
-    tag: 'Hydronic Heat',
-    tagClass: 'tag-salmon',
-    efficiency: '95.5% AFUE',
-    primaryImage: 'assets/images/furnace-internal.svg',
-    primaryCaption: 'HydroMax Wall-Hung Boiler',
-    thumbnails: [
-      { img: 'assets/images/furnace-internal.svg', label: 'Unit Front', caption: 'Compact Space-Saving Wall-Hung Design' },
-      { img: 'assets/images/furnace-main.svg', label: 'Burner Tube', caption: 'Premix Low-NOx Stainless Steel Combustion' },
-      { img: 'assets/images/smart-thermostat.svg', label: 'Outdoor Sensor', caption: 'Outdoor Reset Thermostat Automation' },
-      { img: 'assets/images/install-view.svg', label: 'Radiant Loop', caption: 'Chicago Radiator & In-Floor PEX System' }
-    ],
-    placeholders: {
-      TextPlaceHolder1: '95.5% AFUE Wall-Hung Hydronic Condensing Boiler for Baseboard & Radiators',
-      TextPlaceHolder2: 'Turndown Ratio 10:1 to match exact heat load with minimal gas consumption',
-      TextPlaceHolder3: '15-Year Limited Heat Exchanger Warranty for Residential Installations',
-      TextPlaceHolder4: 'Direct Venting PVC/CPVC with Outdoor Temperature Reset Automation'
-    },
-    specs: {
-      airflow: 'Hydronic Circulator Pump Control',
-      soundLevel: 'Whisper-Quiet 48 dBA',
-      stages: '10:1 Modulating Premix Gas Burner',
-      dimensions: '29" H x 17.5" W x 14.5" D'
-    }
-  },
-  {
-    id: 'iaq-purifier-uv',
-    name: 'Best Comfort PureAir™ Whole-Home IAQ System',
-    category: 'iaq',
-    tag: 'Clean Air',
-    tagClass: 'tag-blue',
-    efficiency: 'MERV 16 + UV-C',
-    primaryImage: 'assets/images/smart-thermostat.svg',
-    primaryCaption: 'Whole-Home Air Purification Unit',
-    thumbnails: [
-      { img: 'assets/images/smart-thermostat.svg', label: 'Control Hub', caption: 'Real-Time Air Quality & PM2.5 Index Display' },
-      { img: 'assets/images/furnace-internal.svg', label: 'UV-C Lamp', caption: 'Hospital-Grade Germicidal UV-C Sterilization' },
-      { img: 'assets/images/furnace-main.svg', label: 'Filter Media', caption: 'Hospital-Grade Carbon Clean MERV 16 Cartridge' },
-      { img: 'assets/images/install-view.svg', label: 'Duct Mount', caption: 'Direct Return-Air Duct In-Line Integration' }
-    ],
-    placeholders: {
-      TextPlaceHolder1: 'Captures 99.9% of Airborne Viruses, Mold Spores, Pollen, and Pet Dander',
-      TextPlaceHolder2: 'Zero Ozone Emission Certified with Activated Carbon Odor Neutralization',
-      TextPlaceHolder3: '5-Year Complete System Electronics and Housing Limited Warranty',
-      TextPlaceHolder4: 'Automatic Filter Life Sensor with Smartphone Push Reminders'
-    },
-    specs: {
-      airflow: 'Low Pressure Drop Media Design',
-      soundLevel: 'Silent Operation In-Duct',
-      stages: '3-Stage Filtration: MERV16 + UV-C + Carbon',
-      dimensions: '21" H x 25" W x 7" D'
-    }
+(function checkLegacyInspect() {
+  const params = new URLSearchParams(window.location.search);
+  const legacyInspect = params.get('inspect') || params.get('id');
+  if (legacyInspect) {
+    window.location.href = 'product-detail.html?id=' + encodeURIComponent(legacyInspect);
   }
-];
+})();
+
+let currentCategory = 'all';
+let currentBrand = 'all';
+let currentSearch = '';
+let currentSort = 'default';
 
 document.addEventListener('DOMContentLoaded', () => {
-  initProductShowcase();
-  initCategoryFilters();
+  initCatalogToolbar();
+  renderCatalog();
+  initSizingCalculator();
   initQuoteModal();
 });
 
-function initProductShowcase() {
-  const primaryBox = document.querySelector('#primaryImageBox');
-  const primaryImg = document.querySelector('#primaryProductImg');
-  const viewStatusBadge = document.querySelector('#currentViewStatus');
-  const thumbnailBoxes = document.querySelectorAll('.thumbnail-box');
+function generateStarHtml(rating) {
+  const rounded = Math.round(rating);
+  let starsHtml = '';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= rounded) {
+      starsHtml += '<span class="star-filled">&#9733;</span>';
+    } else {
+      starsHtml += '<span class="star-empty">&#9733;</span>';
+    }
+  }
+  return starsHtml;
+}
 
-  if (!primaryBox || !thumbnailBoxes.length) return;
+function renderCatalog() {
+  const grid = document.querySelector('#productsCatalogGrid');
+  const countBadge = document.querySelector('#catalogCountBadge');
+  const emptyState = document.querySelector('#catalogEmptyState');
+  if (!grid) return;
 
-  thumbnailBoxes.forEach((thumb, index) => {
-    thumb.addEventListener('click', () => {
-      thumbnailBoxes.forEach(t => t.classList.remove('active'));
-      thumb.classList.add('active');
-
-      const targetImgSrc = thumb.getAttribute('data-img-src');
-      const viewLabel = thumb.getAttribute('data-view-label') || `Angle ${index + 1}`;
-      const captionText = thumb.getAttribute('data-caption') || '';
-
-      if (primaryImg) {
-        primaryImg.style.opacity = '0';
-        primaryImg.style.transform = 'scale(0.95)';
-
-        setTimeout(() => {
-          primaryImg.src = targetImgSrc;
-          primaryImg.alt = `${viewLabel} - ${captionText}`;
-          primaryImg.style.opacity = '1';
-          primaryImg.style.transform = 'scale(1)';
-        }, 180);
+  let filtered = HVAC_PRODUCTS.filter(product => {
+    
+    if (currentCategory !== 'all' && product.category !== currentCategory) {
+      return false;
+    }
+    
+    if (currentBrand !== 'all' && product.brand.toLowerCase() !== currentBrand.toLowerCase()) {
+      return false;
+    }
+    
+    if (currentSearch) {
+      const q = currentSearch.toLowerCase();
+      const matchName = (product.name || '').toLowerCase().includes(q);
+      const matchBrand = (product.brand || '').toLowerCase().includes(q);
+      const matchCat = (product.category || '').toLowerCase().includes(q);
+      const matchSpot = (product.spot_text || '').toLowerCase().includes(q);
+      const matchPh1 = (product.placeholders?.TextPlaceHolder1 || '').toLowerCase().includes(q);
+      const matchPh2 = (product.placeholders?.TextPlaceHolder2 || '').toLowerCase().includes(q);
+      if (!matchName && !matchBrand && !matchCat && !matchSpot && !matchPh1 && !matchPh2) {
+        return false;
       }
+    }
+    return true;
+  });
 
-      if (viewStatusBadge) {
-        viewStatusBadge.innerHTML = `<svg class="svg-icon"><use href="#icon-eye"></use></svg> View: ${viewLabel} &bull; <span style="color:#fff; font-weight:normal; margin-left:4px;">${captionText}</span>`;
+  if (currentSort === 'price-asc') {
+    filtered.sort((a, b) => (Number(a.price_from) || 0) - (Number(b.price_from) || 0));
+  } else if (currentSort === 'price-desc') {
+    filtered.sort((a, b) => (Number(b.price_from) || 0) - (Number(a.price_from) || 0));
+  } else if (currentSort === 'rating-desc') {
+    filtered.sort((a, b) => {
+      if (b.avgRating !== a.avgRating) return b.avgRating - a.avgRating;
+      return (b.reviewCount || 0) - (a.reviewCount || 0);
+    });
+  } else if (currentSort === 'name-asc') {
+    filtered.sort((a, b) => (a.brand + ' ' + a.name).localeCompare(b.brand + ' ' + b.name));
+  }
+
+  if (countBadge) {
+    countBadge.textContent = `Showing ${filtered.length} of ${HVAC_PRODUCTS.length} products`;
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    if (emptyState) emptyState.style.display = 'block';
+    return;
+  } else {
+    if (emptyState) emptyState.style.display = 'none';
+  }
+
+  grid.innerHTML = filtered.map(product => {
+    const priceText = product.variants && product.variants.length > 0
+      ? `From $${Number(product.price_from).toFixed(2)}`
+      : (product.price_from ? `$${Number(product.price_from).toFixed(2)}` : 'Request Quote');
+
+    const promoNotice = product.is_promo && product.promo_text
+      ? `<div style="background:rgba(255,0,127,0.12); border:1px solid rgba(255,0,127,0.3); border-radius:4px; padding:4px 8px; font-size:0.75rem; color:#ff6584; margin-bottom:10px; font-weight:700;">${product.promo_text}</div>`
+      : '';
+
+    const variantBadge = product.variants && product.variants.length > 0
+      ? `<div style="font-size:0.75rem; color:var(--rich-blue-electric); margin-bottom:8px; font-weight:600;">${product.variants.length} Sizes/Options Available</div>`
+      : '';
+
+    return `
+      <article class="card card-interactive product-listing-card" data-category="${product.category}" style="display:flex; flex-direction:column; overflow:hidden; padding:0; background:rgba(14,30,64,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:12px; transition:transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;">
+        <div class="product-card-thumb" style="background:#ffffff; padding:16px; text-align:center; position:relative; border-bottom:1px solid rgba(255,255,255,0.08); height:210px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+          <span class="card-tag ${product.tagClass}" style="position:absolute; top:12px; left:12px; z-index:2; box-shadow:0 2px 8px rgba(0,0,0,0.18); font-size:0.72rem; padding:4px 10px;">${product.tag}</span>
+          <a href="product-detail.html?id=${product.id}" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%;" aria-label="View ${product.name}">
+            <img src="${product.primaryImage}" alt="${product.name}" style="max-height:100%; max-width:100%; width:auto; height:auto; object-fit:contain; transition:transform 0.35s ease;" onerror="this.src='assets/images/ac-main.svg';" />
+          </a>
+        </div>
+
+        <div class="product-card-body" style="padding:20px; display:flex; flex-direction:column; flex-grow:1;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px;">
+            <span style="font-size:0.76rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--rich-blue-electric); font-weight:800;">${product.brand}</span>
+            <span style="font-size:0.95rem; font-weight:800; color:#fff;">${priceText}</span>
+          </div>
+
+          <h3 class="product-card-title" style="font-size:1.1rem; color:#fff; margin-bottom:8px; line-height:1.3;">
+            <a href="product-detail.html?id=${product.id}" style="color:#fff; text-decoration:none; transition:color 0.2s;">
+              ${product.name}
+            </a>
+          </h3>
+
+          <div class="star-rating-display" style="margin-bottom:10px;">
+            ${generateStarHtml(product.avgRating)}
+            <span class="rating-score-num">${product.avgRating}</span>
+            <span class="rating-count-text">(${product.reviewCount} ${product.reviewCount === 1 ? 'review' : 'reviews'})</span>
+          </div>
+
+          <p class="product-card-desc" style="font-size:0.85rem; color:var(--text-light); line-height:1.5; margin-bottom:12px; flex-grow:1;">
+            ${product.spot_text || product.placeholders.TextPlaceHolder1}
+          </p>
+
+          ${promoNotice}
+          ${variantBadge}
+
+          <div class="product-card-footer" style="margin-top:auto; display:flex; gap:8px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
+            <a href="product-detail.html?id=${product.id}" class="btn btn-salmon btn-sm" style="flex:1; text-align:center; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+              <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
+              Details &amp; Reviews &rarr;
+            </a>
+            <button type="button" class="btn btn-outline btn-sm btn-request-quote" data-product-name="${product.brand} - ${product.name}">
+              Quote
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  grid.querySelectorAll('.btn-request-quote').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const modal = document.querySelector('#quoteModal');
+      const modalProductName = document.querySelector('#modalProductName');
+      const modalProductField = document.querySelector('#modalProductField');
+      const pName = btn.getAttribute('data-product-name') || 'Selected HVAC Equipment';
+
+      if (modalProductName) modalProductName.textContent = pName;
+      if (modalProductField) modalProductField.value = pName;
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
       }
     });
   });
 }
 
-function loadProductIntoShowcase(productId) {
-  const product = HVAC_PRODUCTS.find(p => p.id === productId);
-  if (!product) return;
-
-  const titleEl = document.querySelector('#showcaseProductTitle');
-  const metaEl = document.querySelector('#showcaseProductMeta');
-  const effBadge = document.querySelector('#showcaseEfficiencyBadge');
-  const primaryImg = document.querySelector('#primaryProductImg');
-  const viewStatusBadge = document.querySelector('#currentViewStatus');
-
-  if (titleEl) titleEl.textContent = product.name;
-  if (metaEl) metaEl.innerHTML = `Category: <strong>${product.category.toUpperCase()}</strong> &bull; Chicago Tested Model: <strong>${product.id}</strong>`;
-  if (effBadge) effBadge.textContent = product.efficiency;
-
-  if (primaryImg) {
-    primaryImg.src = product.thumbnails[0].img;
-    primaryImg.alt = product.name;
-  }
-  if (viewStatusBadge) {
-    viewStatusBadge.innerHTML = `<svg class="svg-icon"><use href="#icon-eye"></use></svg> View: ${product.thumbnails[0].label} &bull; <span style="color:#fff; font-weight:normal; margin-left:4px;">${product.thumbnails[0].caption}</span>`;
-  }
-
-  const thumbContainer = document.querySelector('#showcaseThumbnailsRow');
-  if (thumbContainer) {
-    thumbContainer.innerHTML = '';
-    product.thumbnails.forEach((t, i) => {
-      const thumbBtn = document.createElement('button');
-      thumbBtn.className = `thumbnail-box ${i === 0 ? 'active' : ''}`;
-      thumbBtn.setAttribute('data-img-src', t.img);
-      thumbBtn.setAttribute('data-view-label', t.label);
-      thumbBtn.setAttribute('data-caption', t.caption);
-      thumbBtn.innerHTML = `
-        <img src="${t.img}" alt="${t.label}" />
-        <span class="thumbnail-caption">${t.label}</span>
-      `;
-      thumbContainer.appendChild(thumbBtn);
-    });
-
-    initProductShowcase();
-  }
-
-  const p1 = document.querySelector('#textPlaceHolder1');
-  const p2 = document.querySelector('#textPlaceHolder2');
-  const p3 = document.querySelector('#textPlaceHolder3');
-  const p4 = document.querySelector('#textPlaceHolder4');
-
-  if (p1) p1.textContent = product.placeholders.TextPlaceHolder1;
-  if (p2) p2.textContent = product.placeholders.TextPlaceHolder2;
-  if (p3) p3.textContent = product.placeholders.TextPlaceHolder3;
-  if (p4) p4.textContent = product.placeholders.TextPlaceHolder4;
-
-  const showcaseEl = document.querySelector('#productShowcaseSection');
-  if (showcaseEl) {
-    showcaseEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-function initCategoryFilters() {
+function initCatalogToolbar() {
+  const searchInput = document.querySelector('#catalogSearchInput');
+  const searchClear = document.querySelector('#catalogSearchClear');
+  const sortSelect = document.querySelector('#catalogSortSelect');
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const productCards = document.querySelectorAll('.product-card');
+  const brandPills = document.querySelectorAll('.brand-filter-pill');
 
-  if (!filterBtns.length || !productCards.length) return;
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value.trim();
+      if (searchClear) {
+        searchClear.style.display = currentSearch.length > 0 ? 'block' : 'none';
+      }
+      renderCatalog();
+    });
+  }
+
+  if (searchClear && searchInput) {
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      currentSearch = '';
+      searchClear.style.display = 'none';
+      renderCatalog();
+      searchInput.focus();
+    });
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      renderCatalog();
+    });
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
-      const filterValue = btn.getAttribute('data-filter');
-
-      productCards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category');
-        if (filterValue === 'all' || cardCategory === filterValue) {
-          card.style.display = 'flex';
-          card.style.opacity = '1';
-        } else {
-          card.style.display = 'none';
-          card.style.opacity = '0';
-        }
-      });
+      currentCategory = btn.getAttribute('data-filter') || 'all';
+      renderCatalog();
     });
   });
 
-  document.querySelectorAll('.btn-inspect-product').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const pId = btn.getAttribute('data-product-id');
-      if (pId) loadProductIntoShowcase(pId);
+  brandPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      brandPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentBrand = pill.getAttribute('data-brand') || 'all';
+      renderCatalog();
     });
   });
 }
@@ -282,18 +226,6 @@ function initQuoteModal() {
   const modalProductField = document.querySelector('#modalProductField');
 
   if (!modal) return;
-
-  document.querySelectorAll('.btn-request-quote').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const pName = btn.getAttribute('data-product-name') || 'Selected HVAC Unit';
-      if (modalProductName) modalProductName.textContent = pName;
-      if (modalProductField) modalProductField.value = pName;
-
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  });
 
   function closeModal() {
     modal.classList.remove('active');
@@ -337,4 +269,65 @@ function initQuoteModal() {
       }, 700);
     });
   }
+}
+
+function initSizingCalculator() {
+  const slider = document.querySelector('#homeSizeSlider');
+  const sqftDisplay = document.querySelector('#calcSquareFootageDisplay');
+  const coolingEl = document.querySelector('#calcCoolingTonnage');
+  const heatingEl = document.querySelector('#calcHeatingBTU');
+  const savingsEl = document.querySelector('#calcAnnualSavings');
+  const rebateEl = document.querySelector('#calcRebateAmount');
+
+  if (!slider) return;
+
+  function updateEstimates(val) {
+    if (sqftDisplay) sqftDisplay.textContent = Number(val).toLocaleString() + ' sq ft';
+
+    let cooling = '2.0 Tons';
+    let heating = '45,000 BTU';
+    let savings = '$380 / yr';
+    let rebate = '$1,000+';
+
+    if (val <= 1400) {
+      cooling = '2.0 Tons';
+      heating = '45,000 BTU';
+      savings = '$380 / yr';
+      rebate = '$1,000+';
+    } else if (val <= 2000) {
+      cooling = '2.5 Tons';
+      heating = '60,000 BTU';
+      savings = '$490 / yr';
+      rebate = '$1,200+';
+    } else if (val <= 2600) {
+      cooling = '3.0 Tons';
+      heating = '70,000 BTU';
+      savings = '$620 / yr';
+      rebate = '$1,400+';
+    } else if (val <= 3300) {
+      cooling = '3.5 Tons';
+      heating = '85,000 BTU';
+      savings = '$760 / yr';
+      rebate = '$1,800+';
+    } else if (val <= 4000) {
+      cooling = '4.0 Tons';
+      heating = '100,000 BTU';
+      savings = '$920 / yr';
+      rebate = '$2,000+';
+    } else {
+      cooling = '5.0 Tons (Dual Zone)';
+      heating = '120,000 BTU';
+      savings = '$1,180 / yr';
+      rebate = '$2,500+';
+    }
+
+    if (coolingEl) coolingEl.textContent = cooling;
+    if (heatingEl) heatingEl.textContent = heating;
+    if (savingsEl) savingsEl.textContent = savings;
+    if (rebateEl) rebateEl.textContent = rebate;
+  }
+
+  slider.addEventListener('input', (e) => {
+    updateEstimates(e.target.value);
+  });
 }

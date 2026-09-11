@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact &amp; Schedule Service | Best Comfort Heating &amp; Cooling</title>
-  <meta name="description" content="Schedule furnace repair, AC maintenance, or emergency HVAC dispatch in Joliet, Naperville, and Greater Chicago. Available 24/7 at (815) 556-0660.">
+  <title>Indoor Air Quality &amp; Whole-Home Purification | Best Comfort Chicago</title>
+  <meta name="description" content="Eliminate 99.9% of viruses, allergens, and dust with hospital-grade MERV 16 filtration, UV-C purifiers, steam humidifiers, and ERV ventilation in Greater Chicago.">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/pages.css">
   <script src="assets/js/icons.js"></script>
@@ -179,14 +179,14 @@
       <div class="top-bar-info">
         <div class="top-bar-item">
           <span class="emergency-pulse"></span>
-          <strong>24/7 Priority Emergency Service</strong>
+          <strong>Certified Indoor Air Quality Specialists &bull; 24/7 Hotline</strong>
         </div>
         <div class="top-bar-item">
-          <span><svg class="svg-icon" style="color:var(--rich-blue-electric);"><use href="#icon-map-pin"></use></svg> 1504 Essington Rd, Joliet, IL 60435</span>
+          <span><svg class="svg-icon" style="color:var(--rich-blue-electric);"><use href="#icon-map-pin"></use></svg> Joliet, Plainfield, Naperville &amp; Chicagoland</span>
         </div>
       </div>
       <div class="top-bar-item">
-        <span>Immediate Dispatch Call:</span>
+        <span>Questions about allergens?</span>
         <a href="tel:8155560660" class="top-phone-link">
           <svg class="svg-icon"><use href="#icon-phone"></use></svg> (815) 556-0660
         </a>
@@ -276,11 +276,11 @@
         </div>
 
         <a href="products.html" class="nav-link" id="navProducts">Products</a>
-        <a href="air-quality.html" class="nav-link" id="navAirQuality">Air Quality</a>
+        <a href="air-quality.html" class="nav-link active" id="navAirQuality">Air Quality</a>
       </nav>
 
       <div class="nav-actions">
-        <a href="contact.html" class="btn btn-salmon btn-sm active" id="navBookOnline">Book Online</a>
+        <a href="contact.html" class="btn btn-salmon btn-sm" id="navBookOnline">Book Online</a>
         <button class="mobile-toggle" aria-label="Toggle Menu">
           <span></span>
           <span></span>
@@ -321,8 +321,8 @@
       </div>
 
       <a href="products.html" class="nav-link"><svg class="svg-icon"><use href="#icon-package"></use></svg> Products</a>
-      <a href="air-quality.html" class="nav-link"><svg class="svg-icon"><use href="#icon-wind"></use></svg> Air Quality</a>
-      <a href="contact.html" class="nav-link active"><svg class="svg-icon"><use href="#icon-calendar"></use></svg> Book Online / Contact</a>
+      <a href="air-quality.html" class="nav-link active"><svg class="svg-icon"><use href="#icon-wind"></use></svg> Air Quality</a>
+      <a href="contact.html" class="nav-link"><svg class="svg-icon"><use href="#icon-calendar"></use></svg> Book Online / Contact</a>
     </div>
     <div style="margin-top:auto;">
       <a href="tel:8155560660" class="btn btn-pink" style="width:100%; text-align:center;">
@@ -333,256 +333,145 @@
 
   <section class="page-hero">
     <div class="container page-hero-inner">
-      <div class="badge-pill badge-salmon">Online Booking &amp; Dispatch</div>
-      <h1>Schedule Your HVAC Appointment or Emergency Dispatch</h1>
+      <div class="badge-pill badge-salmon">Clean, Pure, Healthy Indoor Air</div>
+      <h1>Whole-Home Indoor Air Quality (IAQ) Solutions</h1>
       <p>
-        Fill out our quick service booking form below for standard appointments, or call our 24/7 Chicago emergency dispatch desk directly.
+        The EPA ranks indoor air pollution among the top environmental health risks. In Chicago, sealed winter homes trap viruses, wildfire smoke, pet dander, and dry air. We restore pure hospital-grade air to every room.
       </p>
+      <div style="margin-top:24px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="#iaqSolutions" class="btn btn-salmon">Explore IAQ Systems</a>
+        <a href="#auditOffer" class="btn btn-outline">$49 Air Quality Audit Special</a>
+      </div>
     </div>
   </section>
 
-  <main class="section section-navy">
+  <main class="section section-navy" id="iaqSolutions">
     <div class="container">
-      <div class="contact-layout">
-        <div class="contact-card-box">
-          <div style="margin-bottom:24px;">
-            <span class="badge-pill badge-pink">Direct Technician Booking</span>
-            <h2 style="font-size:1.85rem; color:#fff; font-weight:800; margin-top:8px;">Schedule HVAC Service</h2>
-            <p style="color:var(--text-muted); font-size:0.95rem;">
-              We provide fixed 2-hour arrival windows with advance GPS text alerts.
-            </p>
-          </div>
-
-          <form id="contactBookingForm">
-            <div class="grid-2" style="gap:16px;">
-              <div class="form-group">
-                <label for="bookFirstName">First Name *</label>
-                <input type="text" id="bookFirstName" class="form-control" placeholder="Jane" required>
-              </div>
-              <div class="form-group">
-                <label for="bookLastName">Last Name *</label>
-                <input type="text" id="bookLastName" class="form-control" placeholder="Doe" required>
-              </div>
-            </div>
-
-            <div class="grid-2" style="gap:16px;">
-              <div class="form-group">
-                <label for="bookPhone">Phone Number * (For On-My-Way Text)</label>
-                <input type="tel" id="bookPhone" class="form-control" placeholder="(815) 555-0188" required>
-              </div>
-              <div class="form-group">
-                <label for="bookEmail">Email Address *</label>
-                <input type="email" id="bookEmail" class="form-control" placeholder="jane.doe@example.com" required>
-              </div>
-            </div>
-
-            <div class="grid-2" style="gap:16px;">
-              <div class="form-group">
-                <label for="bookServiceType">Service Requested *</label>
-                <select id="bookServiceType" class="form-control" required>
-                  <option value="emergency-furnace">Emergency: No Heat / Frozen Pipes</option>
-                  <option value="emergency-ac">Emergency: AC Breakdown / Water Leak</option>
-                  <option value="tuneup-heat">Annual Furnace 28-Point Precision Tune-Up</option>
-                  <option value="tuneup-ac">Spring AC 21-Point Optimization</option>
-                  <option value="estimate-new">Free Estimate on New Heating &amp; AC System</option>
-                  <option value="boiler">Boiler &amp; Radiant Heating Repair</option>
-                  <option value="iaq">Whole-Home Humidifier &amp; UV Filter Install</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="bookZip">City or Chicago / Will County Zip *</label>
-                <input type="text" id="bookZip" class="form-control" placeholder="e.g. Joliet, 60435" required>
-              </div>
-            </div>
-
-            <div class="grid-2" style="gap:16px;">
-              <div class="form-group">
-                <label for="bookPreferredDate">Preferred Date</label>
-                <input type="date" id="bookPreferredDate" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="bookTimeWindow">Preferred Time Window</label>
-                <select id="bookTimeWindow" class="form-control">
-                  <option value="morning">Morning (8:00 AM - 12:00 PM)</option>
-                  <option value="afternoon">Afternoon (12:00 PM - 4:00 PM)</option>
-                  <option value="evening">Late Afternoon (4:00 PM - 7:00 PM)</option>
-                  <option value="asap">ASAP / Urgent Emergency Dispatch</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="bookNotes">Describe System Symptoms (Noise, Error Codes, Age of Unit)</label>
-              <textarea id="bookNotes" rows="4" class="form-control" placeholder="e.g. Furnace clicking 3 times then shutting off, blowing cold air through vents..."></textarea>
-            </div>
-
-            <div style="background:rgba(255,101,80,0.1); border:1px solid rgba(255,101,80,0.3); border-radius:var(--radius-sm); padding:12px 16px; margin-bottom:20px;">
-              <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.92rem; color:var(--text-light); margin:0;">
-                <input type="checkbox" id="urgentCheck" style="width:18px; height:18px; accent-color:var(--vibrant-pink);">
-                <span><strong>Check if Emergency:</strong> Temperature inside home is below 55°F or elderly/infants present.</span>
-              </label>
-            </div>
-
-            <button type="submit" class="btn btn-salmon btn-lg" style="width:100%;" id="btnConfirmBooking">
-              Confirm &amp; Schedule Appointment &rarr;
-            </button>
-            <div class="form-alert" id="bookingSuccessAlert"></div>
-          </form>
-        </div>
-
-        <div class="contact-info-panel">
-          <div class="info-card pulse-radar" style="border-color:var(--vibrant-pink); background:radial-gradient(circle at top right, rgba(255,42,133,0.15), var(--rich-blue-card));">
-            <div class="info-card-header">
-              <div class="info-card-icon" style="color:var(--vibrant-pink);">
-                <svg class="svg-icon"><use href="#icon-alert"></use></svg>
-              </div>
-              <div>
-                <span style="font-size:0.8rem; text-transform:uppercase; font-weight:700; color:var(--vibrant-pink); letter-spacing:0.05em;">24/7 Emergency Line</span>
-                <h4>Need Immediate Heat or AC?</h4>
-              </div>
-            </div>
-            <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:14px;">
-              Our live Chicago dispatchers answer every call 24 hours a day, 365 days a year—including holidays and weekends.
-            </p>
-            <a href="tel:8155560660" class="btn btn-pink" style="width:100%; text-align:center;">
-              <svg class="svg-icon"><use href="#icon-phone"></use></svg> Call (815) 556-0660 Now
-            </a>
-          </div>
-
-          <div class="info-card">
-            <div class="info-card-header">
-              <div class="info-card-icon" style="color:var(--electric-salmon);">
-                <svg class="svg-icon"><use href="#icon-map-pin"></use></svg>
-              </div>
-              <div>
-                <span style="font-size:0.8rem; text-transform:uppercase; font-weight:700; color:var(--electric-salmon); letter-spacing:0.05em;">Service Hub</span>
-                <h4>Joliet &amp; Chicagoland Offices</h4>
-              </div>
-            </div>
-            <p style="color:var(--text-light); font-size:0.92rem; line-height:1.6;">
-              <strong>Best Comfort Heating &amp; Cooling</strong><br>
-              1504 Essington Rd<br>
-              Joliet, IL 60435<br>
-              <span style="color:var(--rich-blue-electric);">Email: service@bestcomforthvac.com</span>
-            </p>
-          </div>
-
-          <div class="info-card">
-            <div class="info-card-header">
-              <div class="info-card-icon" style="color:var(--rich-blue-electric);">
-                <svg class="svg-icon"><use href="#icon-clock"></use></svg>
-              </div>
-              <div>
-                <span style="font-size:0.8rem; text-transform:uppercase; font-weight:700; color:var(--rich-blue-electric); letter-spacing:0.05em;">Operating Schedule</span>
-                <h4>Working Hours</h4>
-              </div>
-            </div>
-            <div style="font-size:0.92rem; color:var(--text-light); line-height:1.7;">
-              <div style="display:flex; justify-content:space-between;">
-                <span>Monday - Friday:</span>
-                <strong>7:00 AM - 8:00 PM</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between;">
-                <span>Saturday:</span>
-                <strong>8:00 AM - 6:00 PM</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; color:var(--vibrant-pink); font-weight:bold;">
-                <span>Sunday &amp; After Hours:</span>
-                <span>24/7 On-Call Dispatch</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <h4 style="margin-bottom:8px; font-size:1rem; color:#fff;">Service Coverage Areas</h4>
-            <div class="chicago-areas-cloud">
-              <span class="area-badge">Joliet</span>
-              <span class="area-badge">Naperville</span>
-              <span class="area-badge">Plainfield</span>
-              <span class="area-badge">Shorewood</span>
-              <span class="area-badge">Bolingbrook</span>
-              <span class="area-badge">Aurora</span>
-              <span class="area-badge">Crest Hill</span>
-              <span class="area-badge">Orland Park</span>
-            </div>
-          </div>
-
-        </div>
+      
+      <div class="section-header">
+        <div class="badge-pill badge-blue">Complete Defense</div>
+        <h2 class="section-title">The Four Pillars of Chicagoland Clean Air</h2>
+        <p class="section-subtitle">
+          Standard 1-inch furnace filters only protect the blower motor. Our whole-home solutions sanitize every cubic foot of air your family breathes.
+        </p>
       </div>
 
-      <div style="margin-top:70px;">
-        <div class="section-header">
-          <div class="badge-pill badge-salmon">Emergency Guidelines</div>
-          <h2 class="section-title">What to Do While Waiting for Your Technician</h2>
-          <p class="section-subtitle">
-            Crucial safety steps to safeguard your plumbing and property until our truck pulls into your driveway.
+      <div class="iaq-pillars-grid">
+        <div class="iaq-card">
+          <div style="width:44px; height:44px; border-radius:10px; background:rgba(0, 212, 255, 0.15); color:var(--rich-blue-electric); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+            <svg class="svg-icon"><use href="#icon-sparkles"></use></svg>
+          </div>
+          <span class="iaq-badge-pollutant">Viruses &bull; Mold &bull; Dust</span>
+          <h3 style="font-size:1.3rem; color:#fff; font-weight:800; margin-bottom:10px;">MERV 16 Medical Filtration</h3>
+          <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:18px;">
+            Captures over 99% of airborne particles down to 0.3 microns, including COVID-19, influenza, wildfire smoke particles, and pollen.
           </p>
+          <ul class="bullet-list" style="font-size:0.85rem;">
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Up to 500x more effective than basic filters</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Annual cartridge change (lasts 12 months)</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Low static resistance on blower motor</li>
+          </ul>
         </div>
 
-        <div class="accordion-wrapper" style="max-width:860px; margin:0 auto;" data-single-open="true">
-          <div class="accordion-item active">
-            <button class="accordion-header">
-              <div class="accordion-header-title">
-                <span class="icon-tag"><svg class="svg-icon"><use href="#icon-droplet"></use></svg></span>
-                <span>Preventing Frozen &amp; Burst Water Pipes During a Furnace Outage</span>
-              </div>
-              <span class="accordion-icon">&#9662;</span>
-            </button>
-            <div class="accordion-content">
-              <div class="accordion-inner">
-                Open under-sink cabinet doors in your kitchen and bathrooms to let warm room air circulate around water supply lines. Turn faucets to a slight, steady trickle—moving water takes far longer to freeze, preventing catastrophic pipe ruptures.
-              </div>
-            </div>
+        <div class="iaq-card">
+          <div style="width:44px; height:44px; border-radius:10px; background:rgba(236, 72, 153, 0.15); color:var(--vibrant-pink); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+            <svg class="svg-icon"><use href="#icon-bolt"></use></svg>
           </div>
+          <span class="iaq-badge-pollutant" style="background:rgba(236, 72, 153, 0.15); color:#f472b6; border-color:rgba(236, 72, 153, 0.3);">Bacteria &bull; VOCs &bull; Odors</span>
+          <h3 style="font-size:1.3rem; color:#fff; font-weight:800; margin-bottom:10px;">In-Duct UV-C Germicidal Lamps</h3>
+          <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:18px;">
+            Direct hospital-grade UV-C irradiation destroys the DNA of bacteria, viruses, and microbial slime growing on your central AC evaporator coil.
+          </p>
+          <ul class="bullet-list" style="font-size:0.85rem;">
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Neutralizes biological pathogens instantly</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Keeps AC coil pristine and efficient</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Zero ozone emission certified</li>
+          </ul>
+        </div>
 
-          <div class="accordion-item">
-            <button class="accordion-header">
-              <div class="accordion-header-title">
-                <span class="icon-tag"><svg class="svg-icon"><use href="#icon-alert"></use></svg></span>
-                <span>Smelling Natural Gas (Rotten Egg / Sulfur Odor)?</span>
-              </div>
-              <span class="accordion-icon">&#9662;</span>
-            </button>
-            <div class="accordion-content">
-              <div class="accordion-inner">
-                If you detect a distinct rotten egg odor, do NOT flick light switches, turn on appliances, or use your phone inside the home. Immediately evacuate all household members and pets outside, then call Nicor Gas (888-642-6748) or 911 from a safe distance before calling our dispatch desk.
-              </div>
-            </div>
+        <div class="iaq-card">
+          <div style="width:44px; height:44px; border-radius:10px; background:rgba(255, 107, 107, 0.15); color:var(--electric-salmon); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+            <svg class="svg-icon"><use href="#icon-droplet"></use></svg>
           </div>
+          <span class="iaq-badge-pollutant" style="background:rgba(59, 130, 246, 0.15); color:#60a5fa; border-color:rgba(59, 130, 246, 0.3);">Dry Sinuses &bull; Hardwood Cracking</span>
+          <h3 style="font-size:1.3rem; color:#fff; font-weight:800; margin-bottom:10px;">Whole-Home Steam Humidification</h3>
+          <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:18px;">
+            Winter heating drops indoor humidity to Sahara Desert levels (&lt;15%). Our automated steam humidifiers maintain the healthy 35-45% sweet spot.
+          </p>
+          <ul class="bullet-list" style="font-size:0.85rem;">
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Protects hardwood floors &amp; acoustic instruments</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Relieves nosebleeds, itchy skin &amp; dry throat</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Makes 68°F feel like 72°F to cut heating bills</li>
+          </ul>
+        </div>
 
-          <div class="accordion-item">
-            <button class="accordion-header">
-              <div class="accordion-header-title">
-                <span class="icon-tag"><svg class="svg-icon"><use href="#icon-plug"></use></svg></span>
-                <span>Checking Thermostat Batteries &amp; Furnace Red Power Switch</span>
-              </div>
-              <span class="accordion-icon">&#9662;</span>
-            </button>
-            <div class="accordion-content">
-              <div class="accordion-inner">
-                Nearly 15% of winter no-heat calls are caused by dead AA batteries inside older wall thermostats, or someone accidentally flipping the red emergency furnace power toggle switch located at the top of the basement stairs. Check both switches first!
-              </div>
-            </div>
+        <div class="iaq-card">
+          <div style="width:44px; height:44px; border-radius:10px; background:rgba(16, 185, 129, 0.15); color:#34d399; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+            <svg class="svg-icon"><use href="#icon-wind"></use></svg>
           </div>
+          <span class="iaq-badge-pollutant" style="background:rgba(16, 185, 129, 0.15); color:#34d399; border-color:rgba(16, 185, 129, 0.3);">Stale Air &bull; Carbon Dioxide &bull; Radon</span>
+          <h3 style="font-size:1.3rem; color:#fff; font-weight:800; margin-bottom:10px;">Energy Recovery Ventilators (ERV)</h3>
+          <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:18px;">
+            Continuously exhausts stale, CO2-laden indoor air while drawing in filtered fresh outdoor air, transferring thermal energy to minimize heating loss.
+          </p>
+          <ul class="bullet-list" style="font-size:0.85rem;">
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Recovers up to 80% of conditioned temperature</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Reduces heavy basement radon &amp; cooking fumes</li>
+            <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Essential for modern tight energy-code homes</li>
+          </ul>
         </div>
       </div>
+
+      <section class="calc-box" id="auditOffer" style="margin-top: 80px; position: relative; overflow: hidden;">
+        <div class="grid-2" style="align-items: center; gap: 36px;">
+          <div>
+            <span class="badge-pill badge-salmon">Special Diagnostic Offer</span>
+            <h2 style="font-size: 2rem; color: #fff; font-weight: 900; margin: 10px 0 14px 0;">
+              $49 Whole-Home Air Quality &amp; Duct Assessment
+            </h2>
+            <p style="color: var(--text-light); line-height: 1.6; margin-bottom: 20px;">
+              Our NATE certified air quality technician visits your home with professional digital particle meters. We measure PM2.5, VOC levels, relative humidity, and duct static pressure, delivering a comprehensive written health report.
+            </p>
+            <ul class="bullet-list bullet-salmon" style="margin-bottom: 24px;">
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Laser PM2.5 &amp; PM10 allergen particle count</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> Carbon Monoxide (CO) &amp; gas leak detector scan</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> AC evaporator coil &amp; duct mold inspection</li>
+              <li class="bullet-item"><span class="bullet-icon"><svg class="svg-icon"><use href="#icon-check-circle"></use></svg></span> $49 fee 100% credited toward any air quality system</li>
+            </ul>
+          </div>
+
+          <div style="background: rgba(8, 15, 33, 0.85); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: var(--radius-md); padding: 28px;">
+            <h3 style="font-size: 1.25rem; color: #fff; font-weight: 800; margin-bottom: 16px;">Schedule Your $49 Air Audit</h3>
+            <form id="iaqAuditForm">
+              <div class="form-group">
+                <label for="iaqName">Full Name</label>
+                <input type="text" id="iaqName" class="form-control" placeholder="Jane Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="iaqPhone">Phone Number</label>
+                <input type="tel" id="iaqPhone" class="form-control" placeholder="(815) 555-0182" required>
+              </div>
+              <div class="form-group">
+                <label for="iaqSymptoms">Primary Concern</label>
+                <select id="iaqSymptoms" class="form-control">
+                  <option value="allergies" selected>Severe Allergies / Asthma</option>
+                  <option value="dryness">Winter Dry Throat &amp; Nosebleeds</option>
+                  <option value="odors">Musty Basements / Pet Odors</option>
+                  <option value="smoke">Wildfire Smoke &amp; Dust Infiltration</option>
+                  <option value="general">Routine Annual Clean Air Checkup</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-salmon" style="width: 100%; margin-top: 10px;">
+                Claim $49 Audit Special &rarr;
+              </button>
+              <div class="form-alert" id="iaqFormAlert"></div>
+            </form>
+          </div>
+        </div>
+      </section>
 
     </div>
   </main>
-
-  <button type="button" class="back-to-top" id="backToTopBtn" aria-label="Back to Top">
-    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-  </button>
-
-  <a href="tel:8155560660" class="floating-hotline">
-    <div class="floating-hotline-icon">
-      <svg class="svg-icon"><use href="#icon-phone"></use></svg>
-    </div>
-    <div>
-      <span class="hotline-label" style="font-size:0.75rem; text-transform:uppercase; display:block; opacity:0.9;">24/7 Urgent Dispatch</span>
-      <span>(815) 556-0660</span>
-    </div>
-  </a>
 
   <footer class="site-footer">
     <div class="container">
@@ -598,45 +487,37 @@
             </div>
           </div>
           <p>
-            Authentic, licensed HVAC specialists serving Joliet, Will County, and the greater Chicago metro. 24/7 heating and air conditioning repair, installations, boilers, and indoor air purification.
+            Chicagoland's trusted indoor air purification and HVAC climate specialists. Serving Joliet, Naperville, and Will County 24/7.
           </p>
         </div>
 
         <div class="footer-col">
-          <h3>Services</h3>
+          <h3>IAQ Solutions</h3>
           <div class="footer-links">
-            <a href="services.html#heating"><svg class="svg-icon"><use href="#icon-fire"></use></svg> Furnace Repairs</a>
-            <a href="services.html#cooling"><svg class="svg-icon"><use href="#icon-snowflake"></use></svg> AC Maintenance</a>
-            <a href="services.html#heating"><svg class="svg-icon"><use href="#icon-droplet"></use></svg> Hydronic Boilers</a>
-            <a href="services.html#cooling"><svg class="svg-icon"><use href="#icon-bolt"></use></svg> Heat Pump Inverters</a>
-            <a href="services.html#iaq"><svg class="svg-icon"><use href="#icon-sparkles"></use></svg> Air Purifiers &amp; Filters</a>
+            <a href="air-quality.html">Whole-Home MERV 16</a>
+            <a href="air-quality.html">In-Duct UV-C Purifiers</a>
+            <a href="air-quality.html">Steam Humidifiers</a>
+            <a href="air-quality.html">Energy Recovery ERV</a>
           </div>
         </div>
 
         <div class="footer-col">
           <h3>Quick Links</h3>
           <div class="footer-links">
-            <a href="index.html"><svg class="svg-icon"><use href="#icon-home"></use></svg> Home</a>
-            <a href="products.html"><svg class="svg-icon"><use href="#icon-package"></use></svg> Products &amp; Specs</a>
-            <a href="about.html"><svg class="svg-icon"><use href="#icon-star"></use></svg> Why Chicago Chooses Us</a>
-            <a href="contact.html"><svg class="svg-icon"><use href="#icon-calendar"></use></svg> Book Service</a>
-            <a href="tel:8155560660"><svg class="svg-icon"><use href="#icon-phone"></use></svg> 24/7 Hotline</a>
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="products.html">Products</a>
+            <a href="financing.html">Financing</a>
+            <a href="contact.html">Contact Us</a>
           </div>
         </div>
 
         <div class="footer-col">
-          <h3>Contact Info</h3>
-          <div class="footer-contact-item">
-            <span><svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-map-pin"></use></svg></span>
-            <div>
-              <strong>Headquarters:</strong><br>
-              1504 Essington Rd, Joliet, IL 60435
-            </div>
-          </div>
+          <h3>Clean Air Hotline</h3>
           <div class="footer-contact-item">
             <span><svg class="svg-icon" style="color:var(--electric-salmon);"><use href="#icon-phone"></use></svg></span>
             <div>
-              <strong>24/7 Emergency Phone:</strong><br>
+              <strong>Dispatch Desk:</strong><br>
               <a href="tel:8155560660" style="color:var(--electric-salmon); font-weight:700;">(815) 556-0660</a>
             </div>
           </div>
@@ -644,8 +525,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2026 Best Comfort Heating &amp; Cooling. All rights reserved. Hand-built Vanilla HTML, CSS &amp; JS.</p>
-        <p style="color:var(--electric-salmon);">1504 Essington Rd, Joliet, IL 60435 • 24/7 Emergency Dispatch</p>
+        <p>&copy; 2026 Best Comfort Heating &amp; Cooling. Hand-built Vanilla HTML, CSS &amp; JS.</p>
       </div>
     </div>
   </footer>
@@ -653,30 +533,30 @@
   <script src="assets/js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.querySelector('#contactBookingForm');
-      if (!form) return;
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const alertBox = document.querySelector('#bookingSuccessAlert');
-        const submitBtn = document.querySelector('#btnConfirmBooking');
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Transmitting to Chicago Dispatch...';
-        }
-        setTimeout(() => {
-          if (alertBox) {
-            alertBox.className = 'form-alert success';
-            alertBox.innerHTML = '<svg class="svg-icon" style="color:#34d399; margin-right:6px;"><use href="#icon-check-circle"></use></svg> <strong>Dispatch Confirmed!</strong> Your service ticket has been routed to our Will County / Chicago truck coordinator. A confirmation text has been dispatched to your mobile number.';
+      const form = document.querySelector('#iaqAuditForm');
+      const alertBox = document.querySelector('#iaqFormAlert');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = form.querySelector('button[type="submit"]');
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = 'Booking $49 Audit...';
           }
-          form.reset();
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Confirm & Schedule Appointment →';
-          }
-        }, 800);
-      });
+          setTimeout(() => {
+            if (alertBox) {
+              alertBox.className = 'form-alert success';
+              alertBox.innerHTML = '<svg class="svg-icon" style="color:#34d399; margin-right:6px;"><use href="#icon-check-circle"></use></svg> <strong>Special Reserved!</strong> We will call you within 15 minutes to confirm your $49 Air Quality Audit appointment.';
+            }
+            form.reset();
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = 'Claim $49 Audit Special →';
+            }
+          }, 700);
+        });
+      }
     });
-
-</script>
+  </script>
 </body>
 </html>

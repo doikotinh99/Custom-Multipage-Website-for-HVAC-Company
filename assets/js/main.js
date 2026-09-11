@@ -50,6 +50,16 @@ function initMobileNav() {
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
   if (backdrop) backdrop.addEventListener('click', closeDrawer);
 
+  const subToggle = drawer.querySelector('.mobile-sub-toggle');
+  const subMenu = drawer.querySelector('.mobile-sub-menu');
+  if (subToggle && subMenu) {
+    subToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      subToggle.classList.toggle('active');
+      subMenu.classList.toggle('open');
+    });
+  }
+
   const drawerLinks = drawer.querySelectorAll('a');
   drawerLinks.forEach(link => {
     link.addEventListener('click', closeDrawer);
@@ -153,7 +163,7 @@ function highlightActiveNav() {
   const currentPath = window.location.pathname;
   const pageName = currentPath.substring(currentPath.lastIndexOf('/') + 1) || 'index.html';
 
-  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('.nav-link, .dropdown-link, .mobile-sub-link');
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
     if (href === pageName || (pageName === '' && href === 'index.html')) {
@@ -162,6 +172,18 @@ function highlightActiveNav() {
       link.classList.remove('active');
     }
   });
+
+  if (pageName.startsWith('services-') || pageName === 'services.html') {
+    const servicesParent = document.querySelector('#navServices');
+    if (servicesParent) servicesParent.classList.add('active');
+
+    const subMenu = document.querySelector('.mobile-sub-menu');
+    const subToggle = document.querySelector('.mobile-sub-toggle');
+    if (subMenu && subToggle) {
+      subMenu.classList.add('open');
+      subToggle.classList.add('active');
+    }
+  }
 }
 
 function initQuickEstimateForm() {
@@ -333,4 +355,3 @@ function initStickyHeader() {
   window.addEventListener('scroll', updateSticky, { passive: true });
   updateSticky();
 }
-
