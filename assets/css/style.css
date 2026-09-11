@@ -920,7 +920,7 @@ button {
 
 .back-to-top {
   position: fixed;
-  bottom: 84px;
+  bottom: 104px;
   right: 24px;
   width: 44px;
   height: 44px;
@@ -932,10 +932,10 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 890;
+  z-index: 950;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(14px);
+  transform: translateY(8px) scale(0.92);
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -952,18 +952,18 @@ button {
   background: linear-gradient(135deg, var(--electric-salmon), var(--vibrant-pink));
   border-color: transparent;
   color: #ffffff;
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 101, 80, 0.55);
 }
 
 .back-to-top.visible {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .back-to-top.visible:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.05);
 }
 
 .back-to-top svg {
@@ -1031,7 +1031,7 @@ button {
     display: none;
   }
   .back-to-top {
-    bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 52px);
+    bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 68px);
     right: max(16px, env(safe-area-inset-right, 16px));
     width: 40px;
     height: 40px;
@@ -1127,7 +1127,7 @@ button {
     font-size: 0.82rem;
   }
   .back-to-top {
-    bottom: calc(max(14px, env(safe-area-inset-bottom, 14px)) + 46px);
+    bottom: calc(max(14px, env(safe-area-inset-bottom, 14px)) + 60px);
     right: max(14px, env(safe-area-inset-right, 14px));
     width: 36px;
     height: 36px;
