@@ -918,6 +918,69 @@ button {
   font-size: 1.1rem;
 }
 
+.back-to-top {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(14, 30, 64, 0.92);
+  border: 1.5px solid var(--electric-salmon);
+  color: var(--electric-salmon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 890;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.25s ease,
+              border-color 0.25s ease,
+              color 0.25s ease,
+              box-shadow 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 101, 80, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.back-to-top:hover {
+  background: linear-gradient(135deg, var(--electric-salmon), var(--vibrant-pink));
+  border-color: transparent;
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 101, 80, 0.55);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top.visible:hover {
+  transform: translateY(-3px);
+}
+
+.back-to-top svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+
+.back-to-top:hover svg {
+  transform: translateY(-2px);
+}
+
 @media (max-width: 1024px) {
   .footer-top {
     grid-template-columns: 1fr 1fr;
@@ -966,6 +1029,16 @@ button {
   }
   .floating-hotline span.hotline-label {
     display: none;
+  }
+  .back-to-top {
+    bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 52px);
+    right: max(16px, env(safe-area-inset-right, 16px));
+    width: 40px;
+    height: 40px;
+  }
+  .back-to-top svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -1052,6 +1125,16 @@ button {
   .floating-hotline {
     padding: 8px 14px;
     font-size: 0.82rem;
+  }
+  .back-to-top {
+    bottom: calc(max(14px, env(safe-area-inset-bottom, 14px)) + 46px);
+    right: max(14px, env(safe-area-inset-right, 14px));
+    width: 36px;
+    height: 36px;
+  }
+  .back-to-top svg {
+    width: 16px;
+    height: 16px;
   }
 }
 

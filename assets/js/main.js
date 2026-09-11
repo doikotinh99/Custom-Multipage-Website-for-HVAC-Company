@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickEstimateForm();
   initScrollAnimations();
   initButtonRipple();
+  initBackToTop();
 });
 
 function initScrollProgressBar() {
@@ -284,4 +285,34 @@ function initButtonRipple() {
     `;
     document.head.appendChild(style);
   }
+}
+
+function initBackToTop() {
+  let btn = document.querySelector('.back-to-top');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
+    document.body.appendChild(btn);
+  }
+
+  function toggleBackToTop() {
+    if (window.scrollY > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', toggleBackToTop, { passive: true });
+  toggleBackToTop();
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
 }
