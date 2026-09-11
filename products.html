@@ -269,11 +269,13 @@
         </div>
 
         <div class="mobile-category-scroll" id="mobileCatChips">
-          <button type="button" class="mobile-cat-chip active" data-cat="all">All Products (20)</button>
-          <button type="button" class="mobile-cat-chip" data-cat="systems">❄️ Systems &amp; AC (3)</button>
-          <button type="button" class="mobile-cat-chip" data-cat="filters">🌿 Air Filters &amp; IAQ (5)</button>
-          <button type="button" class="mobile-cat-chip" data-cat="thermostats">📱 Thermostats (2)</button>
-          <button type="button" class="mobile-cat-chip" data-cat="parts">🛠️ OEM Parts (10)</button>
+          <button type="button" class="mobile-cat-chip active" data-cat="all">All Equipment (20)</button>
+          <button type="button" class="mobile-cat-chip" data-cat="furnaces">🔥 Furnaces &amp; Heating</button>
+          <button type="button" class="mobile-cat-chip" data-cat="systems">❄️ AC &amp; Systems</button>
+          <button type="button" class="mobile-cat-chip" data-cat="commercial">🏢 Commercial</button>
+          <button type="button" class="mobile-cat-chip" data-cat="filters">🌿 IAQ &amp; Filters</button>
+          <button type="button" class="mobile-cat-chip" data-cat="thermostats">📱 Thermostats</button>
+          <button type="button" class="mobile-cat-chip" data-cat="parts">🛠️ OEM Parts</button>
         </div>
       </div>
 
@@ -285,7 +287,7 @@
           <div class="rockauto-sidebar-head">
             <h3>
               <svg class="svg-icon" style="color:var(--rich-blue-electric);"><use href="#icon-tools"></use></svg>
-              Catalog Tree
+              Equipment Catalog Tree
             </h3>
             <div style="display:flex; align-items:center; gap:8px;">
               <button type="button" class="rockauto-reset-btn" id="treeResetBtn">Reset All</button>
@@ -314,42 +316,201 @@
               </div>
 
               <div class="facet-group">
-                <div class="facet-group-title">Manufacturer / Brand</div>
-                <div class="facet-options-list" id="facetBrandList">
+                <div class="facet-group-title">Cabinet Width</div>
+                <div class="facet-options-list" id="facetWidthList">
                   <label class="facet-checkbox-item">
-                    <input type="checkbox" class="brand-facet-cb" value="Ameristar">
-                    <span>Ameristar</span>
+                    <input type="checkbox" class="width-facet-cb" value="14.5&quot;">
+                    <span>14.5&quot; Compact Housing</span>
                   </label>
                   <label class="facet-checkbox-item">
-                    <input type="checkbox" class="brand-facet-cb" value="Rheem">
-                    <span>Rheem</span>
+                    <input type="checkbox" class="width-facet-cb" value="17.5&quot;">
+                    <span>17.5&quot; Standard Housing</span>
                   </label>
                   <label class="facet-checkbox-item">
-                    <input type="checkbox" class="brand-facet-cb" value="Durastar">
-                    <span>Durastar</span>
+                    <input type="checkbox" class="width-facet-cb" value="21&quot;">
+                    <span>21.0&quot; Medium Housing</span>
+                  </label>
+                  <label class="facet-checkbox-item">
+                    <input type="checkbox" class="width-facet-cb" value="24.5&quot;">
+                    <span>24.5&quot; Wide Housing</span>
                   </label>
                 </div>
               </div>
 
               <div class="facet-group">
-                <div class="facet-group-title">Equipment Category</div>
-                <div class="facet-options-list" id="facetCatList">
+                <div class="facet-group-title">Heating Capacity (BTU)</div>
+                <div class="facet-options-list" id="facetBtuList">
                   <label class="facet-checkbox-item">
-                    <input type="checkbox" class="cat-facet-cb" value="systems">
-                    <span>HVAC Systems &amp; AC</span>
+                    <input type="checkbox" class="btu-facet-cb" value="30000">
+                    <span>30,000 - 35,000 BTU/h</span>
                   </label>
                   <label class="facet-checkbox-item">
-                    <input type="checkbox" class="cat-facet-cb" value="filters">
-                    <span>Air Filters &amp; IAQ</span>
+                    <input type="checkbox" class="btu-facet-cb" value="40000">
+                    <span>40,000 - 45,000 BTU/h</span>
                   </label>
                   <label class="facet-checkbox-item">
-                    <input type="checkbox" class="cat-facet-cb" value="thermostats">
-                    <span>Smart Thermostats</span>
+                    <input type="checkbox" class="btu-facet-cb" value="50000">
+                    <span>50,000 - 55,000 BTU/h</span>
                   </label>
                   <label class="facet-checkbox-item">
-                    <input type="checkbox" class="cat-facet-cb" value="parts">
-                    <span>OEM Replacement Parts</span>
+                    <input type="checkbox" class="btu-facet-cb" value="60000">
+                    <span>60,000+ BTU/h</span>
                   </label>
+                </div>
+              </div>
+
+              <div class="facet-group">
+                <div class="facet-group-title">AFUE Gas Efficiency</div>
+                <div class="facet-options-list" id="facetEffList">
+                  <label class="facet-checkbox-item">
+                    <input type="checkbox" class="eff-facet-cb" value="80%">
+                    <span>80% AFUE Standard</span>
+                  </label>
+                  <label class="facet-checkbox-item">
+                    <input type="checkbox" class="eff-facet-cb" value="high">
+                    <span>92%+ High Efficiency</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="facet-group">
+                <div class="facet-group-title">Manufacturer / Brand (A-Z)</div>
+                <div class="select2-combobox" id="brandSelect2">
+                  <div class="select2-control" id="brandSelect2Control" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                    <span class="select2-static-placeholder" id="brandSelect2PlaceholderText">Select Manufacturers (A-Z)...</span>
+                    <div class="select2-arrow">
+                      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>
+                    </div>
+                  </div>
+
+                  <div class="select2-dropdown" id="brandSelect2Dropdown">
+                    <div class="select2-search-wrap">
+                      <svg class="select2-search-icon"><use href="#icon-search"></use></svg>
+                      <input type="text" id="brandSearchBox" class="select2-search-input" placeholder="Search brand name..." autocomplete="off">
+                      <button type="button" id="brandSearchClear" class="select2-search-clear" style="display:none;" aria-label="Clear brand search">&times;</button>
+                    </div>
+
+                    <div class="select2-actions-bar">
+                      <span id="brandSelectCount" class="select2-count-label">0 selected</span>
+                      <button type="button" id="brandSelectClearAll" class="select2-action-btn">Clear All</button>
+                    </div>
+
+                    <div class="select2-rendered" id="brandSelect2Rendered" style="display:none;"></div>
+
+
+                    <div class="select2-options-scroll" id="facetBrandList">
+                      <div class="brand-alphabet-group" data-letter="A">
+                        <div class="brand-letter-header">A</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Amana">
+                            <input type="checkbox" class="brand-facet-cb" value="Amana">
+                            <span>Amana</span>
+                          </label>
+                          <label class="facet-checkbox-item" data-brand="American Standard">
+                            <input type="checkbox" class="brand-facet-cb" value="American Standard">
+                            <span>American Standard</span>
+                          </label>
+                          <label class="facet-checkbox-item" data-brand="Ameristar">
+                            <input type="checkbox" class="brand-facet-cb" value="Ameristar">
+                            <span>Ameristar</span>
+                            <span class="tree-badge">8</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="B">
+                        <div class="brand-letter-header">B</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Bryant">
+                            <input type="checkbox" class="brand-facet-cb" value="Bryant">
+                            <span>Bryant</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="C">
+                        <div class="brand-letter-header">C</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Carrier">
+                            <input type="checkbox" class="brand-facet-cb" value="Carrier">
+                            <span>Carrier</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="D">
+                        <div class="brand-letter-header">D</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Ducane">
+                            <input type="checkbox" class="brand-facet-cb" value="Ducane">
+                            <span>Ducane</span>
+                          </label>
+                          <label class="facet-checkbox-item" data-brand="Durastar">
+                            <input type="checkbox" class="brand-facet-cb" value="Durastar">
+                            <span>Durastar</span>
+                            <span class="tree-badge">6</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="G">
+                        <div class="brand-letter-header">G</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Goodman">
+                            <input type="checkbox" class="brand-facet-cb" value="Goodman">
+                            <span>Goodman</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="L">
+                        <div class="brand-letter-header">L</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Lennox">
+                            <input type="checkbox" class="brand-facet-cb" value="Lennox">
+                            <span>Lennox</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="R">
+                        <div class="brand-letter-header">R</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Rheem">
+                            <input type="checkbox" class="brand-facet-cb" value="Rheem">
+                            <span>Rheem</span>
+                            <span class="tree-badge">6</span>
+                          </label>
+                          <label class="facet-checkbox-item" data-brand="Ruud">
+                            <input type="checkbox" class="brand-facet-cb" value="Ruud">
+                            <span>Ruud</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="T">
+                        <div class="brand-letter-header">T</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="Trane">
+                            <input type="checkbox" class="brand-facet-cb" value="Trane">
+                            <span>Trane</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="brand-alphabet-group" data-letter="Y">
+                        <div class="brand-letter-header">Y</div>
+                        <div class="brand-letter-list">
+                          <label class="facet-checkbox-item" data-brand="York">
+                            <input type="checkbox" class="brand-facet-cb" value="York">
+                            <span>York</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="select2-no-results" id="brandNoResults" style="display:none;">No matching brands found</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
