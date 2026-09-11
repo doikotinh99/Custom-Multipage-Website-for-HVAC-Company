@@ -201,76 +201,41 @@ function initRockAutoTree() {
 
   if (!treeContainer) return;
 
-  const resProds = HVAC_PRODUCTS.filter(p => getProductSector(p) === 'residential');
-  const commProds = HVAC_PRODUCTS.filter(p => getProductSector(p) === 'commercial');
-
-  const resFurnaces = resProds.filter(p => p.category === 'furnaces' || p.category === 'systems');
-  const resAcSystems = resProds.filter(p => p.category === 'systems');
-  const resFilters = resProds.filter(p => p.category === 'filters');
-  const resThermostats = resProds.filter(p => p.category === 'thermostats');
-
-  const commFurnaces = commProds.filter(p => p.category === 'furnaces' || p.name.toLowerCase().includes('furnace') || p.category === 'systems');
-  const commFilters = commProds.filter(p => p.category === 'filters');
-  const commParts = commProds.filter(p => p.category === 'parts');
-
-  const singleStageFurnaces = HVAC_PRODUCTS.filter(p => getProductStage(p) === 'single' && (p.category === 'furnaces' || p.category === 'systems' || p.category === 'parts'));
-  const twoStageFurnaces = HVAC_PRODUCTS.filter(p => getProductStage(p) === 'two');
-  const variableFurnaces = HVAC_PRODUCTS.filter(p => getProductStage(p) === 'variable');
+  const residentialProds = HVAC_PRODUCTS.filter(p => getProductSector(p) === 'residential');
+  const commercialProds = HVAC_PRODUCTS.filter(p => getProductSector(p) === 'commercial');
+  const specialityProds = HVAC_PRODUCTS.filter(p => p.category === 'parts' || (p.name && p.name.toLowerCase().includes('boiler')));
+  const refrigerationProds = HVAC_PRODUCTS.filter(p => p.category === 'systems' && p.originalCategory && p.originalCategory.toLowerCase().includes('coil'));
 
   const isAllRootActive = currentSector === 'all' && currentCategory === 'all' && currentStage === 'all';
 
   let treeHtml = `
-
     <div class="tree-branch ${openBranches.has('branch-res') ? 'open' : ''}" id="branch-res">
       <button type="button" class="tree-branch-header ${currentSector === 'residential' && currentCategory === 'all' ? 'active' : ''}" data-action="sector" data-val="residential">
         <span class="tree-branch-title">
           <svg class="svg-icon" style="width:15px; height:15px; color:var(--electric-salmon);"><use href="#icon-home"></use></svg>
-          <span>Residential Equipment</span>
+          <span>Residential</span>
         </span>
         <span style="display:flex; align-items:center; gap:6px;">
-          <span class="tree-badge">${resProds.length}</span>
+          <span class="tree-badge">${residentialProds.length}</span>
           <span class="tree-branch-indicator">&#9656;</span>
         </span>
       </button>
       <div class="tree-branch-children">
-        <div class="tree-sub-branch ${openBranches.has('branch-res-furnaces') ? 'open' : ''}" id="branch-res-furnaces">
-          <button type="button" class="tree-sub-header ${currentCategory === 'furnaces' ? 'active' : ''}" data-action="category" data-val="furnaces">
-            <span style="display:flex; align-items:center; gap:6px;">
-              <svg class="svg-icon" style="width:14px; height:14px; color:#ff6550;"><use href="#icon-fire"></use></svg>
-              <span>Furnaces &amp; Heating</span>
-            </span>
-            <span style="display:flex; align-items:center; gap:4px;">
-              <span class="tree-badge">4</span>
-              <span class="tree-branch-indicator" style="font-size:0.65rem;">&#9656;</span>
-            </span>
-          </button>
-          <div class="tree-sub-children">
-            <button type="button" class="tree-sub-leaf ${currentStage === 'single' ? 'active' : ''}" data-action="stage" data-val="single">
-              <span>Single Stage (80% - 92% AFUE)</span>
-              <span class="tree-badge">2</span>
-            </button>
-            <button type="button" class="tree-sub-leaf ${currentStage === 'two' ? 'active' : ''}" data-action="stage" data-val="two">
-              <span>Two Stage (92% - 96% AFUE)</span>
-              <span class="tree-badge">1</span>
-            </button>
-            <button type="button" class="tree-sub-leaf ${currentStage === 'variable' ? 'active' : ''}" data-action="stage" data-val="variable">
-              <span>Two Stage Variable (98% AFUE)</span>
-              <span class="tree-badge">1</span>
-            </button>
-          </div>
-        </div>
-
+        <button type="button" class="tree-child-btn ${currentCategory === 'furnaces' ? 'active' : ''}" data-action="category" data-val="furnaces">
+          <span>Furnaces &amp; Heating</span>
+          <span class="tree-badge">${residentialProds.filter(p => p.category === 'furnaces').length}</span>
+        </button>
         <button type="button" class="tree-child-btn ${currentCategory === 'systems' && currentSector === 'residential' ? 'active' : ''}" data-action="category" data-val="systems" data-sector="residential">
-          <span>Air Conditioning &amp; Heat Pumps</span>
-          <span class="tree-badge">3</span>
+          <span>AC &amp; Heat Pumps</span>
+          <span class="tree-badge">${residentialProds.filter(p => p.category === 'systems').length}</span>
+        </button>
+        <button type="button" class="tree-child-btn ${currentCategory === 'thermostats' ? 'active' : ''}" data-action="category" data-val="thermostats">
+          <span>Controls &amp; Thermostats</span>
+          <span class="tree-badge">${residentialProds.filter(p => p.category === 'thermostats').length}</span>
         </button>
         <button type="button" class="tree-child-btn ${currentCategory === 'filters' && currentSector === 'residential' ? 'active' : ''}" data-action="category" data-val="filters" data-sector="residential">
           <span>Air Filters &amp; IAQ</span>
-          <span class="tree-badge">${resFilters.length}</span>
-        </button>
-        <button type="button" class="tree-child-btn ${currentCategory === 'thermostats' ? 'active' : ''}" data-action="category" data-val="thermostats" data-sector="residential">
-          <span>Controls &amp; Thermostats</span>
-          <span class="tree-badge">${resThermostats.length}</span>
+          <span class="tree-badge">${residentialProds.filter(p => p.category === 'filters').length}</span>
         </button>
       </div>
     </div>
@@ -279,25 +244,63 @@ function initRockAutoTree() {
       <button type="button" class="tree-branch-header ${currentSector === 'commercial' ? 'active' : ''}" data-action="sector" data-val="commercial">
         <span class="tree-branch-title">
           <svg class="svg-icon" style="width:15px; height:15px; color:var(--rich-blue-electric);"><use href="#icon-bolt"></use></svg>
-          <span>Commercial Solutions</span>
+          <span>Commercial</span>
         </span>
         <span style="display:flex; align-items:center; gap:6px;">
-          <span class="tree-badge">${commProds.length}</span>
+          <span class="tree-badge">${commercialProds.length}</span>
           <span class="tree-branch-indicator">&#9656;</span>
         </span>
       </button>
       <div class="tree-branch-children">
         <button type="button" class="tree-child-btn ${currentCategory === 'systems' && currentSector === 'commercial' ? 'active' : ''}" data-action="category" data-val="systems" data-sector="commercial">
           <span>Packaged RTU &amp; Boilers</span>
-          <span class="tree-badge">1</span>
+          <span class="tree-badge">${commercialProds.filter(p => p.category === 'systems').length}</span>
         </button>
         <button type="button" class="tree-child-btn ${currentCategory === 'filters' && currentSector === 'commercial' ? 'active' : ''}" data-action="category" data-val="filters" data-sector="commercial">
-          <span>Commercial Filtration Media</span>
-          <span class="tree-badge">${commFilters.length}</span>
+          <span>Commercial Filtration</span>
+          <span class="tree-badge">${commercialProds.filter(p => p.category === 'filters').length}</span>
         </button>
         <button type="button" class="tree-child-btn ${currentCategory === 'parts' && currentSector === 'commercial' ? 'active' : ''}" data-action="category" data-val="parts" data-sector="commercial">
           <span>OEM Replacement Parts</span>
-          <span class="tree-badge">${commParts.length}</span>
+          <span class="tree-badge">${commercialProds.filter(p => p.category === 'parts').length}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="tree-branch ${openBranches.has('branch-spec') ? 'open' : ''}" id="branch-spec">
+      <button type="button" class="tree-branch-header ${currentCategory === 'speciality' ? 'active' : ''}" data-action="category" data-val="parts">
+        <span class="tree-branch-title">
+          <svg class="svg-icon" style="width:15px; height:15px; color:var(--vibrant-pink);"><use href="#icon-fire"></use></svg>
+          <span>Speciality Heating</span>
+        </span>
+        <span style="display:flex; align-items:center; gap:6px;">
+          <span class="tree-badge">${specialityProds.length}</span>
+          <span class="tree-branch-indicator">&#9656;</span>
+        </span>
+      </button>
+      <div class="tree-branch-children">
+        <button type="button" class="tree-child-btn" data-action="category" data-val="parts">
+          <span>Boilers &amp; Radiant</span>
+          <span class="tree-badge">${specialityProds.length}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="tree-branch ${openBranches.has('branch-ref') ? 'open' : ''}" id="branch-ref">
+      <button type="button" class="tree-branch-header ${currentCategory === 'refrigeration' ? 'active' : ''}" data-action="category" data-val="systems">
+        <span class="tree-branch-title">
+          <svg class="svg-icon" style="width:15px; height:15px; color:var(--rich-blue-electric);"><use href="#icon-snowflake"></use></svg>
+          <span>Refrigeration</span>
+        </span>
+        <span style="display:flex; align-items:center; gap:6px;">
+          <span class="tree-badge">${refrigerationProds.length}</span>
+          <span class="tree-branch-indicator">&#9656;</span>
+        </span>
+      </button>
+      <div class="tree-branch-children">
+        <button type="button" class="tree-child-btn" data-action="category" data-val="systems">
+          <span>Cooling &amp; Refrigeration Units</span>
+          <span class="tree-badge">${refrigerationProds.length}</span>
         </button>
       </div>
     </div>
@@ -1168,16 +1171,18 @@ function renderCatalog() {
 
       return `
         <article class="product-list-row" data-id="${p.id}">
-          <div class="list-row-thumb">
-            <img src="${p.primaryImage}" alt="${p.name}" loading="lazy">
-          </div>
-          <div class="list-row-info">
-            <div class="list-row-brand">${p.brand} &bull; <span style="text-transform:capitalize;">${sector}</span></div>
-            <h3 class="list-row-title"><a href="product-detail.html?id=${p.id}" style="text-decoration:none; color:inherit;">${p.name}</a></h3>
-            <div style="font-size: 0.8rem; color: #b0c4de; margin-top:4px;">${p.spot_text || p.primaryCaption || 'Smart thermostat with remote access and scheduling'}</div>
-            <div class="list-row-badges">
-              ${hasRebate ? '<span class="card-tag" style="background:#ff1e8e; color:#fff; padding:3px 9px; border-radius:3px; font-size:0.7rem; font-weight:800;">SPRING SALE</span>' : ''}
-              <span class="list-badge-eff">${p.efficiency || 'High-Efficiency'}</span>
+          <div class="list-row-top">
+            <div class="list-row-thumb">
+              <img src="${p.primaryImage}" alt="${p.name}" loading="lazy">
+            </div>
+            <div class="list-row-info">
+              <div class="list-row-brand">${p.brand} &bull; <span style="text-transform:capitalize;">${sector}</span></div>
+              <h3 class="list-row-title"><a href="product-detail.html?id=${p.id}" style="text-decoration:none; color:inherit;">${p.name}</a></h3>
+              <div style="font-size: 0.8rem; color: #b0c4de; margin-top:4px;">${p.spot_text || p.primaryCaption || 'Smart thermostat with remote access and scheduling'}</div>
+              <div class="list-row-badges">
+                ${hasRebate ? '<span class="card-tag" style="background:#ff1e8e; color:#fff; padding:3px 9px; border-radius:3px; font-size:0.7rem; font-weight:800;">SPRING SALE</span>' : ''}
+                <span class="list-badge-eff">${p.efficiency || 'High-Efficiency'}</span>
+              </div>
             </div>
           </div>
           <div class="list-row-specs">
@@ -1187,9 +1192,11 @@ function renderCatalog() {
             <div class="spec-mini-item"><strong>BTU</strong><span>${p.btu || 'N/A'}</span></div>
           </div>
           <div class="list-row-actions">
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">From</div>
-            <div class="list-row-price">${p.price_from ? '$' + p.price_from.toLocaleString() : '$149.99'}</div>
-            <div style="margin-top:12px; display:flex; gap:8px;">
+            <div>
+              <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">From</div>
+              <div class="list-row-price">${p.price_from ? '$' + p.price_from.toLocaleString() : '$149.99'}</div>
+            </div>
+            <div style="display:flex; gap:8px;">
               <a href="product-detail.html?id=${p.id}" class="btn" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 12px; border-radius:4px; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
                 <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
                 Specs
