@@ -839,8 +839,8 @@ function initRockAutoSearch() {
 }
 
 function initViewModeToggle() {
-  const gridBtn = document.querySelector('#viewModeGridBtn');
-  const listBtn = document.querySelector('#viewModeListBtn');
+  const gridBtn = document.querySelector('#viewBtnGrid');
+  const listBtn = document.querySelector('#viewBtnList');
   const grid = document.querySelector('#productsCatalogGrid');
 
   if (!gridBtn || !listBtn || !grid) return;
@@ -849,7 +849,9 @@ function initViewModeToggle() {
     currentViewMode = 'grid';
     gridBtn.classList.add('active');
     listBtn.classList.remove('active');
-    grid.classList.remove('list-view');
+    // Ensure grid layout classes
+    grid.classList.remove('product-list-view');
+    if (!grid.classList.contains('grid-3')) grid.classList.add('grid-3');
     grid.classList.add('grid-view');
     renderCatalog();
   });
@@ -858,8 +860,10 @@ function initViewModeToggle() {
     currentViewMode = 'list';
     listBtn.classList.add('active');
     gridBtn.classList.remove('active');
+    // Switch to list layout, remove grid classes
     grid.classList.remove('grid-view');
-    grid.classList.add('list-view');
+    grid.classList.remove('grid-3');
+    grid.classList.add('product-list-view');
     renderCatalog();
   });
 }
@@ -1163,29 +1167,35 @@ function renderCatalog() {
       const sector = getProductSector(p);
 
       return `
-        <article class="rockauto-list-item" data-id="${p.id}">
-          <div class="list-item-thumb">
+        <article class="product-list-row" data-id="${p.id}">
+          <div class="list-row-thumb">
             <img src="${p.primaryImage}" alt="${p.name}" loading="lazy">
           </div>
-          <div class="list-item-info">
-            <div class="list-item-brand">${p.brand} &bull; <span style="text-transform:capitalize;">${sector}</span></div>
-            <h3 class="list-item-title">${p.name}</h3>
-            <div class="list-item-specs-pills">
-              <span class="spec-pill">${stageLabel}</span>
-              <span class="spec-pill">${airflowLabel}</span>
-              <span class="spec-pill">${p.efficiency || 'High-Efficiency'}</span>
-              <span class="spec-pill">${width} Width</span>
-              ${hasRebate ? '<span class="spec-pill rebate-pill">ComEd Rebate</span>' : ''}
+          <div class="list-row-info">
+            <div class="list-row-brand">${p.brand} &bull; <span style="text-transform:capitalize;">${sector}</span></div>
+            <h3 class="list-row-title"><a href="product-detail.html?id=${p.id}" style="text-decoration:none; color:inherit;">${p.name}</a></h3>
+            <div style="font-size: 0.8rem; color: #b0c4de; margin-top:4px;">${p.spot_text || p.primaryCaption || 'Smart thermostat with remote access and scheduling'}</div>
+            <div class="list-row-badges">
+              ${hasRebate ? '<span class="card-tag" style="background:#ff1e8e; color:#fff; padding:3px 9px; border-radius:3px; font-size:0.7rem; font-weight:800;">SPRING SALE</span>' : ''}
+              <span class="list-badge-eff">${p.efficiency || 'High-Efficiency'}</span>
             </div>
           </div>
-          <div class="list-item-pricing">
-            <div class="list-item-price-label">Installed From</div>
-            <div class="list-item-price">${p.price_from ? '$' + p.price_from.toLocaleString() : 'Call for Quote'}</div>
-            ${hasRebate ? '<div class="rebate-note">Rebate Eligible</div>' : ''}
+          <div class="list-row-specs">
+            <div class="spec-mini-item"><strong>Stage</strong><span>${stageLabel}</span></div>
+            <div class="spec-mini-item"><strong>Airflow</strong><span>${airflowLabel}</span></div>
+            <div class="spec-mini-item"><strong>Width</strong><span>${width}</span></div>
+            <div class="spec-mini-item"><strong>BTU</strong><span>${p.btu || 'N/A'}</span></div>
           </div>
-          <div class="list-item-actions">
-            <a href="product-detail.html?id=${p.id}" class="btn btn-outline btn-sm">View Specs</a>
-            <button type="button" class="btn btn-salmon btn-sm btn-request-quote" data-id="${p.id}" data-name="${p.name}">Instant Quote</button>
+          <div class="list-row-actions">
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">From</div>
+            <div class="list-row-price">${p.price_from ? '$' + p.price_from.toLocaleString() : '$149.99'}</div>
+            <div style="margin-top:12px; display:flex; gap:8px;">
+              <a href="product-detail.html?id=${p.id}" class="btn" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 12px; border-radius:4px; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
+                <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
+                Specs
+              </a>
+              <button type="button" class="btn btn-request-quote" data-id="${p.id}" data-name="${p.name}" style="background:#ff523b; color:#fff; border:none; padding:6px 12px; border-radius:4px; font-size:0.8rem; font-weight:800;">Quote</button>
+            </div>
           </div>
         </article>
       `;

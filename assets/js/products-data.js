@@ -8,6 +8,8 @@ const HVAC_PRODUCTS = [
     "tag": "Bundle Deal Available",
     "tagClass": "tag-pink",
     "efficiency": "92% AFUE",
+    "btu": "30,000 BTU",
+    "series": "M96V",
     "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/4842fef4-a7e0-4cb8-a65a-ac83e98d726e.jpg",
     "primaryCaption": "Premium high-efficiency residential filter",
     "thumbnails": [
@@ -167,7 +169,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 7
       }
-    ]
+    ],
+    "btu": "40,000 BTU",
+    "series": "DS18"
   },
   {
     "id": "183e04f6-f9ec-4752-b867-5ab4facafd93",
@@ -234,7 +238,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 4
       }
-    ]
+    ],
+    "btu": "45,000 BTU",
+    "series": "Prestige"
   },
   {
     "id": "9ff1077b-2ec5-48ab-81a8-d42a05c231b8",
@@ -352,7 +358,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 6
       }
-    ]
+    ],
+    "btu": "50,000 BTU",
+    "series": "ASX14"
   },
   {
     "id": "a99a302f-5dea-492f-bbb0-80aac1f46c0a",
@@ -419,7 +427,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 7
       }
-    ]
+    ],
+    "btu": "60,000 BTU",
+    "series": "M96V"
   },
   {
     "id": "cf17e5e6-e80f-444b-82a8-c7ee014f59c6",
@@ -460,7 +470,9 @@ const HVAC_PRODUCTS = [
     },
     "avgRating": 5,
     "reviewCount": 0,
-    "reviews": []
+    "reviews": [],
+    "btu": "80,000 BTU",
+    "series": "Classic Plus"
   },
   {
     "id": "7c8c9d8b-642e-4010-a9c8-2e39fda3dbfa",
@@ -569,7 +581,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 2
       }
-    ]
+    ],
+    "btu": "100,000 BTU",
+    "series": "DS24"
   },
   {
     "id": "c4f4db63-942d-41f8-97e7-51465d67b0dc",
@@ -636,7 +650,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 2
       }
-    ]
+    ],
+    "btu": "120,000 BTU",
+    "series": "ASX14"
   },
   {
     "id": "845d7efc-5302-4c99-bb34-8422adb9e01c",
@@ -703,7 +719,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 5
       }
-    ]
+    ],
+    "btu": "30,000 BTU",
+    "series": "DS14"
   },
   {
     "id": "c5444e30-4df6-42bc-b5cd-d03274f38fff",
@@ -786,7 +804,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 3
       }
-    ]
+    ],
+    "btu": "40,000 BTU",
+    "series": "Classic Plus"
   },
   {
     "id": "5b7c4c5f-eee4-4c89-85b1-cc6f60cdc3c7",
@@ -848,7 +868,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 5
       }
-    ]
+    ],
+    "btu": "45,000 BTU",
+    "series": "DS24"
   },
   {
     "id": "135f96b7-0cac-4095-adc5-fb77fb2673b9",
@@ -920,7 +942,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 4
       }
-    ]
+    ],
+    "btu": "50,000 BTU",
+    "series": "Performance"
   },
   {
     "id": "7a1454d0-b08e-4d99-9fd8-b47e65553863",
@@ -1025,7 +1049,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 7
       }
-    ]
+    ],
+    "btu": "60,000 BTU",
+    "series": "DS14"
   },
   {
     "id": "955f00be-9fbb-4359-93c1-1f5725d2ae45",
@@ -1111,7 +1137,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 6
       }
-    ]
+    ],
+    "btu": "80,000 BTU",
+    "series": "A96V"
   },
   {
     "id": "4a3fbc27-5114-4e31-a4cf-b9c172be8864",
@@ -1188,7 +1216,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 6
       }
-    ]
+    ],
+    "btu": "100,000 BTU",
+    "series": "DS24"
   },
   {
     "id": "fd54ce44-52a6-4907-8ad0-09c6ab086f83",
@@ -1255,7 +1285,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 4
       }
-    ]
+    ],
+    "btu": "120,000 BTU",
+    "series": "Performance"
   },
   {
     "id": "226bfe91-7e4f-4c95-9eee-eba5e06cd9eb",
@@ -1322,7 +1354,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 3
       }
-    ]
+    ],
+    "btu": "30,000 BTU",
+    "series": "Classic"
   },
   {
     "id": "8fb08049-39ee-4d77-b72c-a69f0b77c62e",
@@ -1420,7 +1454,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 6
       }
-    ]
+    ],
+    "btu": "40,000 BTU",
+    "series": "DS18"
   },
   {
     "id": "854bdaf5-8755-4e6c-a020-28e6e3ef04e0",
@@ -1482,7 +1518,9 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 2
       }
-    ]
+    ],
+    "btu": "45,000 BTU",
+    "series": "M97V"
   },
   {
     "id": "7826d224-d8ab-496e-ae87-57c5e4a5d121",
@@ -1565,13 +1603,8 @@ const HVAC_PRODUCTS = [
         "created_at": "2026-02-26T02:12:18.277796+00:00",
         "helpful_votes": 2
       }
-    ]
+    ],
+    "btu": "50,000 BTU",
+    "series": "ASX14"
   }
 ];
-
-if (typeof window !== 'undefined') {
-  window.HVAC_PRODUCTS = HVAC_PRODUCTS;
-}
-if (typeof module !== 'undefined') {
-  module.exports = HVAC_PRODUCTS;
-}

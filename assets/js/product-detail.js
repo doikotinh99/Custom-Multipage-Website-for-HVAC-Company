@@ -441,6 +441,8 @@ function renderProductDetail(product) {
         <div><strong>Operating Sound:</strong> ${product.specs.soundLevel}</div>
         <div><strong>Capacity Stages:</strong> ${product.specs.stages}</div>
         <div><strong>Dimensions:</strong> ${product.specs.dimensions}</div>
+        <div><strong>Series #:</strong> ${product.series || 'Standard'}</div>
+        <div><strong>Heating Capacity (BTU):</strong> ${product.btu || 'N/A'}</div>
       </div>
     `;
   }
@@ -453,6 +455,8 @@ function renderProductDetail(product) {
         <div><strong>Warranty Coverage:</strong> ${product.placeholders.TextPlaceHolder3}</div>
         <div><strong>Chicago Rebates:</strong> ComEd & Nicor Gas Trade Ally Eligible</div>
         <div><strong>Labor Protection:</strong> 1-Year 100% Best Comfort Satisfaction Guarantee</div>
+        <div><strong>Efficiency Rating:</strong> ${product.efficiency || 'High-Efficiency'}</div>
+        <div><strong>Product Series:</strong> ${product.series || 'Standard'}</div>
       </div>
     `;
   }
