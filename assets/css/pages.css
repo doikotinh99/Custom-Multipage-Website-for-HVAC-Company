@@ -3168,9 +3168,8 @@
   display: flex;
 }
 
-/* Multi-Tier Nesting Levels ("just much smaller now") */
-/* Multi-Tier Nesting Levels ("Brand-First Engineering Catalog") */
-/* Level 1: Manufacturer / Brand (A-Z) */
+/* Multi-Tier Nesting Levels: Category -> Specs -> Width -> BTU -> Brand */
+/* Level 1: Main HVAC Category */
 .tree-node-lvl-1 > .tree-row {
   min-height: 34px;
   padding: 3px 6px;
@@ -3189,7 +3188,7 @@
   border-left: 2px solid var(--rich-blue-electric);
 }
 
-/* Level 2: Category */
+/* Level 2: Stage / Subcategories */
 .tree-node-lvl-2 > .tree-row {
   min-height: 28px;
   padding: 1px 4px;
@@ -3200,7 +3199,7 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Level 3: Stages / Subcategories */
+/* Level 3: Airflow */
 .tree-node-lvl-3 > .tree-row {
   min-height: 26px;
 }
@@ -3210,7 +3209,7 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
-/* Level 4: Airflow */
+/* Level 4: Efficiency */
 .tree-node-lvl-4 > .tree-row {
   min-height: 25px;
 }
@@ -3220,34 +3219,34 @@
   color: rgba(255, 255, 255, 0.78);
 }
 
-/* Level 5: Efficiency */
+/* Level 5: Width */
 .tree-node-lvl-5 > .tree-row {
   min-height: 24px;
 }
 .tree-node-lvl-5 > .tree-row .tree-node-btn {
   font-size: 0.75rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.74);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
 }
 
-/* Level 6: Width */
+/* Level 6: BTU */
 .tree-node-lvl-6 > .tree-row {
-  min-height: 24px;
+  min-height: 23px;
 }
 .tree-node-lvl-6 > .tree-row .tree-node-btn {
-  font-size: 0.74rem;
+  font-size: 0.73rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.70);
+  color: rgba(255, 255, 255, 0.75);
 }
 
-/* Level 7: BTU */
+/* Level 7: Brand Leaf */
 .tree-node-lvl-7 > .tree-row {
   min-height: 22px;
 }
 .tree-node-lvl-7 > .tree-row .tree-node-btn {
   font-size: 0.72rem;
-  font-weight: 400;
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--rich-blue-electric);
 }
 .tree-node-lvl-7 > .tree-row .tree-node-btn:hover {
   color: #fff;

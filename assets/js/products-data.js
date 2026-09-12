@@ -1606,5 +1606,349 @@ const HVAC_PRODUCTS = [
     ],
     "btu": "50,000 BTU",
     "series": "ASX14"
+  },
+  {
+    "id": "amana-furnace-14-30k",
+    "name": "Amana AMES80 30,000 BTU 80% AFUE Multi-Speed Gas Furnace",
+    "brand": "Amana",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "30,000 BTU",
+    "series": "AMES80",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/95499080-1fd7-4c38-9b58-7872fdd695be.jpg",
+    "primaryCaption": "Amana 80% AFUE single-stage multi-speed gas furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/95499080-1fd7-4c38-9b58-7872fdd695be.jpg",
+        "label": "Primary",
+        "caption": "Amana single stage 30k BTU"
+      }
+    ],
+    "spot_text": "Heavy-duty Million-Air tubular heat exchanger with quiet multi-speed blower",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1250,
+    "variants": [],
+    "promo_title": "10-Year Unit Replacement Limited Warranty",
+    "promo_description": "Includes lifetime heat exchanger warranty coverage",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE Efficiency",
+      "TextPlaceHolder2": "Single Stage Gas Valve",
+      "TextPlaceHolder3": "14.5\" Compact Cabinet",
+      "TextPlaceHolder4": "Multi-Speed ECM Blower"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Whisper-Quiet Low Decibel",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.8,
+    "reviewCount": 7,
+    "reviews": []
+  },
+  {
+    "id": "goodman-furnace-14-30k",
+    "name": "Goodman GM9S80 30,000 BTU 80% Single-Stage Upflow Gas Furnace",
+    "brand": "Goodman",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "30,000 BTU",
+    "series": "GM9S80",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/4842fef4-a7e0-4cb8-a65a-ac83e98d726e.jpg",
+    "primaryCaption": "Goodman 80% AFUE single-stage gas furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/4842fef4-a7e0-4cb8-a65a-ac83e98d726e.jpg",
+        "label": "Primary",
+        "caption": "Goodman 30k BTU"
+      }
+    ],
+    "spot_text": "Durable aluminized-steel tubular heat exchanger with quiet 4-speed blower motor",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1180,
+    "variants": [],
+    "promo_title": "Contractor Favorite",
+    "promo_description": "Easy installation with universal multi-position design",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE",
+      "TextPlaceHolder2": "Single Stage",
+      "TextPlaceHolder3": "14.5\" Cabinet Width",
+      "TextPlaceHolder4": "Upflow Configuration"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Quiet Operation",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.6,
+    "reviewCount": 11,
+    "reviews": []
+  },
+  {
+    "id": "amana-furnace-14-45k",
+    "name": "Amana AMES80 45,000 BTU 80% AFUE Upflow Gas Furnace",
+    "brand": "Amana",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "45,000 BTU",
+    "series": "AMES80",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/95499080-1fd7-4c38-9b58-7872fdd695be.jpg",
+    "primaryCaption": "Amana 45k BTU 80% AFUE gas furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/95499080-1fd7-4c38-9b58-7872fdd695be.jpg",
+        "label": "Primary",
+        "caption": "Amana 45k BTU"
+      }
+    ],
+    "spot_text": "High reliability Million-Air heat exchanger designed for compact residential installations",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1390,
+    "variants": [],
+    "promo_title": "Top Seller",
+    "promo_description": "Premium build quality and warranty",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE",
+      "TextPlaceHolder2": "45,000 BTU Heating",
+      "TextPlaceHolder3": "14.5\" Width",
+      "TextPlaceHolder4": "Upflow"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Low Decibel",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.9,
+    "reviewCount": 8,
+    "reviews": []
+  },
+  {
+    "id": "goodman-furnace-14-45k",
+    "name": "Goodman GM9S80 45,000 BTU 80% AFUE Upflow Gas Furnace",
+    "brand": "Goodman",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "45,000 BTU",
+    "series": "GM9S80",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/4842fef4-a7e0-4cb8-a65a-ac83e98d726e.jpg",
+    "primaryCaption": "Goodman 45k BTU 80% AFUE gas furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/4842fef4-a7e0-4cb8-a65a-ac83e98d726e.jpg",
+        "label": "Primary",
+        "caption": "Goodman 45k BTU"
+      }
+    ],
+    "spot_text": "Aluminized steel tubular heat exchanger, self-diagnostic control board",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1220,
+    "variants": [],
+    "promo_title": "Value Choice",
+    "promo_description": "Best value high-performance heating",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE",
+      "TextPlaceHolder2": "45,000 BTU",
+      "TextPlaceHolder3": "14.5\" Width",
+      "TextPlaceHolder4": "Single Stage"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Quiet",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.7,
+    "reviewCount": 15,
+    "reviews": []
+  },
+  {
+    "id": "rheem-furnace-14-45k",
+    "name": "Rheem Classic Series 45,000 BTU 80% AFUE Upflow Gas Furnace",
+    "brand": "Rheem",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "45,000 BTU",
+    "series": "Classic R801T",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/deafce7b-98dc-4ce6-9342-a954f12147a1.jpg",
+    "primaryCaption": "Rheem Classic 45k BTU 80% AFUE furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/deafce7b-98dc-4ce6-9342-a954f12147a1.jpg",
+        "label": "Primary",
+        "caption": "Rheem Classic 45k"
+      }
+    ],
+    "spot_text": "PlusOne Diagnostics 7-segment LED display and constant torque motor",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1340,
+    "variants": [],
+    "promo_title": "PlusOne Diagnostics",
+    "promo_description": "Easy troubleshooting and diagnostics built-in",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE",
+      "TextPlaceHolder2": "45,000 BTU",
+      "TextPlaceHolder3": "14.5\" Width",
+      "TextPlaceHolder4": "Single Stage"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Whisper-Quiet",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.8,
+    "reviewCount": 19,
+    "reviews": []
+  },
+  {
+    "id": "trane-furnace-14-45k",
+    "name": "Trane XR80 45,000 BTU 80% AFUE Single-Stage Upflow Gas Furnace",
+    "brand": "Trane",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "45,000 BTU",
+    "series": "XR80",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/86608594-4122-470e-92c7-8b03856f0f05.jpeg",
+    "primaryCaption": "Trane XR80 45k BTU 80% AFUE gas furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/86608594-4122-470e-92c7-8b03856f0f05.jpeg",
+        "label": "Primary",
+        "caption": "Trane XR80 45k"
+      }
+    ],
+    "spot_text": "Rugged Silicon Nitride Hot Surface Igniter and heavy-steel insulated cabinet",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1450,
+    "variants": [],
+    "promo_title": "It's Hard to Stop a Trane",
+    "promo_description": "Industry-renowned reliability and long-term durability",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE",
+      "TextPlaceHolder2": "45,000 BTU",
+      "TextPlaceHolder3": "14.5\" Width",
+      "TextPlaceHolder4": "Upflow"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Ultra Quiet",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.9,
+    "reviewCount": 24,
+    "reviews": []
+  },
+  {
+    "id": "amana-furnace-14-55k",
+    "name": "Amana AMES80 55,000 BTU 80% AFUE Upflow Gas Furnace",
+    "brand": "Amana",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "55,000 BTU",
+    "series": "AMES80",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/95499080-1fd7-4c38-9b58-7872fdd695be.jpg",
+    "primaryCaption": "Amana 55k BTU 80% AFUE gas furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/95499080-1fd7-4c38-9b58-7872fdd695be.jpg",
+        "label": "Primary",
+        "caption": "Amana 55k BTU"
+      }
+    ],
+    "spot_text": "High output 55,000 BTU with Million-Air tubular heat exchanger in a 14.5\" chassis",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1490,
+    "variants": [],
+    "promo_title": "10-Year Limited Warranty",
+    "promo_description": "Comprehensive parts warranty with registration",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE",
+      "TextPlaceHolder2": "55,000 BTU",
+      "TextPlaceHolder3": "14.5\" Width",
+      "TextPlaceHolder4": "Upflow"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Whisper-Quiet",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.8,
+    "reviewCount": 6,
+    "reviews": []
+  },
+  {
+    "id": "goodman-furnace-14-55k",
+    "name": "Goodman GM9S80 55,000 BTU 80% AFUE Upflow Gas Furnace",
+    "brand": "Goodman",
+    "category": "furnaces",
+    "originalCategory": "HVAC Equipment Residential - Furnace Only",
+    "tag": "80% AFUE",
+    "tagClass": "tag-salmon",
+    "efficiency": "80% AFUE",
+    "btu": "55,000 BTU",
+    "series": "GM9S80",
+    "primaryImage": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/4842fef4-a7e0-4cb8-a65a-ac83e98d726e.jpg",
+    "primaryCaption": "Goodman 55k BTU 80% AFUE gas furnace",
+    "thumbnails": [
+      {
+        "img": "https://ozsvufpqeuvklrqzqpuk.supabase.co/storage/v1/object/public/file-manager/4842fef4-a7e0-4cb8-a65a-ac83e98d726e.jpg",
+        "label": "Primary",
+        "caption": "Goodman 55k BTU"
+      }
+    ],
+    "spot_text": "Dependable aluminized steel heat exchanger with multi-speed high efficiency blower",
+    "status": "active_showing",
+    "is_part": false,
+    "price_from": 1290,
+    "variants": [],
+    "promo_title": "Top Contractor Pick",
+    "promo_description": "Easy setup and robust performance",
+    "placeholders": {
+      "TextPlaceHolder1": "80% AFUE",
+      "TextPlaceHolder2": "55,000 BTU",
+      "TextPlaceHolder3": "14.5\" Width",
+      "TextPlaceHolder4": "Upflow"
+    },
+    "specs": {
+      "airflow": "Upflow Airflow Orientation",
+      "soundLevel": "Quiet Operation",
+      "stages": "Single Stage",
+      "dimensions": "14.5\" Width Housing"
+    },
+    "avgRating": 4.7,
+    "reviewCount": 12,
+    "reviews": []
   }
 ];

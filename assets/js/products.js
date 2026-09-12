@@ -268,13 +268,13 @@ function isNodeActive(criteria) {
   if (criteria.btu && criteria.btu !== currentBtu) return false;
 
   // Exact depth checks: ensure node is not marked active if a more specific filter is active
-  if (!criteria.brand && currentBrand !== 'all') return false;
   if (!criteria.category && currentCategory !== 'all') return false;
   if (!criteria.stage && currentStage !== 'all') return false;
   if (!criteria.airflow && currentAirflow !== 'all') return false;
   if (!criteria.afue && currentAfue !== 'all') return false;
   if (!criteria.width && currentWidth !== 'all') return false;
   if (!criteria.btu && currentBtu !== 'all') return false;
+  if (!criteria.brand && currentBrand !== 'all') return false;
 
   return true;
 }
@@ -328,405 +328,498 @@ function initRockAutoTree() {
   const widths = ['14.5"', '17.5"', '21"', '24.5"'];
   const furnaceBtus = ['30000', '35000', '40000', '45000', '50000', '55000', '60000'];
 
-  const uniqueBrands = [...new Set(HVAC_PRODUCTS.map(p => p.brand).filter(Boolean))].sort((a, b) => a.localeCompare(b));
-
-  function buildBrandNode(brandName) {
-    const slug = brandName.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const brandCrit = { brand: brandName };
-
-    function makeBtuNodes(baseId, baseCriteria, btuList) {
-      return btuList.map(b => {
-        const bNum = Number(b).toLocaleString();
-        const crit = { ...baseCriteria, btu: b };
-        return {
-          id: `${baseId}-btu${b}`,
-          level: 7,
-          title: `${bNum} BTU's`,
-          criteria: crit,
-          count: countMatches(crit)
-        };
-      });
-    }
-
-    function makeWidthNodes(baseId, baseCriteria, btuList) {
-      return widths.map(w => {
-        const wNum = w.replace(/[^0-9]/g, '');
-        const crit = { ...baseCriteria, width: w };
-        const wId = `${baseId}-w${wNum}`;
-        return {
-          id: wId,
-          level: 6,
-          title: `${w} Width`,
-          criteria: crit,
-          count: countMatches(crit),
-          children: makeBtuNodes(wId, crit, btuList)
-        };
-      });
-    }
-
-    // --- FURNACES TREE (Strict Client Hierarchy under Brand) ---
-    const furnCrit = { ...brandCrit, category: 'furnaces' };
-
-    // Single Stage
-    const singleUp80 = { ...furnCrit, stage: 'single', airflow: 'upflow', afue: '80%' };
-    const singleUpHigh = { ...furnCrit, stage: 'single', airflow: 'upflow', afue: 'high' };
-    const singleDown80 = { ...furnCrit, stage: 'single', airflow: 'downflow', afue: '80%' };
-    const singleDownHigh = { ...furnCrit, stage: 'single', airflow: 'downflow', afue: 'high' };
-
-    // Two Stage
-    const twoUp80 = { ...furnCrit, stage: 'two', airflow: 'upflow', afue: '80%' };
-    const twoUpHigh = { ...furnCrit, stage: 'two', airflow: 'upflow', afue: 'high' };
-    const twoDown80 = { ...furnCrit, stage: 'two', airflow: 'downflow', afue: '80%' };
-    const twoDownHigh = { ...furnCrit, stage: 'two', airflow: 'downflow', afue: 'high' };
-
-    // Two Stage Variable / Modulating
-    const varUpHigh = { ...furnCrit, stage: 'variable', airflow: 'upflow', afue: 'high' };
-    const varDownHigh = { ...furnCrit, stage: 'variable', airflow: 'downflow', afue: 'high' };
-
-    const furnacesNode = {
-      id: `node-${slug}-furnaces`,
-      level: 2,
-      title: 'Furnaces & Heating',
-      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--electric-salmon);"><use href="#icon-fire"></use></svg>',
-      criteria: furnCrit,
-      count: countMatches(furnCrit),
-      children: [
-        {
-          id: `node-${slug}-furn-single`,
-          level: 3,
-          title: 'Single stage',
-          criteria: { ...furnCrit, stage: 'single' },
-          count: countMatches({ ...furnCrit, stage: 'single' }),
-          children: [
-            {
-              id: `node-${slug}-furn-single-up`,
-              level: 4,
-              title: 'Up Flow',
-              criteria: { ...furnCrit, stage: 'single', airflow: 'upflow' },
-              count: countMatches({ ...furnCrit, stage: 'single', airflow: 'upflow' }),
-              children: [
-                {
-                  id: `node-${slug}-furn-single-up-80`,
-                  level: 5,
-                  title: '80% AFUE',
-                  criteria: singleUp80,
-                  count: countMatches(singleUp80),
-                  children: makeWidthNodes(`node-${slug}-furn-single-up-80`, singleUp80, furnaceBtus)
-                },
-                {
-                  id: `node-${slug}-furn-single-up-high`,
-                  level: 5,
-                  title: '90%+ High AFUE',
-                  criteria: singleUpHigh,
-                  count: countMatches(singleUpHigh),
-                  children: makeWidthNodes(`node-${slug}-furn-single-up-high`, singleUpHigh, ['30000', '40000', '50000', '60000', '80000'])
-                }
-              ]
-            },
-            {
-              id: `node-${slug}-furn-single-down`,
-              level: 4,
-              title: 'Downflow',
-              criteria: { ...furnCrit, stage: 'single', airflow: 'downflow' },
-              count: countMatches({ ...furnCrit, stage: 'single', airflow: 'downflow' }),
-              children: [
-                {
-                  id: `node-${slug}-furn-single-down-80`,
-                  level: 5,
-                  title: '80% AFUE',
-                  criteria: singleDown80,
-                  count: countMatches(singleDown80),
-                  children: makeWidthNodes(`node-${slug}-furn-single-down-80`, singleDown80, ['30000', '40000', '45000', '60000'])
-                },
-                {
-                  id: `node-${slug}-furn-single-down-high`,
-                  level: 5,
-                  title: '90%+ High AFUE',
-                  criteria: singleDownHigh,
-                  count: countMatches(singleDownHigh),
-                  children: makeWidthNodes(`node-${slug}-furn-single-down-high`, singleDownHigh, ['30000', '40000', '60000'])
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: `node-${slug}-furn-two`,
-          level: 3,
-          title: 'Two stage',
-          criteria: { ...furnCrit, stage: 'two' },
-          count: countMatches({ ...furnCrit, stage: 'two' }),
-          children: [
-            {
-              id: `node-${slug}-furn-two-up`,
-              level: 4,
-              title: 'Up Flow',
-              criteria: { ...furnCrit, stage: 'two', airflow: 'upflow' },
-              count: countMatches({ ...furnCrit, stage: 'two', airflow: 'upflow' }),
-              children: [
-                {
-                  id: `node-${slug}-furn-two-up-80`,
-                  level: 5,
-                  title: '80% AFUE',
-                  criteria: twoUp80,
-                  count: countMatches(twoUp80),
-                  children: makeWidthNodes(`node-${slug}-furn-two-up-80`, twoUp80, ['40000', '50000', '60000'])
-                },
-                {
-                  id: `node-${slug}-furn-two-up-high`,
-                  level: 5,
-                  title: '90%+ High AFUE',
-                  criteria: twoUpHigh,
-                  count: countMatches(twoUpHigh),
-                  children: makeWidthNodes(`node-${slug}-furn-two-up-high`, twoUpHigh, ['45000', '50000', '60000', '100000'])
-                }
-              ]
-            },
-            {
-              id: `node-${slug}-furn-two-down`,
-              level: 4,
-              title: 'Downflow',
-              criteria: { ...furnCrit, stage: 'two', airflow: 'downflow' },
-              count: countMatches({ ...furnCrit, stage: 'two', airflow: 'downflow' }),
-              children: [
-                {
-                  id: `node-${slug}-furn-two-down-high`,
-                  level: 5,
-                  title: '90%+ High AFUE',
-                  criteria: twoDownHigh,
-                  count: countMatches(twoDownHigh),
-                  children: makeWidthNodes(`node-${slug}-furn-two-down-high`, twoDownHigh, ['45000', '60000'])
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: `node-${slug}-furn-var`,
-          level: 3,
-          title: 'Two stage variable',
-          criteria: { ...furnCrit, stage: 'variable' },
-          count: countMatches({ ...furnCrit, stage: 'variable' }),
-          children: [
-            {
-              id: `node-${slug}-furn-var-up`,
-              level: 4,
-              title: 'Up Flow',
-              criteria: { ...furnCrit, stage: 'variable', airflow: 'upflow' },
-              count: countMatches({ ...furnCrit, stage: 'variable', airflow: 'upflow' }),
-              children: [
-                {
-                  id: `node-${slug}-furn-var-up-high`,
-                  level: 5,
-                  title: '97%+ Modulating',
-                  criteria: varUpHigh,
-                  count: countMatches(varUpHigh),
-                  children: makeWidthNodes(`node-${slug}-furn-var-up-high`, varUpHigh, ['40000', '50000', '60000'])
-                }
-              ]
-            },
-            {
-              id: `node-${slug}-furn-var-down`,
-              level: 4,
-              title: 'Downflow',
-              criteria: { ...furnCrit, stage: 'variable', airflow: 'downflow' },
-              count: countMatches({ ...furnCrit, stage: 'variable', airflow: 'downflow' }),
-              children: [
-                {
-                  id: `node-${slug}-furn-var-down-high`,
-                  level: 5,
-                  title: '98% Ultra-Efficiency',
-                  criteria: varDownHigh,
-                  count: countMatches(varDownHigh),
-                  children: makeWidthNodes(`node-${slug}-furn-var-down-high`, varDownHigh, ['50000', '100000'])
-                }
-              ]
-            }
-          ]
+  function getMatchingBrands(crit) {
+    const matched = HVAC_PRODUCTS.filter(p => {
+      if (crit.brand && crit.brand !== 'all') {
+        if (p.brand.toLowerCase() !== crit.brand.toLowerCase()) return false;
+      }
+      if (crit.sector && crit.sector !== 'all') {
+        if (getProductSector(p) !== crit.sector) return false;
+      }
+      if (crit.category && crit.category !== 'all') {
+        if (crit.category === 'furnaces') {
+          const isFurnace = p.category === 'furnaces' || 
+            (p.category === 'systems' && (p.name.toLowerCase().includes('furnace') || p.name.toLowerCase().includes('boiler'))) || 
+            (p.originalCategory && p.originalCategory.toLowerCase().includes('furnace'));
+          if (!isFurnace) return false;
+        } else if (crit.category === 'commercial') {
+          if (getProductSector(p) !== 'commercial') return false;
+        } else if (p.category !== crit.category) {
+          return false;
         }
-      ]
-    };
-
-    // --- AC & HEAT PUMPS ---
-    const acCrit = { ...brandCrit, category: 'systems' };
-    const acNode = {
-      id: `node-${slug}-systems`,
-      level: 2,
-      title: 'AC & Heat Pumps',
-      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--rich-blue-electric);"><use href="#icon-snowflake"></use></svg>',
-      criteria: acCrit,
-      count: countMatches(acCrit),
-      children: [
-        {
-          id: `node-${slug}-ac-single`,
-          level: 3,
-          title: 'Single Stage (14-16 SEER)',
-          criteria: { ...acCrit, stage: 'single' },
-          count: countMatches({ ...acCrit, stage: 'single' })
-        },
-        {
-          id: `node-${slug}-ac-two`,
-          level: 3,
-          title: 'Two Stage (16-18 SEER)',
-          criteria: { ...acCrit, stage: 'two' },
-          count: countMatches({ ...acCrit, stage: 'two' })
-        },
-        {
-          id: `node-${slug}-ac-var`,
-          level: 3,
-          title: 'Variable Inverter (18+ SEER)',
-          criteria: { ...acCrit, stage: 'variable' },
-          count: countMatches({ ...acCrit, stage: 'variable' })
-        }
-      ]
-    };
-
-    // --- AIR FILTRATION & IAQ ---
-    const filterCrit = { ...brandCrit, category: 'filters' };
-    const filterNode = {
-      id: `node-${slug}-filters`,
-      level: 2,
-      title: 'Air Filters & IAQ',
-      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:#22c55e;"><use href="#icon-leaf"></use></svg>',
-      criteria: filterCrit,
-      count: countMatches(filterCrit),
-      children: [
-        {
-          id: `node-${slug}-filter-merv13`,
-          level: 3,
-          title: 'MERV 13 Premium',
-          criteria: { ...filterCrit, stage: 'single' },
-          count: countMatches({ ...filterCrit, stage: 'single' })
-        },
-        {
-          id: `node-${slug}-filter-merv8`,
-          level: 3,
-          title: 'MERV 8 - 10 Standard',
-          criteria: { ...filterCrit, stage: 'two' },
-          count: countMatches({ ...filterCrit, stage: 'two' })
-        },
-        {
-          id: `node-${slug}-filter-uvc`,
-          level: 3,
-          title: 'UV-C Air Purifiers',
-          criteria: { ...filterCrit, stage: 'variable' },
-          count: countMatches({ ...filterCrit, stage: 'variable' })
-        }
-      ]
-    };
-
-    // --- CONTROLS & THERMOSTATS ---
-    const thermCrit = { ...brandCrit, category: 'thermostats' };
-    const thermNode = {
-      id: `node-${slug}-thermostats`,
-      level: 2,
-      title: 'Controls & Thermostats',
-      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--vibrant-pink);"><use href="#icon-smartphone"></use></svg>',
-      criteria: thermCrit,
-      count: countMatches(thermCrit),
-      children: [
-        {
-          id: `node-${slug}-therm-wifi`,
-          level: 3,
-          title: 'WiFi Smart Thermostats',
-          criteria: { ...thermCrit, stage: 'two' },
-          count: countMatches({ ...thermCrit, stage: 'two' })
-        },
-        {
-          id: `node-${slug}-therm-prog`,
-          level: 3,
-          title: '7-Day Programmable',
-          criteria: { ...thermCrit, stage: 'single' },
-          count: countMatches({ ...thermCrit, stage: 'single' })
-        }
-      ]
-    };
-
-    // --- COMMERCIAL SYSTEMS ---
-    const commCrit = { ...brandCrit, category: 'commercial' };
-    const commNode = {
-      id: `node-${slug}-commercial`,
-      level: 2,
-      title: 'Commercial Systems',
-      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--rich-blue-electric);"><use href="#icon-bolt"></use></svg>',
-      criteria: commCrit,
-      count: countMatches(commCrit),
-      children: [
-        {
-          id: `node-${slug}-comm-rtu`,
-          level: 3,
-          title: 'Packaged RTU & Boilers',
-          criteria: { ...commCrit, stage: 'single' },
-          count: countMatches({ ...commCrit, stage: 'single' })
-        },
-        {
-          id: `node-${slug}-comm-fil`,
-          level: 3,
-          title: 'Commercial Filtration',
-          criteria: { ...commCrit, stage: 'two' },
-          count: countMatches({ ...commCrit, stage: 'two' })
-        }
-      ]
-    };
-
-    // --- OEM REPLACEMENT PARTS ---
-    const partsCrit = { ...brandCrit, category: 'parts' };
-    const partsNode = {
-      id: `node-${slug}-parts`,
-      level: 2,
-      title: 'OEM Replacement Parts',
-      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--text-muted);"><use href="#icon-tools"></use></svg>',
-      criteria: partsCrit,
-      count: countMatches(partsCrit),
-      children: [
-        {
-          id: `node-${slug}-parts-elec`,
-          level: 3,
-          title: 'Capacitors & Contactors',
-          criteria: { ...partsCrit, stage: 'single' },
-          count: countMatches({ ...partsCrit, stage: 'single' })
-        },
-        {
-          id: `node-${slug}-parts-sensor`,
-          level: 3,
-          title: 'Flame Sensors & Ignitors',
-          criteria: { ...partsCrit, stage: 'single', airflow: 'downflow' },
-          count: countMatches({ ...partsCrit, stage: 'single', airflow: 'downflow' })
-        },
-        {
-          id: `node-${slug}-parts-ref`,
-          level: 3,
-          title: 'Refrigerants (R-410A / R-22)',
-          criteria: { ...partsCrit, stage: 'two' },
-          count: countMatches({ ...partsCrit, stage: 'two' })
-        }
-      ]
-    };
-
-    return {
-      id: `node-brand-${slug}`,
-      level: 1,
-      title: brandName,
-      icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--rich-blue-electric);"><use href="#icon-package"></use></svg>',
-      criteria: brandCrit,
-      count: countMatches(brandCrit),
-      children: [
-        { ...furnacesNode, isLast: false },
-        { ...acNode, isLast: false },
-        { ...filterNode, isLast: false },
-        { ...thermNode, isLast: false },
-        { ...commNode, isLast: false },
-        { ...partsNode, isLast: true }
-      ]
-    };
+      }
+      if (crit.stage && crit.stage !== 'all') {
+        if (getProductStage(p) !== crit.stage) return false;
+      }
+      if (crit.airflow && crit.airflow !== 'all') {
+        const af = getProductAirflow(p);
+        if (af !== 'multipoise' && af !== crit.airflow) return false;
+      }
+      if (crit.afue && crit.afue !== 'all') {
+        const eff = (p.efficiency || '').toLowerCase();
+        if (crit.afue === '80%' && !eff.includes('80%')) return false;
+        if (crit.afue === 'high' && (eff.includes('80%') || eff.includes('standard'))) return false;
+      }
+      if (crit.width && crit.width !== 'all') {
+        if (normalizeWidth(getProductWidth(p)) !== normalizeWidth(crit.width)) return false;
+      }
+      if (crit.btu && crit.btu !== 'all') {
+        const btu = getProductBtu(p);
+        const target = parseInt(crit.btu, 10);
+        if (Math.abs(btu - target) > 5000) return false;
+      }
+      return true;
+    });
+    return [...new Set(matched.map(p => p.brand).filter(Boolean))].sort((a, b) => a.localeCompare(b));
   }
 
-  const brandNodesHtml = uniqueBrands.map((b, idx) => {
-    const bNode = buildBrandNode(b);
-    return renderTreeNode({ ...bNode, isLast: idx === uniqueBrands.length - 1 });
+  function makeBrandNodes(baseId, baseCriteria, level = 7) {
+    const brands = getMatchingBrands(baseCriteria);
+    return brands.map(b => {
+      const slug = b.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const crit = { ...baseCriteria, brand: b };
+      return {
+        id: `${baseId}-brand-${slug}`,
+        level: level,
+        title: b,
+        icon: '<svg class="svg-icon" style="width:12px; height:12px; color:var(--rich-blue-electric);"><use href="#icon-package"></use></svg>',
+        criteria: crit,
+        count: countMatches(crit),
+        children: []
+      };
+    });
+  }
+
+  function makeBtuNodes(baseId, baseCriteria, btuList) {
+    return btuList.map(b => {
+      const bNum = Number(b).toLocaleString();
+      const crit = { ...baseCriteria, btu: b };
+      const btuId = `${baseId}-btu${b}`;
+      const brandChildren = makeBrandNodes(btuId, crit, 7);
+      return {
+        id: btuId,
+        level: 6,
+        title: `${bNum} BTU's`,
+        criteria: crit,
+        count: countMatches(crit),
+        children: brandChildren
+      };
+    });
+  }
+
+  function makeWidthNodes(baseId, baseCriteria, btuList) {
+    return widths.map(w => {
+      const wNum = w.replace(/[^0-9]/g, '');
+      const crit = { ...baseCriteria, width: w };
+      const wId = `${baseId}-w${wNum}`;
+      return {
+        id: wId,
+        level: 5,
+        title: `${w} Width`,
+        criteria: crit,
+        count: countMatches(crit),
+        children: makeBtuNodes(wId, crit, btuList)
+      };
+    });
+  }
+
+  // --- 1. FURNACES & HEATING ---
+  const furnCrit = { category: 'furnaces' };
+  const singleUp80 = { ...furnCrit, stage: 'single', airflow: 'upflow', afue: '80%' };
+  const singleUpHigh = { ...furnCrit, stage: 'single', airflow: 'upflow', afue: 'high' };
+  const singleDown80 = { ...furnCrit, stage: 'single', airflow: 'downflow', afue: '80%' };
+  const singleDownHigh = { ...furnCrit, stage: 'single', airflow: 'downflow', afue: 'high' };
+
+  const twoUp80 = { ...furnCrit, stage: 'two', airflow: 'upflow', afue: '80%' };
+  const twoUpHigh = { ...furnCrit, stage: 'two', airflow: 'upflow', afue: 'high' };
+  const twoDown80 = { ...furnCrit, stage: 'two', airflow: 'downflow', afue: '80%' };
+  const twoDownHigh = { ...furnCrit, stage: 'two', airflow: 'downflow', afue: 'high' };
+
+  const varUpHigh = { ...furnCrit, stage: 'variable', airflow: 'upflow', afue: 'high' };
+  const varDownHigh = { ...furnCrit, stage: 'variable', airflow: 'downflow', afue: 'high' };
+
+  const furnacesNode = {
+    id: 'node-cat-furnaces',
+    level: 1,
+    title: 'Furnaces & Heating',
+    icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--electric-salmon);"><use href="#icon-fire"></use></svg>',
+    criteria: furnCrit,
+    count: countMatches(furnCrit),
+    children: [
+      {
+        id: 'node-furn-single',
+        level: 2,
+        title: 'Single stage',
+        criteria: { ...furnCrit, stage: 'single' },
+        count: countMatches({ ...furnCrit, stage: 'single' }),
+        children: [
+          {
+            id: 'node-furn-single-up',
+            level: 3,
+            title: 'Up Flow',
+            criteria: { ...furnCrit, stage: 'single', airflow: 'upflow' },
+            count: countMatches({ ...furnCrit, stage: 'single', airflow: 'upflow' }),
+            children: [
+              {
+                id: 'node-furn-single-up-80',
+                level: 4,
+                title: '80% AFUE',
+                criteria: singleUp80,
+                count: countMatches(singleUp80),
+                children: makeWidthNodes('node-furn-single-up-80', singleUp80, furnaceBtus)
+              },
+              {
+                id: 'node-furn-single-up-high',
+                level: 4,
+                title: '90%+ High AFUE',
+                criteria: singleUpHigh,
+                count: countMatches(singleUpHigh),
+                children: makeWidthNodes('node-furn-single-up-high', singleUpHigh, ['30000', '40000', '50000', '60000', '80000'])
+              }
+            ]
+          },
+          {
+            id: 'node-furn-single-down',
+            level: 3,
+            title: 'Downflow',
+            criteria: { ...furnCrit, stage: 'single', airflow: 'downflow' },
+            count: countMatches({ ...furnCrit, stage: 'single', airflow: 'downflow' }),
+            children: [
+              {
+                id: 'node-furn-single-down-80',
+                level: 4,
+                title: '80% AFUE',
+                criteria: singleDown80,
+                count: countMatches(singleDown80),
+                children: makeWidthNodes('node-furn-single-down-80', singleDown80, ['30000', '40000', '45000', '60000'])
+              },
+              {
+                id: 'node-furn-single-down-high',
+                level: 4,
+                title: '90%+ High AFUE',
+                criteria: singleDownHigh,
+                count: countMatches(singleDownHigh),
+                children: makeWidthNodes('node-furn-single-down-high', singleDownHigh, ['30000', '40000', '60000'])
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'node-furn-two',
+        level: 2,
+        title: 'Two stage',
+        criteria: { ...furnCrit, stage: 'two' },
+        count: countMatches({ ...furnCrit, stage: 'two' }),
+        children: [
+          {
+            id: 'node-furn-two-up',
+            level: 3,
+            title: 'Up Flow',
+            criteria: { ...furnCrit, stage: 'two', airflow: 'upflow' },
+            count: countMatches({ ...furnCrit, stage: 'two', airflow: 'upflow' }),
+            children: [
+              {
+                id: 'node-furn-two-up-80',
+                level: 4,
+                title: '80% AFUE',
+                criteria: twoUp80,
+                count: countMatches(twoUp80),
+                children: makeWidthNodes('node-furn-two-up-80', twoUp80, furnaceBtus)
+              },
+              {
+                id: 'node-furn-two-up-high',
+                level: 4,
+                title: '90%+ High AFUE',
+                criteria: twoUpHigh,
+                count: countMatches(twoUpHigh),
+                children: makeWidthNodes('node-furn-two-up-high', twoUpHigh, ['40000', '50000', '60000', '80000', '100000'])
+              }
+            ]
+          },
+          {
+            id: 'node-furn-two-down',
+            level: 3,
+            title: 'Downflow',
+            criteria: { ...furnCrit, stage: 'two', airflow: 'downflow' },
+            count: countMatches({ ...furnCrit, stage: 'two', airflow: 'downflow' }),
+            children: [
+              {
+                id: 'node-furn-two-down-80',
+                level: 4,
+                title: '80% AFUE',
+                criteria: twoDown80,
+                count: countMatches(twoDown80),
+                children: makeWidthNodes('node-furn-two-down-80', twoDown80, ['40000', '60000'])
+              },
+              {
+                id: 'node-furn-two-down-high',
+                level: 4,
+                title: '90%+ High AFUE',
+                criteria: twoDownHigh,
+                count: countMatches(twoDownHigh),
+                children: makeWidthNodes('node-furn-two-down-high', twoDownHigh, ['40000', '60000', '80000'])
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'node-furn-var',
+        level: 2,
+        title: 'Two stage variable / Modulating',
+        criteria: { ...furnCrit, stage: 'variable' },
+        count: countMatches({ ...furnCrit, stage: 'variable' }),
+        children: [
+          {
+            id: 'node-furn-var-up',
+            level: 3,
+            title: 'Up Flow',
+            criteria: { ...furnCrit, stage: 'variable', airflow: 'upflow' },
+            count: countMatches({ ...furnCrit, stage: 'variable', airflow: 'upflow' }),
+            children: [
+              {
+                id: 'node-furn-var-up-high',
+                level: 4,
+                title: '90%+ High AFUE',
+                criteria: varUpHigh,
+                count: countMatches(varUpHigh),
+                children: makeWidthNodes('node-furn-var-up-high', varUpHigh, ['40000', '60000', '80000', '100000', '120000'])
+              }
+            ]
+          },
+          {
+            id: 'node-furn-var-down',
+            level: 3,
+            title: 'Downflow',
+            criteria: { ...furnCrit, stage: 'variable', airflow: 'downflow' },
+            count: countMatches({ ...furnCrit, stage: 'variable', airflow: 'downflow' }),
+            children: [
+              {
+                id: 'node-furn-var-down-high',
+                level: 4,
+                title: '90%+ High AFUE',
+                criteria: varDownHigh,
+                count: countMatches(varDownHigh),
+                children: makeWidthNodes('node-furn-var-down-high', varDownHigh, ['40000', '60000', '80000'])
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
+
+  // --- 2. AC & HEAT PUMPS ---
+  const acCrit = { category: 'systems' };
+  const acSplitCrit = { ...acCrit, stage: 'single' };
+  const acInvCrit = { ...acCrit, stage: 'two' };
+  const acMiniCrit = { ...acCrit, stage: 'variable' };
+
+  const acNode = {
+    id: 'node-cat-systems',
+    level: 1,
+    title: 'AC & Heat Pumps',
+    icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--rich-blue-electric);"><use href="#icon-snowflake"></use></svg>',
+    criteria: acCrit,
+    count: countMatches(acCrit),
+    children: [
+      {
+        id: 'node-ac-split',
+        level: 2,
+        title: 'Central Split Heat Pumps',
+        criteria: acSplitCrit,
+        count: countMatches(acSplitCrit),
+        children: makeBrandNodes('node-ac-split', acSplitCrit, 3)
+      },
+      {
+        id: 'node-ac-inv',
+        level: 2,
+        title: 'Inverter Condensers',
+        criteria: acInvCrit,
+        count: countMatches(acInvCrit),
+        children: makeBrandNodes('node-ac-inv', acInvCrit, 3)
+      },
+      {
+        id: 'node-ac-mini',
+        level: 2,
+        title: 'Multi-Zone Mini Splits',
+        criteria: acMiniCrit,
+        count: countMatches(acMiniCrit),
+        children: makeBrandNodes('node-ac-mini', acMiniCrit, 3)
+      }
+    ]
+  };
+
+  // --- 3. AIR FILTERS & IAQ ---
+  const filterCrit = { category: 'filters' };
+  const filMerv11 = { ...filterCrit, airflow: 'upflow' };
+  const filMerv13 = { ...filterCrit, stage: 'single' };
+  const filHepa = { ...filterCrit, stage: 'two' };
+  const filUvc = { ...filterCrit, stage: 'variable' };
+
+  const filterNode = {
+    id: 'node-cat-filters',
+    level: 1,
+    title: 'Air Filters & IAQ',
+    icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--mint-leaf);"><use href="#icon-wind"></use></svg>',
+    criteria: filterCrit,
+    count: countMatches(filterCrit),
+    children: [
+      {
+        id: 'node-fil-merv11',
+        level: 2,
+        title: 'MERV 11 Standard Media',
+        criteria: filMerv11,
+        count: countMatches(filMerv11),
+        children: makeBrandNodes('node-fil-merv11', filMerv11, 3)
+      },
+      {
+        id: 'node-fil-merv13',
+        level: 2,
+        title: 'MERV 13 Carbon Clean',
+        criteria: filMerv13,
+        count: countMatches(filMerv13),
+        children: makeBrandNodes('node-fil-merv13', filMerv13, 3)
+      },
+      {
+        id: 'node-fil-hepa',
+        level: 2,
+        title: 'HEPA Whole-House Filtration',
+        criteria: filHepa,
+        count: countMatches(filHepa),
+        children: makeBrandNodes('node-fil-hepa', filHepa, 3)
+      },
+      {
+        id: 'node-fil-uvc',
+        level: 2,
+        title: 'UV-C Air Purifiers',
+        criteria: filUvc,
+        count: countMatches(filUvc),
+        children: makeBrandNodes('node-fil-uvc', filUvc, 3)
+      }
+    ]
+  };
+
+  // --- 4. CONTROLS & THERMOSTATS ---
+  const thermCrit = { category: 'thermostats' };
+  const thermWifi = { ...thermCrit, stage: 'two' };
+  const thermProg = { ...thermCrit, stage: 'single' };
+
+  const thermNode = {
+    id: 'node-cat-thermostats',
+    level: 1,
+    title: 'Controls & Thermostats',
+    icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--vibrant-pink);"><use href="#icon-smartphone"></use></svg>',
+    criteria: thermCrit,
+    count: countMatches(thermCrit),
+    children: [
+      {
+        id: 'node-therm-wifi',
+        level: 2,
+        title: 'WiFi Smart Thermostats',
+        criteria: thermWifi,
+        count: countMatches(thermWifi),
+        children: makeBrandNodes('node-therm-wifi', thermWifi, 3)
+      },
+      {
+        id: 'node-therm-prog',
+        level: 2,
+        title: '7-Day Programmable',
+        criteria: thermProg,
+        count: countMatches(thermProg),
+        children: makeBrandNodes('node-therm-prog', thermProg, 3)
+      }
+    ]
+  };
+
+  // --- 5. COMMERCIAL SYSTEMS ---
+  const commCrit = { category: 'commercial' };
+  const commRtu = { ...commCrit, stage: 'single' };
+  const commFil = { ...commCrit, stage: 'two' };
+
+  const commNode = {
+    id: 'node-cat-commercial',
+    level: 1,
+    title: 'Commercial Systems',
+    icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--rich-blue-electric);"><use href="#icon-bolt"></use></svg>',
+    criteria: commCrit,
+    count: countMatches(commCrit),
+    children: [
+      {
+        id: 'node-comm-rtu',
+        level: 2,
+        title: 'Packaged RTU & Boilers',
+        criteria: commRtu,
+        count: countMatches(commRtu),
+        children: makeBrandNodes('node-comm-rtu', commRtu, 3)
+      },
+      {
+        id: 'node-comm-fil',
+        level: 2,
+        title: 'Commercial Filtration',
+        criteria: commFil,
+        count: countMatches(commFil),
+        children: makeBrandNodes('node-comm-fil', commFil, 3)
+      }
+    ]
+  };
+
+  // --- 6. OEM REPLACEMENT PARTS ---
+  const partsCrit = { category: 'parts' };
+  const partsElec = { ...partsCrit, stage: 'single' };
+  const partsSensor = { ...partsCrit, stage: 'single', airflow: 'downflow' };
+  const partsRef = { ...partsCrit, stage: 'two' };
+
+  const partsNode = {
+    id: 'node-cat-parts',
+    level: 1,
+    title: 'OEM Replacement Parts',
+    icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--text-muted);"><use href="#icon-tools"></use></svg>',
+    criteria: partsCrit,
+    count: countMatches(partsCrit),
+    children: [
+      {
+        id: 'node-parts-elec',
+        level: 2,
+        title: 'Capacitors & Contactors',
+        criteria: partsElec,
+        count: countMatches(partsElec),
+        children: makeBrandNodes('node-parts-elec', partsElec, 3)
+      },
+      {
+        id: 'node-parts-sensor',
+        level: 2,
+        title: 'Flame Sensors & Ignitors',
+        criteria: partsSensor,
+        count: countMatches(partsSensor),
+        children: makeBrandNodes('node-parts-sensor', partsSensor, 3)
+      },
+      {
+        id: 'node-parts-ref',
+        level: 2,
+        title: 'Refrigerants (R-410A / R-22)',
+        criteria: partsRef,
+        count: countMatches(partsRef),
+        children: makeBrandNodes('node-parts-ref', partsRef, 3)
+      }
+    ]
+  };
+
+  const allCategoryNodes = [
+    furnacesNode,
+    acNode,
+    filterNode,
+    thermNode,
+    commNode,
+    partsNode
+  ];
+
+  const categoriesHtml = allCategoryNodes.map((cat, idx) => {
+    return renderTreeNode({ ...cat, isLast: idx === allCategoryNodes.length - 1 });
   }).join('');
 
-  treeContainer.innerHTML = brandNodesHtml;
+  treeContainer.innerHTML = categoriesHtml;
 
   // Helper: Close all sibling tree-nodes under the same parent container
   function closeSiblings(node) {
@@ -1249,10 +1342,6 @@ function renderBreadcrumbs() {
     crumbs.push({ label: 'Commercial', action: 'sector', val: 'commercial' });
   }
 
-  if (currentBrand !== 'all') {
-    crumbs.push({ label: currentBrand, action: 'brand-tree', val: currentBrand });
-  }
-
   if (currentCategory !== 'all') {
     let catLabel = currentCategory;
     if (currentCategory === 'furnaces') catLabel = 'Furnaces & Heating';
@@ -1285,6 +1374,10 @@ function renderBreadcrumbs() {
 
   if (currentBtu !== 'all') {
     crumbs.push({ label: Number(currentBtu).toLocaleString() + ' BTU', action: 'btu', val: currentBtu });
+  }
+
+  if (currentBrand !== 'all') {
+    crumbs.push({ label: currentBrand, action: 'brand-tree', val: currentBrand });
   }
 
   if (selectedWidths.size > 0) {
@@ -1338,15 +1431,15 @@ function renderBreadcrumbs() {
       } else {
         html += `
           <button type="button" class="crumb-link" data-action="${c.action}" data-val="${c.val || ''}">
-            ${idx === 0 ? '<svg class="svg-icon" style="width:12px; height:12px;"><use href="#icon-home"></use></svg> ' : ''}${c.label}
+            <span>${c.label}</span>
           </button>
         `;
       }
     });
 
     html += `
-      <button type="button" class="crumb-clear-btn" id="crumbClearAllBtn" aria-label="Clear All Filters">
-        Clear All &times;
+      <button type="button" class="crumb-link crumb-clear-all" id="crumbClearAllBtn">
+        <span>Clear All &times;</span>
       </button>
     `;
   }
@@ -1363,12 +1456,7 @@ function renderBreadcrumbs() {
         return;
       }
       if (act === 'brand-tree') {
-        currentCategory = 'all';
-        currentStage = 'all';
-        currentAirflow = 'all';
-        currentAfue = 'all';
-        currentWidth = 'all';
-        currentBtu = 'all';
+        // Leaf level, keep selection
       } else if (act === 'sector') {
         currentBrand = 'all';
         currentCategory = 'all';
@@ -1378,27 +1466,32 @@ function renderBreadcrumbs() {
         currentWidth = 'all';
         currentBtu = 'all';
       } else if (act === 'category') {
+        currentBrand = 'all';
         currentStage = 'all';
         currentAirflow = 'all';
         currentAfue = 'all';
         currentWidth = 'all';
         currentBtu = 'all';
       } else if (act === 'stage') {
+        currentBrand = 'all';
         currentAirflow = 'all';
         currentAfue = 'all';
         currentWidth = 'all';
         currentBtu = 'all';
       } else if (act === 'airflow') {
+        currentBrand = 'all';
         currentAfue = 'all';
         currentWidth = 'all';
         currentBtu = 'all';
       } else if (act === 'afue') {
+        currentBrand = 'all';
         currentWidth = 'all';
         currentBtu = 'all';
       } else if (act === 'width') {
+        currentBrand = 'all';
         currentBtu = 'all';
       } else if (act === 'btu') {
-        currentBtu = 'all';
+        currentBrand = 'all';
       } else if (act === 'selectedWidth') {
         selectedWidths.delete(val);
       } else if (act === 'selectedBtu') {
