@@ -25,8 +25,10 @@ let filterRebatesOnly = false;
 let openBranches = new Set(['node-brand-ameristar']);
 let currentPage = 1;
 const itemsPerPage = 6;
+let currentRoleMode = localStorage.getItem('hvac_user_role') || 'consumer';
 
 document.addEventListener('DOMContentLoaded', () => {
+  initRoleSwitcher();
   initRockAutoTree();
   initFacetedFilters();
   initBrandSelect2();
@@ -317,6 +319,109 @@ function renderTreeNode({ id, level, title, count, icon, criteria, children, isL
       ${hasChildren ? `<div class="tree-children">${childrenHtml}</div>` : ''}
     </div>
   `;
+}
+
+function showHvacToast(message, type = 'info') {
+  let toastContainer = document.querySelector('#hvacToastContainer');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.id = 'hvacToastContainer';
+    toastContainer.style.cssText = 'position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:10px; pointer-events:none; max-width:380px;';
+    document.body.appendChild(toastContainer);
+  }
+  const toast = document.createElement('div');
+  const bgColor = type === 'success' ? '#059669' : type === 'warning' ? '#d97706' : '#0284c7';
+  toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 18px; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.5); font-size:0.85rem; font-weight:600; line-height:1.4; display:flex; align-items:center; gap:10px; transform:translateY(20px); opacity:0; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events:auto; border:1px solid rgba(255,255,255,0.2);`;
+  toast.innerHTML = `
+    <span style="font-size:1.1rem;">${type === 'success' ? '✓' : type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+    <div style="flex:1;">${message}</div>
+  `;
+  toastContainer.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+  });
+  setTimeout(() => {
+    toast.style.transform = 'translateY(10px)';
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+function initRoleSwitcher() {
+  const btnConsumer = document.querySelector('#btnRoleConsumer');
+  const btnEmployee = document.querySelector('#btnRoleEmployee');
+  const badgeIndicator = document.querySelector('#roleBadgeIndicator');
+  const badgeText = document.querySelector('#roleBadgeText');
+  const memoBanner = document.querySelector('#serviceOnlyMemoBanner');
+  const memoTitle = document.querySelector('#memoBannerTitle');
+  const memoText = document.querySelector('#memoBannerText');
+
+  function updateRoleUI() {
+    if (currentRoleMode === 'employee') {
+      if (btnConsumer) btnConsumer.classList.remove('active');
+      if (btnEmployee) btnEmployee.classList.add('active');
+      if (badgeIndicator) {
+        badgeIndicator.className = 'role-mode-badge-indicator mode-employee';
+      }
+      if (badgeText) {
+        badgeText.innerHTML = 'Employee View (Field Tech &bull; Naperville Depot)';
+      }
+      if (memoBanner) {
+        memoBanner.style.borderColor = 'rgba(52, 211, 153, 0.45)';
+        memoBanner.style.background = 'linear-gradient(90deg, rgba(52, 211, 153, 0.12), rgba(8, 17, 38, 0.95))';
+      }
+      if (memoTitle) {
+        memoTitle.textContent = 'INTERNAL TECH DISPATCH & WHOLESALE SUPPLY PORTAL:';
+      }
+      if (memoText) {
+        memoText.innerHTML = 'Showing technician trade pricing, vendor stock availability (Ferguson Naperville, Johnstone Supply Naperville/Joliet), and work order requisition controls. <strong>Field Tech ID: BC-7492 (Active)</strong>.';
+      }
+    } else {
+      if (btnConsumer) btnConsumer.classList.add('active');
+      if (btnEmployee) btnEmployee.classList.remove('active');
+      if (badgeIndicator) {
+        badgeIndicator.className = 'role-mode-badge-indicator mode-consumer';
+      }
+      if (badgeText) {
+        badgeText.innerHTML = 'Consumer View (Public)';
+      }
+      if (memoBanner) {
+        memoBanner.style.borderColor = 'rgba(255, 30, 142, 0.35)';
+        memoBanner.style.background = 'linear-gradient(90deg, rgba(255, 30, 142, 0.08), rgba(8, 17, 38, 0.95))';
+      }
+      if (memoTitle) {
+        memoTitle.textContent = 'Notice to Property Owners (Chicago & Suburbs):';
+      }
+      if (memoText) {
+        memoText.innerHTML = 'Best Comfort Heating &amp; Cooling is a licensed HVAC service &amp; installation provider. In accordance with manufacturer warranties and EPA safety regulations, <strong>we do not sell uninstalled equipment to the public for self-installation</strong>. All units include certified installation, load calculation, and 10-year warranty coverage. For emergency replacement, call our 24/7 dispatch at <a href="tel:8155560660" style="color:#ff1e8e; font-weight:800;">(815) 556-0660</a>.';
+      }
+    }
+  }
+
+  updateRoleUI();
+
+  if (btnConsumer) {
+    btnConsumer.addEventListener('click', () => {
+      if (currentRoleMode === 'consumer') return;
+      currentRoleMode = 'consumer';
+      localStorage.setItem('hvac_user_role', 'consumer');
+      updateRoleUI();
+      renderCatalog();
+      showHvacToast('Switched to Consumer View: Direct sales disabled, public service notice active.', 'info');
+    });
+  }
+
+  if (btnEmployee) {
+    btnEmployee.addEventListener('click', () => {
+      if (currentRoleMode === 'employee') return;
+      currentRoleMode = 'employee';
+      localStorage.setItem('hvac_user_role', 'employee');
+      updateRoleUI();
+      renderCatalog();
+      showHvacToast('Switched to Employee View: Field Technician tools & internal wholesale pricing unlocked.', 'success');
+    });
+  }
 }
 
 function initRockAutoTree() {
@@ -1702,11 +1807,130 @@ function renderCatalog() {
       const airflowLabel = airflow === 'downflow' ? 'Downflow' : 'Upflow';
       const sector = getProductSector(p);
 
+      const stampOverlayHtml = p.isDiscontinued ? `
+        <div class="stamp-overlay-wrapper">
+          <div class="stamp-badge-red">Discontinued</div>
+          ${p.discontinuedType === 'alternative' ? '<div class="stamp-badge-alt-green">SEE Alternative Replacement</div>' : ''}
+        </div>
+      ` : '';
+
+      const altBannerHtml = (p.isDiscontinued && p.alternativeItemNumber) ? `
+        <div class="card-alt-item-banner" data-alt-id="${p.alternativeProductId || ''}" title="Click to inspect alternative replacement specification">
+          <svg class="svg-icon" style="width:14px; height:14px; color:#38bdf8;"><use href="#icon-arrow-right"></use></svg>
+          Alternative ITEM NUMBER: <strong>${p.alternativeItemNumber}</strong>
+        </div>
+      ` : '';
+
+      const priceFormatted = p.price_from ? '$' + Number(p.price_from).toFixed(2) : '$149.99';
+      let priceDisplayHtml = '';
+      if (currentRoleMode === 'employee') {
+        priceDisplayHtml = `<div class="list-row-price" style="color:#34d399;">${priceFormatted} <span style="font-size:0.75rem; color:#38bdf8; font-weight:700;">(Tech Cost)</span></div>`;
+      } else {
+        if (p.isDiscontinued) {
+          priceDisplayHtml = `<div class="list-row-price"><span style="text-decoration:line-through; opacity:0.65; color:#94a3b8;">${priceFormatted}</span></div>`;
+        } else {
+          priceDisplayHtml = `<div class="list-row-price">${priceFormatted}</div>`;
+        }
+      }
+
+      let actionsHtml = '';
+      if (currentRoleMode === 'consumer') {
+        if (p.isDiscontinued) {
+          actionsHtml = `
+            <a href="product-detail.html?id=${p.id}" class="btn" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 12px; border-radius:4px; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
+              <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
+              Specs
+            </a>
+            <a href="tel:8155560660" class="btn btn-urgent-dispatch" style="padding:6px 10px; border-radius:4px; font-size:0.74rem; text-decoration:none;">
+              <svg class="svg-icon" style="width:12px; height:12px;"><use href="#icon-phone"></use></svg>
+              24/7 Dispatch (815) 556-0660
+            </a>
+          `;
+        } else {
+          actionsHtml = `
+            <a href="product-detail.html?id=${p.id}" class="btn" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 12px; border-radius:4px; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
+              <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
+              Specs
+            </a>
+            <button type="button" class="btn btn-request-quote" data-id="${p.id}" data-name="${p.name}" style="background:#ff523b; color:#fff; border:none; padding:6px 12px; border-radius:4px; font-size:0.8rem; font-weight:800;">Quote</button>
+          `;
+        }
+      } else {
+        actionsHtml = `
+          <a href="product-detail.html?id=${p.id}" class="btn" style="background:rgba(2,132,199,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.4); padding:6px 12px; border-radius:4px; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
+            <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
+            Tech Specs
+          </a>
+        `;
+      }
+
+      const empPanelHtml = currentRoleMode === 'employee' ? `
+        <div class="employee-ctrl-panel" style="margin-top:12px;">
+          <div class="panel-title">
+            <span>Field Tech Work Order Control</span>
+            <span style="color:#10b981; font-weight:700;">● Naperville Depot</span>
+          </div>
+          <div class="employee-row-item">
+            <span class="label">Part Only Installed:</span>
+            <span class="value" style="font-size:0.95rem; font-weight:900; color:#38bdf8;">$${(p.installedPrice || 505.00).toFixed(2)}</span>
+          </div>
+          <div class="employee-row-item">
+            <span class="label">Special Order:</span>
+            <span class="value" style="color:${p.specialOrder ? '#f59e0b' : '#10b981'}; font-weight:800;">${p.specialOrder ? 'Yes (Special Order 1-2 Days)' : 'No (In Truck Stock)'}</span>
+          </div>
+          <div class="employee-vendors">
+            <span class="vendor-label">Vendor / Supplier:</span>
+            <div class="vendor-links-list">
+              ${(p.vendors && p.vendors.length > 0) ? p.vendors.map(v => `
+                <div style="margin-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+                  <a href="${v.mapLink || '#'}" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline;">${v.name}</a>
+                  <span style="color:#94a3b8; font-size:0.72rem;">Stock: <strong style="color:#fff;">${v.stock}</strong> &bull; ${v.phone}</span>
+                </div>
+              `).join('') : `
+                <div style="margin-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+                  <a href="https://maps.google.com/?q=Ferguson+Naperville+IL" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline;">Ferguson Naperville</a>
+                  <span style="color:#94a3b8; font-size:0.72rem;">Stock: <strong style="color:#fff;">4 Avail</strong> &bull; (630) 555-0199</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <a href="https://maps.google.com/?q=Johnstone+Supply+Naperville+IL" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline;">Johnstone Supply Naperville/Joliet</a>
+                  <span style="color:#94a3b8; font-size:0.72rem;">Stock: <strong style="color:#fff;">2 Avail</strong> &bull; (815) 555-0144</span>
+                </div>
+              `}
+            </div>
+          </div>
+          <div class="employee-action-row">
+            <button type="button" class="btn-emp btn-emp-modify" data-id="${p.id}">Modify Price</button>
+            <button type="button" class="btn-emp btn-emp-quote" data-id="${p.id}" data-name="${p.name}">Send Quote</button>
+            <button type="button" class="btn-emp btn-emp-cart" data-id="${p.id}" data-name="${p.name}">Add To Cart</button>
+          </div>
+          <div class="employee-modify-box" id="empModifyBox-${p.id}">
+            <div class="modify-input-group">
+              <label style="font-size:0.75rem; color:#94a3b8; align-self:center;">Modify Our Price: $</label>
+              <input type="number" step="0.01" class="emp-price-input" id="empPriceInput-${p.id}" value="${(p.price_from || 149.99).toFixed(2)}">
+              <button type="button" class="btn-save-modify" data-id="${p.id}">Save</button>
+            </div>
+          </div>
+          <div class="employee-flags-row" style="margin-top:8px;">
+            <div class="flag-badge ${p.isDiscontinued ? '' : 'flag-inactive'}" data-flag="discontinued" data-id="${p.id}" style="cursor:pointer;" title="Click to toggle Discontinued flag">
+              <span>Flag: DISCONTINUED</span>
+              <span style="font-size:0.65rem; opacity:0.85;">${p.isDiscontinued ? 'ACTIVE' : 'OFF'}</span>
+            </div>
+            ${(p.discontinuedType === 'alternative' || p.alternativeItemNumber) ? `
+              <div class="flag-badge flag-alt" data-flag="alt" data-id="${p.id}" style="cursor:pointer;" title="Click to toggle Alternative flag">
+                <span>Flag: DISCONTINUED (See ALT)</span>
+                <span style="font-size:0.65rem; opacity:0.85;">#${p.alternativeItemNumber || '123ABC456'}</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      ` : '';
+
       return `
         <article class="product-list-row" data-id="${p.id}">
           <div class="list-row-top">
-            <div class="list-row-thumb">
+            <div class="list-row-thumb" style="position:relative; overflow:hidden;">
               <img src="${p.primaryImage}" alt="${p.name}" loading="lazy">
+              ${stampOverlayHtml}
             </div>
             <div class="list-row-info">
               <div class="list-row-brand">${p.brand} &bull; <span style="text-transform:capitalize;">${sector}</span></div>
@@ -1718,6 +1942,7 @@ function renderCatalog() {
               </div>
             </div>
           </div>
+          ${altBannerHtml}
           <div class="list-row-specs">
             <div class="spec-mini-item"><strong>Stage</strong><span>${stageLabel}</span></div>
             <div class="spec-mini-item"><strong>Airflow</strong><span>${airflowLabel}</span></div>
@@ -1727,16 +1952,13 @@ function renderCatalog() {
           <div class="list-row-actions">
             <div>
               <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">From</div>
-              <div class="list-row-price">${p.price_from ? '$' + p.price_from.toLocaleString() : '$149.99'}</div>
+              ${priceDisplayHtml}
             </div>
-            <div style="display:flex; gap:8px;">
-              <a href="product-detail.html?id=${p.id}" class="btn" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); padding:6px 12px; border-radius:4px; font-size:0.8rem; display:flex; align-items:center; gap:4px;">
-                <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
-                Specs
-              </a>
-              <button type="button" class="btn btn-request-quote" data-id="${p.id}" data-name="${p.name}" style="background:#ff523b; color:#fff; border:none; padding:6px 12px; border-radius:4px; font-size:0.8rem; font-weight:800;">Quote</button>
+            <div style="display:flex; gap:8px; align-items:center;">
+              ${actionsHtml}
             </div>
           </div>
+          ${empPanelHtml}
         </article>
       `;
     }).join('');
@@ -1750,17 +1972,156 @@ function renderCatalog() {
       const airflowLabel = airflow === 'downflow' ? 'Down Flow' : 'Up Flow';
       const sector = getProductSector(p);
 
+      const stampOverlayHtml = p.isDiscontinued ? `
+        <div class="stamp-overlay-wrapper">
+          <div class="stamp-badge-red">Discontinued</div>
+          ${p.discontinuedType === 'alternative' ? '<div class="stamp-badge-alt-green">SEE Alternative Replacement</div>' : ''}
+        </div>
+      ` : '';
+
+      const altBannerHtml = (p.isDiscontinued && p.alternativeItemNumber) ? `
+        <div class="card-alt-item-banner" data-alt-id="${p.alternativeProductId || ''}" title="Click to inspect alternative replacement specification">
+          <svg class="svg-icon" style="width:14px; height:14px; color:#38bdf8;"><use href="#icon-arrow-right"></use></svg>
+          Alternative ITEM NUMBER: <strong>${p.alternativeItemNumber}</strong>
+        </div>
+      ` : '';
+
+      const priceFormatted = p.price_from ? '$' + Number(p.price_from).toFixed(2) : '$149.99';
+      let priceDisplayHtml = '';
+      if (currentRoleMode === 'employee') {
+        priceDisplayHtml = `<span style="color:#34d399; font-weight:800; font-size:1.15rem;">From ${priceFormatted}</span> <span style="font-size:0.75rem; color:#38bdf8; font-weight:700;">(Tech Cost)</span>`;
+      } else {
+        if (p.isDiscontinued) {
+          priceDisplayHtml = `<span style="color:#fff; font-weight:800; font-size:1.15rem;">From <span style="text-decoration:line-through; opacity:0.65; color:#94a3b8;">${priceFormatted}</span></span>`;
+        } else {
+          priceDisplayHtml = `<span style="color:#fff; font-weight:800; font-size:1.15rem;">From ${priceFormatted}</span>`;
+        }
+      }
+
+      let footerButtonsHtml = '';
+      if (currentRoleMode === 'consumer') {
+        if (p.isDiscontinued) {
+          footerButtonsHtml = `
+            <div class="product-card-footer" style="display:grid; grid-template-columns:1fr 1.35fr; gap:8px; padding:0; border:none; background:transparent;">
+              <a href="product-detail.html?id=${p.id}" class="btn" style="background:transparent; color:#fff; font-weight:800; border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 6px; border-radius:6px; font-size:0.8rem;">
+                <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
+                View Specs
+              </a>
+              <a href="tel:8155560660" class="btn btn-urgent-dispatch" style="padding:8px 6px; border-radius:6px; font-size:0.73rem; text-decoration:none;">
+                <svg class="svg-icon" style="width:13px; height:13px;"><use href="#icon-phone"></use></svg>
+                24/7 URGENT DISPATCH (815) 556-0660
+              </a>
+            </div>
+          `;
+        } else {
+          footerButtonsHtml = `
+            <div class="product-card-footer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0; border:none; background:transparent;">
+              <a href="product-detail.html?id=${p.id}" class="btn" style="background:#ff523b; color:#fff; font-weight:800; border:none; display:flex; align-items:center; justify-content:center; gap:6px; padding:8px; border-radius:6px;">
+                <svg class="svg-icon" style="width:16px; height:16px;"><use href="#icon-eye"></use></svg>
+                View Specs
+              </a>
+              <button type="button" class="btn btn-request-quote" data-id="${p.id}" data-name="${p.name}" style="background:transparent; color:#fff; font-weight:800; border:1px solid rgba(255,255,255,0.2); padding:8px; border-radius:6px; transition:all 0.2s;">Quote</button>
+            </div>
+          `;
+        }
+      } else {
+        footerButtonsHtml = `
+          <div class="product-card-footer" style="display:grid; grid-template-columns:1fr; gap:8px; padding:0; border:none; background:transparent;">
+            <a href="product-detail.html?id=${p.id}" class="btn" style="background:rgba(2,132,199,0.2); color:#38bdf8; font-weight:800; border:1px solid rgba(56,189,248,0.4); display:flex; align-items:center; justify-content:center; gap:6px; padding:8px; border-radius:6px; font-size:0.82rem;">
+              <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-eye"></use></svg>
+              View Tech Specs &amp; Schematics
+            </a>
+          </div>
+        `;
+      }
+
+      const employeePanelHtml = currentRoleMode === 'employee' ? `
+        <div class="employee-ctrl-panel">
+          <div class="panel-title">
+            <span>Field Tech Work Order Control</span>
+            <span style="color:#10b981; font-weight:700;">● Naperville Depot</span>
+          </div>
+          
+          <div class="employee-row-item">
+            <span class="label">Part Only Installed:</span>
+            <span class="value" style="font-size:0.95rem; font-weight:900; color:#38bdf8;">$${(p.installedPrice || 505.00).toFixed(2)}</span>
+          </div>
+
+          <div class="employee-row-item">
+            <span class="label">Special Order:</span>
+            <span class="value" style="color:${p.specialOrder ? '#f59e0b' : '#10b981'}; font-weight:800;">${p.specialOrder ? 'Yes (Special Order 1-2 Days)' : 'No (In Truck Stock)'}</span>
+          </div>
+
+          <div class="employee-vendors">
+            <span class="vendor-label">Vendor / Supplier:</span>
+            <div class="vendor-links-list">
+              ${(p.vendors && p.vendors.length > 0) ? p.vendors.map(v => `
+                <div style="margin-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+                  <a href="${v.mapLink || '#'}" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline;">${v.name}</a>
+                  <span style="color:#94a3b8; font-size:0.72rem;">Stock: <strong style="color:#fff;">${v.stock}</strong> &bull; ${v.phone}</span>
+                </div>
+              `).join('') : `
+                <div style="margin-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+                  <a href="https://maps.google.com/?q=Ferguson+Naperville+IL" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline;">Ferguson Naperville</a>
+                  <span style="color:#94a3b8; font-size:0.72rem;">Stock: <strong style="color:#fff;">4 Avail</strong> &bull; (630) 555-0199</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <a href="https://maps.google.com/?q=Johnstone+Supply+Naperville+IL" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline;">Johnstone Supply Naperville/Joliet</a>
+                  <span style="color:#94a3b8; font-size:0.72rem;">Stock: <strong style="color:#fff;">2 Avail</strong> &bull; (815) 555-0144</span>
+                </div>
+              `}
+            </div>
+          </div>
+
+          <div class="employee-action-row">
+            <button type="button" class="btn-emp btn-emp-modify" data-id="${p.id}">
+              Modify Price
+            </button>
+            <button type="button" class="btn-emp btn-emp-quote" data-id="${p.id}" data-name="${p.name}">
+              Send Quote
+            </button>
+            <button type="button" class="btn-emp btn-emp-cart" data-id="${p.id}" data-name="${p.name}">
+              Add To Cart
+            </button>
+          </div>
+
+          <div class="employee-modify-box" id="empModifyBox-${p.id}">
+            <div class="modify-input-group">
+              <label style="font-size:0.75rem; color:#94a3b8; align-self:center;">Modify Our Price: $</label>
+              <input type="number" step="0.01" class="emp-price-input" id="empPriceInput-${p.id}" value="${(p.price_from || 149.99).toFixed(2)}">
+              <button type="button" class="btn-save-modify" data-id="${p.id}">Save</button>
+            </div>
+          </div>
+
+          <div class="employee-flags-row" style="margin-top:8px;">
+            <div class="flag-badge ${p.isDiscontinued ? '' : 'flag-inactive'}" data-flag="discontinued" data-id="${p.id}" style="cursor:pointer;" title="Click to toggle Discontinued flag">
+              <span>Flag: DISCONTINUED</span>
+              <span style="font-size:0.65rem; opacity:0.85;">${p.isDiscontinued ? 'ACTIVE' : 'OFF'}</span>
+            </div>
+            ${(p.discontinuedType === 'alternative' || p.alternativeItemNumber) ? `
+              <div class="flag-badge flag-alt" data-flag="alt" data-id="${p.id}" style="cursor:pointer;" title="Click to toggle Alternative flag">
+                <span>Flag: DISCONTINUED (See ALT)</span>
+                <span style="font-size:0.65rem; opacity:0.85;">#${p.alternativeItemNumber || '123ABC456'}</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      ` : '';
+
       return `
         <article class="product-card" data-id="${p.id}" style="display:flex; flex-direction:column; height:100%;">
-          <div class="product-card-thumb" style="position:relative; background:#fff; padding:12px; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+          <div class="product-card-thumb" style="position:relative; background:#fff; padding:12px; border-radius: var(--radius-sm) var(--radius-sm) 0 0; overflow:hidden;">
             <img src="${p.primaryImage}" alt="${p.name}" loading="lazy" style="width:100%; height:180px; object-fit:contain;">
             ${hasRebate ? '<span class="card-rebate-tag" style="position:absolute; top:8px; left:8px; background:#ff1e8e; color:#fff; font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:3px; z-index:2;">SPRING SALE - 15% OFF</span>' : '<span class="card-tag" style="position:absolute; top:8px; left:8px; background:#ff1e8e; color:#fff; font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:3px; z-index:2;">SPRING SALE - 15% OFF</span>'}
             <span class="card-brand-overlay" style="position:absolute; bottom:8px; right:8px; background:rgba(8,17,38,0.7); color:#00d4ff; font-weight:900; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; padding:4px 8px; border-radius:3px; z-index:2;">${p.brand}</span>
+            ${stampOverlayHtml}
           </div>
+
+          ${altBannerHtml}
 
           <div class="product-card-body" style="padding:16px; flex:1; display:flex; flex-direction:column;">
             <div style="margin-bottom:8px;">
-              <span style="color:#fff; font-weight:800; font-size:1.1rem;">From ${p.price_from ? '$' + p.price_from.toLocaleString() : '$149.99'}</span>
+              ${priceDisplayHtml}
             </div>
             
             <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; font-weight:600;">
@@ -1791,14 +2152,10 @@ function renderCatalog() {
               3 Sizes/Options Available
             </div>
             
-            <div class="product-card-footer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0; border:none; background:transparent;">
-              <a href="product-detail.html?id=${p.id}" class="btn" style="background:#ff523b; color:#fff; font-weight:800; border:none; display:flex; align-items:center; justify-content:center; gap:6px; padding:8px; border-radius:6px;">
-                <svg class="svg-icon" style="width:16px; height:16px;"><use href="#icon-eye"></use></svg>
-                View Specs
-              </a>
-              <button type="button" class="btn btn-request-quote" data-id="${p.id}" data-name="${p.name}" style="background:transparent; color:#fff; font-weight:800; border:1px solid rgba(255,255,255,0.2); padding:8px; border-radius:6px; transition:all 0.2s;">Quote</button>
-            </div>
+            ${footerButtonsHtml}
           </div>
+
+          ${employeePanelHtml}
         </article>
       `;
     }).join('');
@@ -1806,11 +2163,96 @@ function renderCatalog() {
 
   renderPagination(totalItems, totalPages);
 
+  // Wire Quote buttons
   grid.querySelectorAll('.btn-request-quote').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const pName = btn.getAttribute('data-name');
       openQuoteModalWithProduct(pName);
+    });
+  });
+
+  // Wire Alternative Banner clicks
+  grid.querySelectorAll('.card-alt-item-banner').forEach(banner => {
+    banner.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const altId = banner.getAttribute('data-alt-id');
+      if (altId) {
+        window.location.href = `product-detail.html?id=${encodeURIComponent(altId)}`;
+      } else {
+        showHvacToast('Redirecting to alternative replacement specifications...', 'info');
+      }
+    });
+  });
+
+  // Wire Employee Action: Send Quote
+  grid.querySelectorAll('.btn-emp-quote').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const pName = btn.getAttribute('data-name');
+      openQuoteModalWithProduct(pName);
+    });
+  });
+
+  // Wire Employee Action: Modify Price toggle
+  grid.querySelectorAll('.btn-emp-modify').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const box = document.querySelector(`#empModifyBox-${id}`);
+      if (box) {
+        box.classList.toggle('active');
+      }
+    });
+  });
+
+  // Wire Employee Action: Save Modified Price
+  grid.querySelectorAll('.btn-save-modify').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const input = document.querySelector(`#empPriceInput-${id}`);
+      if (input) {
+        const newPrice = parseFloat(input.value);
+        if (!isNaN(newPrice) && newPrice > 0) {
+          const targetProd = HVAC_PRODUCTS.find(x => x.id === id);
+          if (targetProd) {
+            targetProd.price_from = newPrice;
+            showHvacToast(`Price for "${targetProd.name}" updated to $${newPrice.toFixed(2)}.`, 'success');
+            renderCatalog();
+          }
+        }
+      }
+    });
+  });
+
+  // Wire Employee Action: Add To Cart / Truck Requisition
+  grid.querySelectorAll('.btn-emp-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const pName = btn.getAttribute('data-name') || 'Item';
+      const workOrderId = 'WO-' + Math.floor(100000 + Math.random() * 900000);
+      showHvacToast(`Added "${pName}" to Truck Stock requisition (${workOrderId})!`, 'success');
+    });
+  });
+
+  // Wire Employee Action: Toggle Flags
+  grid.querySelectorAll('.flag-badge').forEach(badge => {
+    badge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = badge.getAttribute('data-id');
+      const flagType = badge.getAttribute('data-flag');
+      const targetProd = HVAC_PRODUCTS.find(x => x.id === id);
+      if (targetProd) {
+        if (flagType === 'discontinued') {
+          targetProd.isDiscontinued = !targetProd.isDiscontinued;
+          showHvacToast(`Toggled DISCONTINUED flag: now ${targetProd.isDiscontinued ? 'ACTIVE' : 'OFF'}.`, 'warning');
+        } else if (flagType === 'alt') {
+          targetProd.discontinuedType = targetProd.discontinuedType === 'alternative' ? 'no_longer_available' : 'alternative';
+          showHvacToast(`Alternative flag updated: ${targetProd.discontinuedType}.`, 'info');
+        }
+        renderCatalog();
+      }
     });
   });
 }

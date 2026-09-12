@@ -209,8 +209,43 @@
 
 
 
+  <!-- Persistent Role Switcher Bar (Consumer View vs. Employee View) -->
+  <div class="role-mode-bar-container" id="roleModeBarContainer">
+    <div class="role-mode-bar-inner">
+      <div class="role-mode-info">
+        <svg class="svg-icon" style="width:16px; height:16px; color:var(--rich-blue-electric);"><use href="#icon-shield"></use></svg>
+        <span>Portal Mode:</span>
+        <span class="role-mode-badge-indicator mode-consumer" id="roleBadgeIndicator">
+          <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:currentColor;"></span>
+          <span id="roleBadgeText">Consumer View (Public)</span>
+        </span>
+      </div>
+      <div class="role-switch-buttons">
+        <button type="button" class="role-btn btn-role-consumer active" id="btnRoleConsumer" data-role="consumer">
+          <svg class="svg-icon" style="width:13px; height:13px;"><use href="#icon-users"></use></svg>
+          Consumer View
+        </button>
+        <button type="button" class="role-btn btn-role-employee" id="btnRoleEmployee" data-role="employee">
+          <svg class="svg-icon" style="width:13px; height:13px;"><use href="#icon-tools"></use></svg>
+          Employee View (Field Tech)
+        </button>
+      </div>
+    </div>
+  </div>
+
   <main class="section section-navy" id="productsCatalogSection">
     <div class="container">
+
+      <!-- Service Provider Public Notice Memo (Dynamic per Role) -->
+      <div class="service-only-memo-banner" id="serviceOnlyMemoBanner">
+        <svg class="service-only-memo-icon"><use href="#icon-tools"></use></svg>
+        <div class="service-only-memo-content">
+          <div class="service-only-memo-title" id="memoBannerTitle">Notice to Property Owners (Chicago &amp; Suburbs):</div>
+          <div class="service-only-memo-text" id="memoBannerText">
+            Best Comfort Heating &amp; Cooling is a licensed HVAC service &amp; installation provider. In accordance with manufacturer warranties and EPA safety regulations, <strong>we do not sell uninstalled equipment to the public for self-installation</strong>. All units include certified installation, load calculation, and 10-year warranty coverage. For emergency replacement, call our 24/7 dispatch at <a href="tel:8155560660" style="color:#ff1e8e; font-weight:800;">(815) 556-0660</a>.
+          </div>
+        </div>
+      </div>
 
       <div class="mobile-catalog-header">
         <div class="mobile-search-row">

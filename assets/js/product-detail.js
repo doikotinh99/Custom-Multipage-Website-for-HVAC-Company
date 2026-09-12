@@ -1,8 +1,97 @@
+let currentRoleMode = localStorage.getItem('hvac_user_role') || 'consumer';
+
+function showHvacToast(message, type = 'info') {
+  let toastContainer = document.querySelector('#hvacToastContainer');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.id = 'hvacToastContainer';
+    toastContainer.style.cssText = 'position:fixed; bottom:24px; right:24px; z-index:99999; display:flex; flex-direction:column; gap:10px; pointer-events:none; max-width:380px;';
+    document.body.appendChild(toastContainer);
+  }
+  const toast = document.createElement('div');
+  const bgColor = type === 'success' ? '#059669' : type === 'warning' ? '#d97706' : '#0284c7';
+  toast.style.cssText = `background:${bgColor}; color:#fff; padding:12px 18px; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.5); font-size:0.85rem; font-weight:600; line-height:1.4; display:flex; align-items:center; gap:10px; transform:translateY(20px); opacity:0; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events:auto; border:1px solid rgba(255,255,255,0.2);`;
+  toast.innerHTML = `
+    <span style="font-size:1.1rem;">${type === 'success' ? '✓' : type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+    <div style="flex:1;">${message}</div>
+  `;
+  toastContainer.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+  });
+  setTimeout(() => {
+    toast.style.transform = 'translateY(10px)';
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+function initRoleSwitcher(product) {
+  const btnConsumer = document.querySelector('#btnRoleConsumer');
+  const btnEmployee = document.querySelector('#btnRoleEmployee');
+  const badgeIndicator = document.querySelector('#roleBadgeIndicator');
+  const badgeText = document.querySelector('#roleBadgeText');
+
+  function updateRoleUI() {
+    if (currentRoleMode === 'employee') {
+      if (btnConsumer) btnConsumer.classList.remove('active');
+      if (btnEmployee) btnEmployee.classList.add('active');
+      if (badgeIndicator) {
+        badgeIndicator.className = 'role-mode-badge-indicator mode-employee';
+      }
+      if (badgeText) {
+        badgeText.innerHTML = 'Employee View (Field Tech &bull; Naperville Depot)';
+      }
+    } else {
+      if (btnConsumer) btnConsumer.classList.add('active');
+      if (btnEmployee) btnEmployee.classList.remove('active');
+      if (badgeIndicator) {
+        badgeIndicator.className = 'role-mode-badge-indicator mode-consumer';
+      }
+      if (badgeText) {
+        badgeText.innerHTML = 'Consumer View (Public)';
+      }
+    }
+  }
+
+  updateRoleUI();
+
+  if (btnConsumer) {
+    btnConsumer.addEventListener('click', () => {
+      if (currentRoleMode === 'consumer') return;
+      currentRoleMode = 'consumer';
+      localStorage.setItem('hvac_user_role', 'consumer');
+      updateRoleUI();
+      if (product) {
+        renderProductDetail(product);
+        renderRelatedProducts(product);
+      }
+      showHvacToast('Switched to Consumer View: Public spec display active.', 'info');
+    });
+  }
+
+  if (btnEmployee) {
+    btnEmployee.addEventListener('click', () => {
+      if (currentRoleMode === 'employee') return;
+      currentRoleMode = 'employee';
+      localStorage.setItem('hvac_user_role', 'employee');
+      updateRoleUI();
+      if (product) {
+        renderProductDetail(product);
+        renderRelatedProducts(product);
+      }
+      showHvacToast('Switched to Employee View: Internal tech controls & trade pricing unlocked.', 'success');
+    });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id') || '9ff1077b-2ec5-48ab-81a8-d42a05c231b8'; 
 
   const product = HVAC_PRODUCTS.find(p => p.id === productId) || HVAC_PRODUCTS[0];
+  initRoleSwitcher(product);
   if (product) {
     renderProductDetail(product);
     renderRelatedProducts(product);
@@ -326,6 +415,45 @@ function renderProductDetail(product) {
     });
   }
 
+  // Inject Discontinued Stamps on Primary Image Box
+  const imageBox = document.querySelector('#primaryImageBox');
+  if (imageBox) {
+    const oldStamp = imageBox.querySelector('.stamp-overlay-wrapper');
+    if (oldStamp) oldStamp.remove();
+    if (product.isDiscontinued) {
+      const stampEl = document.createElement('div');
+      stampEl.className = 'stamp-overlay-wrapper';
+      stampEl.innerHTML = `
+        <div class="stamp-badge-red">Discontinued</div>
+        ${product.discontinuedType === 'alternative' ? '<div class="stamp-badge-alt-green">SEE Alternative Replacement</div>' : ''}
+      `;
+      imageBox.appendChild(stampEl);
+    }
+  }
+
+  // Inject Alternative Item Banner
+  const oldAltBanner = document.querySelector('#detailAltBanner');
+  if (oldAltBanner) oldAltBanner.remove();
+  if (product.isDiscontinued && product.alternativeItemNumber) {
+    const altBanner = document.createElement('div');
+    altBanner.id = 'detailAltBanner';
+    altBanner.className = 'card-alt-item-banner';
+    altBanner.style.cssText = 'margin-top:14px; border-radius:6px; padding:10px 16px; font-size:0.85rem; cursor:pointer;';
+    altBanner.innerHTML = `
+      <svg class="svg-icon" style="width:16px; height:16px; color:#38bdf8;"><use href="#icon-arrow-right"></use></svg>
+      <span>Alternative ITEM NUMBER: <strong>${product.alternativeItemNumber}</strong> (Click to view replacement)</span>
+    `;
+    altBanner.addEventListener('click', () => {
+      if (product.alternativeProductId) {
+        window.location.href = `product-detail.html?id=${encodeURIComponent(product.alternativeProductId)}`;
+      } else {
+        showHvacToast('Redirecting to alternative replacement specifications...', 'info');
+      }
+    });
+    const showcaseCont = document.querySelector('.primary-image-container');
+    if (showcaseCont) showcaseCont.appendChild(altBanner);
+  }
+
   const ratingStarsEl = document.querySelector('#detailRatingStars');
   const ratingCountEl = document.querySelector('#detailRatingCount');
   if (ratingStarsEl) {
@@ -357,10 +485,21 @@ function renderProductDetail(product) {
         </button>
       `).join('');
 
+      let headerPriceHtml = '';
+      if (currentRoleMode === 'employee') {
+        headerPriceHtml = `<span id="detailLivePrice" style="font-size:1.4rem; font-weight:900; color:#34d399;">$${Number(product.variants[0].price).toFixed(2)} <span style="font-size:0.75rem; color:#38bdf8; font-weight:700;">(Tech Cost)</span></span>`;
+      } else {
+        if (product.isDiscontinued) {
+          headerPriceHtml = `<span id="detailLivePrice" style="font-size:1.4rem; font-weight:900; color:var(--rich-blue-electric);">From <span style="text-decoration:line-through; opacity:0.65; color:#94a3b8;">$${Number(product.variants[0].price).toFixed(2)}</span></span>`;
+        } else {
+          headerPriceHtml = `<span id="detailLivePrice" style="font-size:1.4rem; font-weight:900; color:var(--rich-blue-electric);">$${Number(product.variants[0].price).toFixed(2)}</span>`;
+        }
+      }
+
       variantContainer.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
           <span style="font-size:0.88rem; font-weight:700; color:#fff;">Select Model / Size Variant:</span>
-          <span id="detailLivePrice" style="font-size:1.4rem; font-weight:900; color:var(--rich-blue-electric);">$${Number(product.variants[0].price).toFixed(2)}</span>
+          ${headerPriceHtml}
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:6px;">
           ${optionsHtml}
@@ -385,7 +524,15 @@ function renderProductDetail(product) {
           const priceDisplay = document.querySelector('#detailLivePrice');
           const skuDisplay = document.querySelector('#detailVariantSku');
 
-          if (priceDisplay) priceDisplay.textContent = '$' + Number(priceVal).toFixed(2);
+          if (priceDisplay) {
+            if (currentRoleMode === 'employee') {
+              priceDisplay.innerHTML = `$${Number(priceVal).toFixed(2)} <span style="font-size:0.75rem; color:#38bdf8; font-weight:700;">(Tech Cost)</span>`;
+            } else if (product.isDiscontinued) {
+              priceDisplay.innerHTML = `From <span style="text-decoration:line-through; opacity:0.65; color:#94a3b8;">$${Number(priceVal).toFixed(2)}</span>`;
+            } else {
+              priceDisplay.textContent = '$' + Number(priceVal).toFixed(2);
+            }
+          }
           if (skuDisplay) {
             skuDisplay.innerHTML = `Selected SKU: <strong style="color:#fff;">${skuVal}</strong> &bull; Status: <span style="color:#34d399; font-weight:600;">In Stock</span>`;
           }
@@ -396,10 +543,20 @@ function renderProductDetail(product) {
       });
     } else {
       if (product.price_from) {
+        let priceHtml = '';
+        if (currentRoleMode === 'employee') {
+          priceHtml = `<span style="font-size:1.4rem; font-weight:900; color:#34d399;">$${Number(product.price_from).toFixed(2)} <span style="font-size:0.75rem; color:#38bdf8; font-weight:700;">(Tech Cost)</span></span>`;
+        } else {
+          if (product.isDiscontinued) {
+            priceHtml = `<span style="font-size:1.4rem; font-weight:900; color:var(--rich-blue-electric);">From <span style="text-decoration:line-through; opacity:0.65; color:#94a3b8;">$${Number(product.price_from).toFixed(2)}</span></span>`;
+          } else {
+            priceHtml = `<span style="font-size:1.4rem; font-weight:900; color:var(--rich-blue-electric);">$${Number(product.price_from).toFixed(2)}</span>`;
+          }
+        }
         variantContainer.innerHTML = `
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:0.88rem; font-weight:700; color:#fff;">Reference Unit Price:</span>
-            <span style="font-size:1.4rem; font-weight:900; color:var(--rich-blue-electric);">$${Number(product.price_from).toFixed(2)}</span>
+            <span style="font-size:0.88rem; font-weight:700; color:#fff;">${currentRoleMode === 'employee' ? 'Technician Wholesale Price:' : 'Reference Unit Price:'}</span>
+            ${priceHtml}
           </div>
         `;
         variantContainer.style.display = 'block';
@@ -413,6 +570,197 @@ function renderProductDetail(product) {
         variantContainer.style.display = 'block';
       }
     }
+  }
+
+  // Update Action Bar according to currentRoleMode
+  const actionBar = document.querySelector('.product-action-bar');
+  if (actionBar) {
+    if (currentRoleMode === 'consumer') {
+      if (product.isDiscontinued) {
+        actionBar.innerHTML = `
+          <button type="button" class="btn btn-salmon btn-request-quote" id="btnDetailQuote" data-product-name="${product.brand} - ${product.name} (Discontinued Alternative Ingestion)">
+            <svg class="svg-icon"><use href="#icon-tools"></use></svg> Request Discontinued Part Spec &amp; Diagnostic
+          </button>
+          <a href="tel:8155560660" class="btn btn-urgent-dispatch" style="padding:10px 16px; border-radius:6px; font-size:0.85rem; text-decoration:none;">
+            <svg class="svg-icon" style="width:16px; height:16px;"><use href="#icon-phone"></use></svg>
+            24/7 URGENT DISPATCH (815) 556-0660
+          </a>
+        `;
+      } else {
+        actionBar.innerHTML = `
+          <button type="button" class="btn btn-salmon btn-request-quote" id="btnDetailQuote" data-product-name="${product.brand} - ${product.name}">
+            <svg class="svg-icon"><use href="#icon-dollar"></use></svg> Request Instant Price &amp; Rebate Quote
+          </button>
+          <a href="contact.html" class="btn btn-outline">
+            <svg class="svg-icon"><use href="#icon-calendar"></use></svg> Schedule In-Home Assessment
+          </a>
+        `;
+      }
+    } else {
+      actionBar.innerHTML = `
+        <button type="button" class="btn btn-salmon btn-request-quote" id="btnDetailQuote" data-product-name="${product.brand} - ${product.name}">
+          <svg class="svg-icon"><use href="#icon-phone"></use></svg> Send Customer Quote
+        </button>
+        <button type="button" class="btn btn-emp-cart-detail" style="background:#0284c7; color:#fff; font-weight:800; border:none; padding:10px 16px; border-radius:6px; font-size:0.85rem; cursor:pointer;" data-name="${product.name}">
+          <svg class="svg-icon" style="width:14px; height:14px;"><use href="#icon-cart"></use></svg> Add to Truck Stock Requisition
+        </button>
+      `;
+      const cartBtn = actionBar.querySelector('.btn-emp-cart-detail');
+      if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+          const wo = 'WO-' + Math.floor(100000 + Math.random() * 900000);
+          showHvacToast(`Added "${product.name}" to Truck Stock requisition (${wo})!`, 'success');
+        });
+      }
+    }
+
+    const dynamicQuoteBtn = actionBar.querySelector('#btnDetailQuote');
+    if (dynamicQuoteBtn) {
+      dynamicQuoteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pName = dynamicQuoteBtn.getAttribute('data-product-name') || `${product.brand} - ${product.name}`;
+        const modal = document.querySelector('#quoteModal');
+        const modalProductName = document.querySelector('#modalProductName');
+        const modalProductField = document.querySelector('#modalProductField');
+        if (modalProductName) modalProductName.textContent = pName;
+        if (modalProductField) modalProductField.value = pName;
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    }
+  }
+
+  // Render Employee Control Panel if in employee mode
+  let detailEmpPanel = document.querySelector('#detailEmployeeControlPanel');
+  if (detailEmpPanel) detailEmpPanel.remove();
+
+  if (currentRoleMode === 'employee') {
+    detailEmpPanel = document.createElement('div');
+    detailEmpPanel.id = 'detailEmployeeControlPanel';
+    detailEmpPanel.className = 'employee-ctrl-panel';
+    detailEmpPanel.style.marginTop = '16px';
+    detailEmpPanel.innerHTML = `
+      <div class="panel-title">
+        <span>Field Tech Internal Work Order Control</span>
+        <span style="color:#10b981; font-weight:700;">● Naperville Depot Active</span>
+      </div>
+      <div class="employee-row-item">
+        <span class="label">Part Only Installed:</span>
+        <span class="value" style="font-size:1.1rem; font-weight:900; color:#38bdf8;">$${(product.installedPrice || 505.00).toFixed(2)}</span>
+      </div>
+      <div class="employee-row-item">
+        <span class="label">Special Order:</span>
+        <span class="value" style="color:${product.specialOrder ? '#f59e0b' : '#10b981'}; font-weight:800;">${product.specialOrder ? 'Yes (Special Order 1-2 Days)' : 'No (In Truck Stock)'}</span>
+      </div>
+      <div class="employee-vendors">
+        <span class="vendor-label">Vendor / Supplier Availability:</span>
+        <div class="vendor-links-list">
+          ${(product.vendors && product.vendors.length > 0) ? product.vendors.map(v => `
+            <div style="margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
+              <a href="${v.mapLink || '#'}" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline; font-weight:700;">${v.name}</a>
+              <span style="color:#94a3b8; font-size:0.75rem;">Stock: <strong style="color:#fff;">${v.stock}</strong> &bull; ${v.phone}</span>
+            </div>
+          `).join('') : `
+            <div style="margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
+              <a href="https://maps.google.com/?q=Ferguson+Naperville+IL" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline; font-weight:700;">Ferguson Naperville</a>
+              <span style="color:#94a3b8; font-size:0.75rem;">Stock: <strong style="color:#fff;">4 Avail</strong> &bull; (630) 555-0199</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <a href="https://maps.google.com/?q=Johnstone+Supply+Naperville+IL" target="_blank" rel="noopener" class="vendor-link" style="color:#67e8f9; text-decoration:underline; font-weight:700;">Johnstone Supply Naperville/Joliet</a>
+              <span style="color:#94a3b8; font-size:0.75rem;">Stock: <strong style="color:#fff;">2 Avail</strong> &bull; (815) 555-0144</span>
+            </div>
+          `}
+        </div>
+      </div>
+      <div class="employee-action-row">
+        <button type="button" class="btn-emp btn-emp-modify" data-id="${product.id}">Modify Price</button>
+        <button type="button" class="btn-emp btn-emp-quote" data-id="${product.id}" data-name="${product.name}">Send Quote</button>
+        <button type="button" class="btn-emp btn-emp-cart" data-id="${product.id}" data-name="${product.name}">Add To Cart</button>
+      </div>
+      <div class="employee-modify-box" id="detailEmpModifyBox-${product.id}">
+        <div class="modify-input-group">
+          <label style="font-size:0.75rem; color:#94a3b8; align-self:center;">Modify Our Price: $</label>
+          <input type="number" step="0.01" class="emp-price-input" id="detailEmpPriceInput-${product.id}" value="${(product.price_from || 149.99).toFixed(2)}">
+          <button type="button" class="btn-save-modify" data-id="${product.id}">Save</button>
+        </div>
+      </div>
+      <div class="employee-flags-row" style="margin-top:8px;">
+        <div class="flag-badge ${product.isDiscontinued ? '' : 'flag-inactive'}" data-flag="discontinued" data-id="${product.id}" style="cursor:pointer;" title="Click to toggle Discontinued flag">
+          <span>Flag: DISCONTINUED</span>
+          <span style="font-size:0.65rem; opacity:0.85;">${product.isDiscontinued ? 'ACTIVE' : 'OFF'}</span>
+        </div>
+        ${(product.discontinuedType === 'alternative' || product.alternativeItemNumber) ? `
+          <div class="flag-badge flag-alt" data-flag="alt" data-id="${product.id}" style="cursor:pointer;" title="Click to toggle Alternative flag">
+            <span>Flag: DISCONTINUED (See ALT)</span>
+            <span style="font-size:0.65rem; opacity:0.85;">#${product.alternativeItemNumber || '123ABC456'}</span>
+          </div>
+        ` : ''}
+      </div>
+    `;
+    if (actionBar && actionBar.parentNode) {
+      actionBar.parentNode.insertBefore(detailEmpPanel, actionBar.nextSibling);
+    }
+
+    const modifyBtn = detailEmpPanel.querySelector('.btn-emp-modify');
+    const modifyBox = detailEmpPanel.querySelector(`#detailEmpModifyBox-${product.id}`);
+    if (modifyBtn && modifyBox) {
+      modifyBtn.addEventListener('click', () => modifyBox.classList.toggle('active'));
+    }
+
+    const saveBtn = detailEmpPanel.querySelector('.btn-save-modify');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        const input = detailEmpPanel.querySelector(`#detailEmpPriceInput-${product.id}`);
+        if (input) {
+          const pVal = parseFloat(input.value);
+          if (!isNaN(pVal) && pVal > 0) {
+            product.price_from = pVal;
+            showHvacToast(`Price updated to $${pVal.toFixed(2)}`, 'success');
+            renderProductDetail(product);
+          }
+        }
+      });
+    }
+
+    const cartBtn = detailEmpPanel.querySelector('.btn-emp-cart');
+    if (cartBtn) {
+      cartBtn.addEventListener('click', () => {
+        const wo = 'WO-' + Math.floor(100000 + Math.random() * 900000);
+        showHvacToast(`Added "${product.name}" to Truck Stock requisition (${wo})!`, 'success');
+      });
+    }
+
+    const quoteBtn = detailEmpPanel.querySelector('.btn-emp-quote');
+    if (quoteBtn) {
+      quoteBtn.addEventListener('click', () => {
+        const modal = document.querySelector('#quoteModal');
+        const modalProd = document.querySelector('#modalProductName');
+        const modalField = document.querySelector('#modalProductField');
+        if (modalProd) modalProd.textContent = `${product.brand} - ${product.name}`;
+        if (modalField) modalField.value = `${product.brand} - ${product.name}`;
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    }
+
+    const flagBadges = detailEmpPanel.querySelectorAll('.flag-badge');
+    flagBadges.forEach(badge => {
+      badge.addEventListener('click', () => {
+        const flagType = badge.getAttribute('data-flag');
+        if (flagType === 'discontinued') {
+          product.isDiscontinued = !product.isDiscontinued;
+          showHvacToast(`Toggled DISCONTINUED flag: now ${product.isDiscontinued ? 'ACTIVE' : 'OFF'}.`, 'warning');
+        } else if (flagType === 'alt') {
+          product.discontinuedType = product.discontinuedType === 'alternative' ? 'no_longer_available' : 'alternative';
+          showHvacToast(`Alternative flag updated: ${product.discontinuedType}.`, 'info');
+        }
+        renderProductDetail(product);
+      });
+    });
   }
 
   const promoBox = document.querySelector('#detailPromoAlert');
@@ -629,15 +977,31 @@ function renderRelatedProducts(currentProduct) {
   const related = HVAC_PRODUCTS.filter(p => p.id !== currentProduct.id).slice(0, 4);
 
   container.innerHTML = related.map(p => {
-    const priceText = p.variants && p.variants.length > 0 
-      ? `From $${Number(p.price_from).toFixed(2)}` 
-      : (p.price_from ? `$${Number(p.price_from).toFixed(2)}` : 'Request Quote');
+    let priceText = '';
+    const rawPrice = p.price_from ? '$' + Number(p.price_from).toFixed(2) : '$149.99';
+    if (currentRoleMode === 'employee') {
+      priceText = `<span style="color:#34d399;">From ${rawPrice}</span>`;
+    } else {
+      if (p.isDiscontinued) {
+        priceText = `From <span style="text-decoration:line-through; opacity:0.65; color:#94a3b8;">${rawPrice}</span>`;
+      } else {
+        priceText = `From ${rawPrice}`;
+      }
+    }
+
+    const stampOverlayHtml = p.isDiscontinued ? `
+      <div class="stamp-overlay-wrapper">
+        <div class="stamp-badge-red">Discontinued</div>
+        ${p.discontinuedType === 'alternative' ? '<div class="stamp-badge-alt-green">SEE Alternative Replacement</div>' : ''}
+      </div>
+    ` : '';
 
     return `
       <article class="card card-interactive" style="display: flex; flex-direction: column; overflow: hidden; padding: 0;">
         <div class="product-card-thumb" style="background: #ffffff; padding: 16px; text-align: center; position: relative; border-bottom: 1px solid rgba(255,255,255,0.08); height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
           <span class="card-tag ${p.tagClass}" style="position: absolute; top: 10px; left: 10px; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.18); font-size: 0.7rem; padding: 3px 8px;">${p.tag}</span>
           <img src="${p.primaryImage}" alt="${p.name}" style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.35s ease;" onerror="this.src='assets/images/ac-main.svg';" />
+          ${stampOverlayHtml}
         </div>
         <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">

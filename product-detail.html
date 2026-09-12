@@ -197,6 +197,30 @@
     </div>
   </nav>
 
+  <!-- Persistent Role Switcher Bar (Consumer View vs. Employee View) -->
+  <div class="role-mode-bar-container" id="roleModeBarContainer">
+    <div class="role-mode-bar-inner">
+      <div class="role-mode-info">
+        <svg class="svg-icon" style="width:16px; height:16px; color:var(--rich-blue-electric);"><use href="#icon-shield"></use></svg>
+        <span>Portal Mode:</span>
+        <span class="role-mode-badge-indicator mode-consumer" id="roleBadgeIndicator">
+          <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:currentColor;"></span>
+          <span id="roleBadgeText">Consumer View (Public)</span>
+        </span>
+      </div>
+      <div class="role-switch-buttons">
+        <button type="button" class="role-btn btn-role-consumer active" id="btnRoleConsumer" data-role="consumer">
+          <svg class="svg-icon" style="width:13px; height:13px;"><use href="#icon-users"></use></svg>
+          Consumer View
+        </button>
+        <button type="button" class="role-btn btn-role-employee" id="btnRoleEmployee" data-role="employee">
+          <svg class="svg-icon" style="width:13px; height:13px;"><use href="#icon-tools"></use></svg>
+          Employee View (Field Tech)
+        </button>
+      </div>
+    </div>
+  </div>
+
   <main class="section section-navy" style="padding-top: 30px;">
     <div class="container">
       

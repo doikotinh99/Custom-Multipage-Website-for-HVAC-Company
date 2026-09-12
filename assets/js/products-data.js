@@ -32,7 +32,18 @@ const HVAC_PRODUCTS = [
     "spot_text": "Premium high-efficiency residential filter",
     "status": "active_showing",
     "is_part": false,
-    "price_from": null,
+    "price_from": 149.99,
+    "isDiscontinued": true,
+    "discontinuedType": "alternative",
+    "alternativeItemNumber": "123ABC456",
+    "alternativeProductId": "amana-furnace-14-30k",
+    "installedPrice": 505.00,
+    "specialOrder": true,
+    "vendors": [
+      { "name": "Ferguson", "location": "Naperville", "hasLink": true, "url": "https://www.ferguson.com" },
+      { "name": "Johnstone Supply", "location": "Naperville", "hasLink": false },
+      { "name": "Johnstone Supply", "location": "Joliet", "hasLink": false }
+    ],
     "variants": [],
     "promo_title": "Bundle Deal Available",
     "promo_description": "Buy 4 filters get 1 free!",
@@ -110,6 +121,14 @@ const HVAC_PRODUCTS = [
     "status": "active_showing",
     "is_part": true,
     "price_from": 16.99,
+    "isDiscontinued": true,
+    "discontinuedType": "no_longer_available",
+    "installedPrice": 240.00,
+    "specialOrder": true,
+    "vendors": [
+      { "name": "Ferguson", "location": "Naperville", "hasLink": true, "url": "https://www.ferguson.com" },
+      { "name": "Johnstone Supply", "location": "Joliet", "hasLink": false }
+    ],
     "variants": [
       {
         "name": "45/5 MFD 440V",
