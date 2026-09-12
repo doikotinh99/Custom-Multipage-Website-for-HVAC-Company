@@ -6,10 +6,14 @@
   }
 })();
 
+let currentBrand = 'all';
 let currentSector = 'all';
 let currentCategory = 'all';
 let currentStage = 'all';
 let currentAirflow = 'all';
+let currentAfue = 'all';
+let currentWidth = 'all';
+let currentBtu = 'all';
 let selectedAfue = new Set();
 let selectedWidths = new Set();
 let selectedBtus = new Set();
@@ -18,7 +22,7 @@ let currentSearch = '';
 let currentSort = 'default';
 let currentViewMode = 'grid';
 let filterRebatesOnly = false;
-let openBranches = new Set();
+let openBranches = new Set(['node-brand-ameristar']);
 let currentPage = 1;
 const itemsPerPage = 6;
 
@@ -52,8 +56,10 @@ function getProductStage(p) {
 function getProductAirflow(p) {
   const a = (p.specs && p.specs.airflow) || '';
   const lower = a.toLowerCase();
+  if (lower.includes('multi') || lower.includes('convertible') || lower.includes('universal') || (lower.includes('upflow') && lower.includes('downflow'))) {
+    return 'multipoise';
+  }
   if (lower.includes('downflow')) return 'downflow';
-  if (lower.includes('multipoise')) return 'multipoise';
   return 'upflow';
 }
 
@@ -63,13 +69,21 @@ function getProductWidth(p) {
   return m ? m[0] : '17.5"';
 }
 
+function normalizeWidth(w) {
+  if (!w || w === 'all') return '';
+  return String(w).replace(/[^0-9.]/g, '');
+}
+
 function getProductAfue(p) {
-  const eff = p.efficiency || '';
-  const m = eff.match(/\d+(?:%|\s*SEER)/);
-  return m ? m[0] : '80% AFUE';
+  const eff = (p.efficiency || '').toLowerCase();
+  return eff.includes('80%') ? '80%' : 'high';
 }
 
 function getProductBtu(p) {
+  if (p.btu) {
+    const num = parseInt(p.btu.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(num) && num > 0) return num;
+  }
   const name = (p.name || '').toLowerCase();
   const spot = (p.spot_text || '').toLowerCase();
   const desc = (p.promo_description || '').toLowerCase();
@@ -177,10 +191,14 @@ function updateMobileFilterBadge() {
   const badge = document.querySelector('#mobileFilterBadge');
   if (!badge) return;
   let count = 0;
+  if (currentBrand !== 'all') count++;
   if (currentSector !== 'all') count++;
   if (currentCategory !== 'all') count++;
   if (currentStage !== 'all') count++;
   if (currentAirflow !== 'all') count++;
+  if (currentAfue !== 'all') count++;
+  if (currentWidth !== 'all') count++;
+  if (currentBtu !== 'all') count++;
   count += selectedAfue.size;
   count += selectedWidths.size;
   count += selectedBtus.size;
@@ -195,276 +213,607 @@ function updateMobileFilterBadge() {
   }
 }
 
+function countMatches(criteria) {
+  return HVAC_PRODUCTS.filter(p => {
+    if (criteria.brand && criteria.brand !== 'all') {
+      if (p.brand.toLowerCase() !== criteria.brand.toLowerCase()) return false;
+    }
+    if (criteria.sector && criteria.sector !== 'all') {
+      if (getProductSector(p) !== criteria.sector) return false;
+    }
+    if (criteria.category && criteria.category !== 'all') {
+      if (criteria.category === 'furnaces') {
+        const isFurnace = p.category === 'furnaces' || 
+          (p.category === 'systems' && (p.name.toLowerCase().includes('furnace') || p.name.toLowerCase().includes('boiler'))) || 
+          (p.originalCategory && p.originalCategory.toLowerCase().includes('furnace'));
+        if (!isFurnace) return false;
+      } else if (criteria.category === 'commercial') {
+        if (getProductSector(p) !== 'commercial') return false;
+      } else if (p.category !== criteria.category) {
+        return false;
+      }
+    }
+    if (criteria.stage && criteria.stage !== 'all') {
+      if (getProductStage(p) !== criteria.stage) return false;
+    }
+    if (criteria.airflow && criteria.airflow !== 'all') {
+      const af = getProductAirflow(p);
+      if (af !== 'multipoise' && af !== criteria.airflow) return false;
+    }
+    if (criteria.afue && criteria.afue !== 'all') {
+      const eff = (p.efficiency || '').toLowerCase();
+      if (criteria.afue === '80%' && !eff.includes('80%')) return false;
+      if (criteria.afue === 'high' && (eff.includes('80%') || eff.includes('standard'))) return false;
+    }
+    if (criteria.width && criteria.width !== 'all') {
+      if (normalizeWidth(getProductWidth(p)) !== normalizeWidth(criteria.width)) return false;
+    }
+    if (criteria.btu && criteria.btu !== 'all') {
+      const btu = getProductBtu(p);
+      const target = parseInt(criteria.btu, 10);
+      if (Math.abs(btu - target) > 5000) return false;
+    }
+    return true;
+  }).length;
+}
+
+function isNodeActive(criteria) {
+  if (!criteria) return false;
+  if (criteria.brand && criteria.brand !== currentBrand) return false;
+  if (criteria.category && criteria.category !== currentCategory) return false;
+  if (criteria.stage && criteria.stage !== currentStage) return false;
+  if (criteria.airflow && criteria.airflow !== currentAirflow) return false;
+  if (criteria.afue && criteria.afue !== currentAfue) return false;
+  if (criteria.width && normalizeWidth(criteria.width) !== normalizeWidth(currentWidth)) return false;
+  if (criteria.btu && criteria.btu !== currentBtu) return false;
+
+  // Exact depth checks: ensure node is not marked active if a more specific filter is active
+  if (!criteria.brand && currentBrand !== 'all') return false;
+  if (!criteria.category && currentCategory !== 'all') return false;
+  if (!criteria.stage && currentStage !== 'all') return false;
+  if (!criteria.airflow && currentAirflow !== 'all') return false;
+  if (!criteria.afue && currentAfue !== 'all') return false;
+  if (!criteria.width && currentWidth !== 'all') return false;
+  if (!criteria.btu && currentBtu !== 'all') return false;
+
+  return true;
+}
+
+function renderTreeNode({ id, level, title, count, icon, criteria, children, isLast }) {
+  const hasChildren = children && children.length > 0;
+  const isOpen = openBranches.has(id);
+  const isActive = isNodeActive(criteria);
+
+  let childrenHtml = '';
+  if (hasChildren) {
+    childrenHtml = children.map((c, idx) => renderTreeNode({
+      ...c,
+      isLast: idx === children.length - 1
+    })).join('');
+  }
+
+  const dataAttrs = Object.entries(criteria || {})
+    .map(([k, v]) => `data-${k}="${String(v).replace(/"/g, '&quot;')}"`)
+    .join(' ');
+
+  return `
+    <div class="tree-node tree-node-lvl-${level} ${isOpen ? 'open' : ''} ${isLast ? 'is-last' : ''}" id="${id}">
+      <div class="tree-row">
+        ${hasChildren ? `
+          <button type="button" class="tree-toggle-btn" data-toggle="${id}" aria-label="Toggle ${title}">
+            &#9656;
+          </button>
+        ` : `
+          <span class="tree-toggle-btn is-leaf-spacer"></span>
+        `}
+        <button type="button" class="tree-node-btn ${isActive ? 'active' : ''}" ${dataAttrs} data-node="${id}">
+          <span class="tree-node-title">
+            ${icon ? icon : ''}
+            <span>${title}</span>
+          </span>
+          <span class="tree-badge ${count === 0 ? 'is-zero' : ''}">${count}</span>
+        </button>
+      </div>
+      ${hasChildren ? `<div class="tree-children">${childrenHtml}</div>` : ''}
+    </div>
+  `;
+}
+
 function initRockAutoTree() {
   const treeContainer = document.querySelector('#rockAutoTree');
   const resetBtn = document.querySelector('#treeResetBtn');
-
   if (!treeContainer) return;
 
-  const residentialProds = HVAC_PRODUCTS.filter(p => getProductSector(p) === 'residential');
-  const commercialProds = HVAC_PRODUCTS.filter(p => getProductSector(p) === 'commercial');
-  const specialityProds = HVAC_PRODUCTS.filter(p => p.category === 'parts' || (p.name && p.name.toLowerCase().includes('boiler')));
-  const refrigerationProds = HVAC_PRODUCTS.filter(p => p.category === 'systems' && p.originalCategory && p.originalCategory.toLowerCase().includes('coil'));
+  // Standard HVAC cabinet dimensions & capacity options requested by client
+  const widths = ['14.5"', '17.5"', '21"', '24.5"'];
+  const furnaceBtus = ['30000', '35000', '40000', '45000', '50000', '55000', '60000'];
 
-  const isAllRootActive = currentSector === 'all' && currentCategory === 'all' && currentStage === 'all';
+  const uniqueBrands = [...new Set(HVAC_PRODUCTS.map(p => p.brand).filter(Boolean))].sort((a, b) => a.localeCompare(b));
 
-  let treeHtml = `
-    <div class="tree-branch ${openBranches.has('branch-res') ? 'open' : ''}" id="branch-res">
-      <button type="button" class="tree-branch-header ${currentSector === 'residential' && currentCategory === 'all' ? 'active' : ''}" data-action="sector" data-val="residential">
-        <span class="tree-branch-title">
-          <svg class="svg-icon" style="width:15px; height:15px; color:var(--electric-salmon);"><use href="#icon-home"></use></svg>
-          <span>Residential</span>
-        </span>
-        <span style="display:flex; align-items:center; gap:6px;">
-          <span class="tree-badge">${residentialProds.length}</span>
-          <span class="tree-branch-indicator">&#9656;</span>
-        </span>
-      </button>
-      <div class="tree-branch-children">
-        <button type="button" class="tree-child-btn ${currentCategory === 'furnaces' ? 'active' : ''}" data-action="category" data-val="furnaces">
-          <span>Furnaces &amp; Heating</span>
-          <span class="tree-badge">${residentialProds.filter(p => p.category === 'furnaces').length}</span>
-        </button>
-        <button type="button" class="tree-child-btn ${currentCategory === 'systems' && currentSector === 'residential' ? 'active' : ''}" data-action="category" data-val="systems" data-sector="residential">
-          <span>AC &amp; Heat Pumps</span>
-          <span class="tree-badge">${residentialProds.filter(p => p.category === 'systems').length}</span>
-        </button>
-        <button type="button" class="tree-child-btn ${currentCategory === 'thermostats' ? 'active' : ''}" data-action="category" data-val="thermostats">
-          <span>Controls &amp; Thermostats</span>
-          <span class="tree-badge">${residentialProds.filter(p => p.category === 'thermostats').length}</span>
-        </button>
-        <button type="button" class="tree-child-btn ${currentCategory === 'filters' && currentSector === 'residential' ? 'active' : ''}" data-action="category" data-val="filters" data-sector="residential">
-          <span>Air Filters &amp; IAQ</span>
-          <span class="tree-badge">${residentialProds.filter(p => p.category === 'filters').length}</span>
-        </button>
-      </div>
-    </div>
+  function buildBrandNode(brandName) {
+    const slug = brandName.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const brandCrit = { brand: brandName };
 
-    <div class="tree-branch ${openBranches.has('branch-comm') ? 'open' : ''}" id="branch-comm">
-      <button type="button" class="tree-branch-header ${currentSector === 'commercial' ? 'active' : ''}" data-action="sector" data-val="commercial">
-        <span class="tree-branch-title">
-          <svg class="svg-icon" style="width:15px; height:15px; color:var(--rich-blue-electric);"><use href="#icon-bolt"></use></svg>
-          <span>Commercial</span>
-        </span>
-        <span style="display:flex; align-items:center; gap:6px;">
-          <span class="tree-badge">${commercialProds.length}</span>
-          <span class="tree-branch-indicator">&#9656;</span>
-        </span>
-      </button>
-      <div class="tree-branch-children">
-        <button type="button" class="tree-child-btn ${currentCategory === 'systems' && currentSector === 'commercial' ? 'active' : ''}" data-action="category" data-val="systems" data-sector="commercial">
-          <span>Packaged RTU &amp; Boilers</span>
-          <span class="tree-badge">${commercialProds.filter(p => p.category === 'systems').length}</span>
-        </button>
-        <button type="button" class="tree-child-btn ${currentCategory === 'filters' && currentSector === 'commercial' ? 'active' : ''}" data-action="category" data-val="filters" data-sector="commercial">
-          <span>Commercial Filtration</span>
-          <span class="tree-badge">${commercialProds.filter(p => p.category === 'filters').length}</span>
-        </button>
-        <button type="button" class="tree-child-btn ${currentCategory === 'parts' && currentSector === 'commercial' ? 'active' : ''}" data-action="category" data-val="parts" data-sector="commercial">
-          <span>OEM Replacement Parts</span>
-          <span class="tree-badge">${commercialProds.filter(p => p.category === 'parts').length}</span>
-        </button>
-      </div>
-    </div>
+    function makeBtuNodes(baseId, baseCriteria, btuList) {
+      return btuList.map(b => {
+        const bNum = Number(b).toLocaleString();
+        const crit = { ...baseCriteria, btu: b };
+        return {
+          id: `${baseId}-btu${b}`,
+          level: 7,
+          title: `${bNum} BTU's`,
+          criteria: crit,
+          count: countMatches(crit)
+        };
+      });
+    }
 
-    <div class="tree-branch ${openBranches.has('branch-spec') ? 'open' : ''}" id="branch-spec">
-      <button type="button" class="tree-branch-header ${currentCategory === 'speciality' ? 'active' : ''}" data-action="category" data-val="parts">
-        <span class="tree-branch-title">
-          <svg class="svg-icon" style="width:15px; height:15px; color:var(--vibrant-pink);"><use href="#icon-fire"></use></svg>
-          <span>Speciality Heating</span>
-        </span>
-        <span style="display:flex; align-items:center; gap:6px;">
-          <span class="tree-badge">${specialityProds.length}</span>
-          <span class="tree-branch-indicator">&#9656;</span>
-        </span>
-      </button>
-      <div class="tree-branch-children">
-        <button type="button" class="tree-child-btn" data-action="category" data-val="parts">
-          <span>Boilers &amp; Radiant</span>
-          <span class="tree-badge">${specialityProds.length}</span>
-        </button>
-      </div>
-    </div>
+    function makeWidthNodes(baseId, baseCriteria, btuList) {
+      return widths.map(w => {
+        const wNum = w.replace(/[^0-9]/g, '');
+        const crit = { ...baseCriteria, width: w };
+        const wId = `${baseId}-w${wNum}`;
+        return {
+          id: wId,
+          level: 6,
+          title: `${w} Width`,
+          criteria: crit,
+          count: countMatches(crit),
+          children: makeBtuNodes(wId, crit, btuList)
+        };
+      });
+    }
 
-    <div class="tree-branch ${openBranches.has('branch-ref') ? 'open' : ''}" id="branch-ref">
-      <button type="button" class="tree-branch-header ${currentCategory === 'refrigeration' ? 'active' : ''}" data-action="category" data-val="systems">
-        <span class="tree-branch-title">
-          <svg class="svg-icon" style="width:15px; height:15px; color:var(--rich-blue-electric);"><use href="#icon-snowflake"></use></svg>
-          <span>Refrigeration</span>
-        </span>
-        <span style="display:flex; align-items:center; gap:6px;">
-          <span class="tree-badge">${refrigerationProds.length}</span>
-          <span class="tree-branch-indicator">&#9656;</span>
-        </span>
-      </button>
-      <div class="tree-branch-children">
-        <button type="button" class="tree-child-btn" data-action="category" data-val="systems">
-          <span>Cooling &amp; Refrigeration Units</span>
-          <span class="tree-badge">${refrigerationProds.length}</span>
-        </button>
-      </div>
-    </div>
-  `;
+    // --- FURNACES TREE (Strict Client Hierarchy under Brand) ---
+    const furnCrit = { ...brandCrit, category: 'furnaces' };
 
-  treeContainer.innerHTML = treeHtml;
+    // Single Stage
+    const singleUp80 = { ...furnCrit, stage: 'single', airflow: 'upflow', afue: '80%' };
+    const singleUpHigh = { ...furnCrit, stage: 'single', airflow: 'upflow', afue: 'high' };
+    const singleDown80 = { ...furnCrit, stage: 'single', airflow: 'downflow', afue: '80%' };
+    const singleDownHigh = { ...furnCrit, stage: 'single', airflow: 'downflow', afue: 'high' };
 
+    // Two Stage
+    const twoUp80 = { ...furnCrit, stage: 'two', airflow: 'upflow', afue: '80%' };
+    const twoUpHigh = { ...furnCrit, stage: 'two', airflow: 'upflow', afue: 'high' };
+    const twoDown80 = { ...furnCrit, stage: 'two', airflow: 'downflow', afue: '80%' };
+    const twoDownHigh = { ...furnCrit, stage: 'two', airflow: 'downflow', afue: 'high' };
 
-  treeContainer.querySelectorAll('.tree-branch-header').forEach(header => {
-    header.addEventListener('click', (e) => {
-      const branch = header.closest('.tree-branch');
-      const action = header.getAttribute('data-action');
-      const val = header.getAttribute('data-val');
-      const branchId = branch ? branch.id : '';
+    // Two Stage Variable / Modulating
+    const varUpHigh = { ...furnCrit, stage: 'variable', airflow: 'upflow', afue: 'high' };
+    const varDownHigh = { ...furnCrit, stage: 'variable', airflow: 'downflow', afue: 'high' };
 
-      if (branch) {
-        branch.classList.toggle('open');
-        if (branch.classList.contains('open')) {
-          openBranches.add(branchId);
-        } else {
-          openBranches.delete(branchId);
+    const furnacesNode = {
+      id: `node-${slug}-furnaces`,
+      level: 2,
+      title: 'Furnaces & Heating',
+      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--electric-salmon);"><use href="#icon-fire"></use></svg>',
+      criteria: furnCrit,
+      count: countMatches(furnCrit),
+      children: [
+        {
+          id: `node-${slug}-furn-single`,
+          level: 3,
+          title: 'Single stage',
+          criteria: { ...furnCrit, stage: 'single' },
+          count: countMatches({ ...furnCrit, stage: 'single' }),
+          children: [
+            {
+              id: `node-${slug}-furn-single-up`,
+              level: 4,
+              title: 'Up Flow',
+              criteria: { ...furnCrit, stage: 'single', airflow: 'upflow' },
+              count: countMatches({ ...furnCrit, stage: 'single', airflow: 'upflow' }),
+              children: [
+                {
+                  id: `node-${slug}-furn-single-up-80`,
+                  level: 5,
+                  title: '80% AFUE',
+                  criteria: singleUp80,
+                  count: countMatches(singleUp80),
+                  children: makeWidthNodes(`node-${slug}-furn-single-up-80`, singleUp80, furnaceBtus)
+                },
+                {
+                  id: `node-${slug}-furn-single-up-high`,
+                  level: 5,
+                  title: '90%+ High AFUE',
+                  criteria: singleUpHigh,
+                  count: countMatches(singleUpHigh),
+                  children: makeWidthNodes(`node-${slug}-furn-single-up-high`, singleUpHigh, ['30000', '40000', '50000', '60000', '80000'])
+                }
+              ]
+            },
+            {
+              id: `node-${slug}-furn-single-down`,
+              level: 4,
+              title: 'Downflow',
+              criteria: { ...furnCrit, stage: 'single', airflow: 'downflow' },
+              count: countMatches({ ...furnCrit, stage: 'single', airflow: 'downflow' }),
+              children: [
+                {
+                  id: `node-${slug}-furn-single-down-80`,
+                  level: 5,
+                  title: '80% AFUE',
+                  criteria: singleDown80,
+                  count: countMatches(singleDown80),
+                  children: makeWidthNodes(`node-${slug}-furn-single-down-80`, singleDown80, ['30000', '40000', '45000', '60000'])
+                },
+                {
+                  id: `node-${slug}-furn-single-down-high`,
+                  level: 5,
+                  title: '90%+ High AFUE',
+                  criteria: singleDownHigh,
+                  count: countMatches(singleDownHigh),
+                  children: makeWidthNodes(`node-${slug}-furn-single-down-high`, singleDownHigh, ['30000', '40000', '60000'])
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: `node-${slug}-furn-two`,
+          level: 3,
+          title: 'Two stage',
+          criteria: { ...furnCrit, stage: 'two' },
+          count: countMatches({ ...furnCrit, stage: 'two' }),
+          children: [
+            {
+              id: `node-${slug}-furn-two-up`,
+              level: 4,
+              title: 'Up Flow',
+              criteria: { ...furnCrit, stage: 'two', airflow: 'upflow' },
+              count: countMatches({ ...furnCrit, stage: 'two', airflow: 'upflow' }),
+              children: [
+                {
+                  id: `node-${slug}-furn-two-up-80`,
+                  level: 5,
+                  title: '80% AFUE',
+                  criteria: twoUp80,
+                  count: countMatches(twoUp80),
+                  children: makeWidthNodes(`node-${slug}-furn-two-up-80`, twoUp80, ['40000', '50000', '60000'])
+                },
+                {
+                  id: `node-${slug}-furn-two-up-high`,
+                  level: 5,
+                  title: '90%+ High AFUE',
+                  criteria: twoUpHigh,
+                  count: countMatches(twoUpHigh),
+                  children: makeWidthNodes(`node-${slug}-furn-two-up-high`, twoUpHigh, ['45000', '50000', '60000', '100000'])
+                }
+              ]
+            },
+            {
+              id: `node-${slug}-furn-two-down`,
+              level: 4,
+              title: 'Downflow',
+              criteria: { ...furnCrit, stage: 'two', airflow: 'downflow' },
+              count: countMatches({ ...furnCrit, stage: 'two', airflow: 'downflow' }),
+              children: [
+                {
+                  id: `node-${slug}-furn-two-down-high`,
+                  level: 5,
+                  title: '90%+ High AFUE',
+                  criteria: twoDownHigh,
+                  count: countMatches(twoDownHigh),
+                  children: makeWidthNodes(`node-${slug}-furn-two-down-high`, twoDownHigh, ['45000', '60000'])
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: `node-${slug}-furn-var`,
+          level: 3,
+          title: 'Two stage variable',
+          criteria: { ...furnCrit, stage: 'variable' },
+          count: countMatches({ ...furnCrit, stage: 'variable' }),
+          children: [
+            {
+              id: `node-${slug}-furn-var-up`,
+              level: 4,
+              title: 'Up Flow',
+              criteria: { ...furnCrit, stage: 'variable', airflow: 'upflow' },
+              count: countMatches({ ...furnCrit, stage: 'variable', airflow: 'upflow' }),
+              children: [
+                {
+                  id: `node-${slug}-furn-var-up-high`,
+                  level: 5,
+                  title: '97%+ Modulating',
+                  criteria: varUpHigh,
+                  count: countMatches(varUpHigh),
+                  children: makeWidthNodes(`node-${slug}-furn-var-up-high`, varUpHigh, ['40000', '50000', '60000'])
+                }
+              ]
+            },
+            {
+              id: `node-${slug}-furn-var-down`,
+              level: 4,
+              title: 'Downflow',
+              criteria: { ...furnCrit, stage: 'variable', airflow: 'downflow' },
+              count: countMatches({ ...furnCrit, stage: 'variable', airflow: 'downflow' }),
+              children: [
+                {
+                  id: `node-${slug}-furn-var-down-high`,
+                  level: 5,
+                  title: '98% Ultra-Efficiency',
+                  criteria: varDownHigh,
+                  count: countMatches(varDownHigh),
+                  children: makeWidthNodes(`node-${slug}-furn-var-down-high`, varDownHigh, ['50000', '100000'])
+                }
+              ]
+            }
+          ]
         }
-      }
+      ]
+    };
 
-      if (action === 'sector') {
-        currentSector = val;
-        currentCategory = 'all';
-        currentStage = 'all';
-        currentAirflow = 'all';
-      }
-
-      currentPage = 1;
-      syncMobileCatChips();
-      syncFacetedCheckboxes();
-      renderBreadcrumbs();
-      renderCatalog();
-      updateTreeActiveStyles();
-      updateMobileFilterBadge();
-    });
-  });
-
-  treeContainer.querySelectorAll('.tree-sub-header').forEach(header => {
-    header.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const subBranch = header.closest('.tree-sub-branch');
-      const action = header.getAttribute('data-action');
-      const val = header.getAttribute('data-val');
-      const subId = subBranch ? subBranch.id : '';
-
-      if (subBranch) {
-        subBranch.classList.toggle('open');
-        if (subBranch.classList.contains('open')) {
-          openBranches.add(subId);
-        } else {
-          openBranches.delete(subId);
+    // --- AC & HEAT PUMPS ---
+    const acCrit = { ...brandCrit, category: 'systems' };
+    const acNode = {
+      id: `node-${slug}-systems`,
+      level: 2,
+      title: 'AC & Heat Pumps',
+      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--rich-blue-electric);"><use href="#icon-snowflake"></use></svg>',
+      criteria: acCrit,
+      count: countMatches(acCrit),
+      children: [
+        {
+          id: `node-${slug}-ac-single`,
+          level: 3,
+          title: 'Single Stage (14-16 SEER)',
+          criteria: { ...acCrit, stage: 'single' },
+          count: countMatches({ ...acCrit, stage: 'single' })
+        },
+        {
+          id: `node-${slug}-ac-two`,
+          level: 3,
+          title: 'Two Stage (16-18 SEER)',
+          criteria: { ...acCrit, stage: 'two' },
+          count: countMatches({ ...acCrit, stage: 'two' })
+        },
+        {
+          id: `node-${slug}-ac-var`,
+          level: 3,
+          title: 'Variable Inverter (18+ SEER)',
+          criteria: { ...acCrit, stage: 'variable' },
+          count: countMatches({ ...acCrit, stage: 'variable' })
         }
+      ]
+    };
+
+    // --- AIR FILTRATION & IAQ ---
+    const filterCrit = { ...brandCrit, category: 'filters' };
+    const filterNode = {
+      id: `node-${slug}-filters`,
+      level: 2,
+      title: 'Air Filters & IAQ',
+      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:#22c55e;"><use href="#icon-leaf"></use></svg>',
+      criteria: filterCrit,
+      count: countMatches(filterCrit),
+      children: [
+        {
+          id: `node-${slug}-filter-merv13`,
+          level: 3,
+          title: 'MERV 13 Premium',
+          criteria: { ...filterCrit, stage: 'single' },
+          count: countMatches({ ...filterCrit, stage: 'single' })
+        },
+        {
+          id: `node-${slug}-filter-merv8`,
+          level: 3,
+          title: 'MERV 8 - 10 Standard',
+          criteria: { ...filterCrit, stage: 'two' },
+          count: countMatches({ ...filterCrit, stage: 'two' })
+        },
+        {
+          id: `node-${slug}-filter-uvc`,
+          level: 3,
+          title: 'UV-C Air Purifiers',
+          criteria: { ...filterCrit, stage: 'variable' },
+          count: countMatches({ ...filterCrit, stage: 'variable' })
+        }
+      ]
+    };
+
+    // --- CONTROLS & THERMOSTATS ---
+    const thermCrit = { ...brandCrit, category: 'thermostats' };
+    const thermNode = {
+      id: `node-${slug}-thermostats`,
+      level: 2,
+      title: 'Controls & Thermostats',
+      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--vibrant-pink);"><use href="#icon-smartphone"></use></svg>',
+      criteria: thermCrit,
+      count: countMatches(thermCrit),
+      children: [
+        {
+          id: `node-${slug}-therm-wifi`,
+          level: 3,
+          title: 'WiFi Smart Thermostats',
+          criteria: { ...thermCrit, stage: 'two' },
+          count: countMatches({ ...thermCrit, stage: 'two' })
+        },
+        {
+          id: `node-${slug}-therm-prog`,
+          level: 3,
+          title: '7-Day Programmable',
+          criteria: { ...thermCrit, stage: 'single' },
+          count: countMatches({ ...thermCrit, stage: 'single' })
+        }
+      ]
+    };
+
+    // --- COMMERCIAL SYSTEMS ---
+    const commCrit = { ...brandCrit, category: 'commercial' };
+    const commNode = {
+      id: `node-${slug}-commercial`,
+      level: 2,
+      title: 'Commercial Systems',
+      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--rich-blue-electric);"><use href="#icon-bolt"></use></svg>',
+      criteria: commCrit,
+      count: countMatches(commCrit),
+      children: [
+        {
+          id: `node-${slug}-comm-rtu`,
+          level: 3,
+          title: 'Packaged RTU & Boilers',
+          criteria: { ...commCrit, stage: 'single' },
+          count: countMatches({ ...commCrit, stage: 'single' })
+        },
+        {
+          id: `node-${slug}-comm-fil`,
+          level: 3,
+          title: 'Commercial Filtration',
+          criteria: { ...commCrit, stage: 'two' },
+          count: countMatches({ ...commCrit, stage: 'two' })
+        }
+      ]
+    };
+
+    // --- OEM REPLACEMENT PARTS ---
+    const partsCrit = { ...brandCrit, category: 'parts' };
+    const partsNode = {
+      id: `node-${slug}-parts`,
+      level: 2,
+      title: 'OEM Replacement Parts',
+      icon: '<svg class="svg-icon" style="width:13px; height:13px; color:var(--text-muted);"><use href="#icon-tools"></use></svg>',
+      criteria: partsCrit,
+      count: countMatches(partsCrit),
+      children: [
+        {
+          id: `node-${slug}-parts-elec`,
+          level: 3,
+          title: 'Capacitors & Contactors',
+          criteria: { ...partsCrit, stage: 'single' },
+          count: countMatches({ ...partsCrit, stage: 'single' })
+        },
+        {
+          id: `node-${slug}-parts-sensor`,
+          level: 3,
+          title: 'Flame Sensors & Ignitors',
+          criteria: { ...partsCrit, stage: 'single', airflow: 'downflow' },
+          count: countMatches({ ...partsCrit, stage: 'single', airflow: 'downflow' })
+        },
+        {
+          id: `node-${slug}-parts-ref`,
+          level: 3,
+          title: 'Refrigerants (R-410A / R-22)',
+          criteria: { ...partsCrit, stage: 'two' },
+          count: countMatches({ ...partsCrit, stage: 'two' })
+        }
+      ]
+    };
+
+    return {
+      id: `node-brand-${slug}`,
+      level: 1,
+      title: brandName,
+      icon: '<svg class="svg-icon" style="width:14px; height:14px; color:var(--rich-blue-electric);"><use href="#icon-package"></use></svg>',
+      criteria: brandCrit,
+      count: countMatches(brandCrit),
+      children: [
+        { ...furnacesNode, isLast: false },
+        { ...acNode, isLast: false },
+        { ...filterNode, isLast: false },
+        { ...thermNode, isLast: false },
+        { ...commNode, isLast: false },
+        { ...partsNode, isLast: true }
+      ]
+    };
+  }
+
+  const brandNodesHtml = uniqueBrands.map((b, idx) => {
+    const bNode = buildBrandNode(b);
+    return renderTreeNode({ ...bNode, isLast: idx === uniqueBrands.length - 1 });
+  }).join('');
+
+  treeContainer.innerHTML = brandNodesHtml;
+
+  // Helper: Close all sibling tree-nodes under the same parent container
+  function closeSiblings(node) {
+    if (!node || !node.parentElement) return;
+    const siblings = Array.from(node.parentElement.children);
+    for (const sib of siblings) {
+      if (sib !== node && sib.classList && sib.classList.contains('tree-node')) {
+        sib.classList.remove('open');
+        openBranches.delete(sib.id);
+        sib.querySelectorAll('.tree-node.open').forEach(desc => {
+          desc.classList.remove('open');
+          openBranches.delete(desc.id);
+        });
       }
+    }
+  }
 
-      if (action === 'category') {
-        currentCategory = val;
-        currentStage = 'all';
-        currentAirflow = 'all';
-      }
-
-      currentPage = 1;
-      syncMobileCatChips();
-      syncFacetedCheckboxes();
-      renderBreadcrumbs();
-      renderCatalog();
-      updateTreeActiveStyles();
-      updateMobileFilterBadge();
-    });
-  });
-
-  treeContainer.querySelectorAll('.tree-sub-leaf').forEach(leaf => {
-    leaf.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const action = leaf.getAttribute('data-action');
-      const val = leaf.getAttribute('data-val');
-
-      if (action === 'stage') {
-        currentCategory = 'furnaces';
-        currentStage = val;
-      }
-
-      currentPage = 1;
-      syncMobileCatChips();
-      syncFacetedCheckboxes();
-      renderBreadcrumbs();
-      renderCatalog();
-      updateTreeActiveStyles();
-      updateMobileFilterBadge();
-    });
-  });
-
-  treeContainer.querySelectorAll('.tree-child-btn').forEach(btn => {
+  // Toggle button event listeners (expand / collapse branch with accordion behavior)
+  treeContainer.querySelectorAll('.tree-toggle-btn[data-toggle]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const action = btn.getAttribute('data-action');
-      const val = btn.getAttribute('data-val');
-      const sector = btn.getAttribute('data-sector');
+      const targetId = btn.getAttribute('data-toggle');
+      const node = document.getElementById(targetId);
+      if (node) {
+        const isOpening = !node.classList.contains('open');
+        if (isOpening) {
+          closeSiblings(node);
+          node.classList.add('open');
+          openBranches.add(targetId);
+        } else {
+          node.classList.remove('open');
+          openBranches.delete(targetId);
+          node.querySelectorAll('.tree-node.open').forEach(desc => {
+            desc.classList.remove('open');
+            openBranches.delete(desc.id);
+          });
+        }
+      }
+    });
+  });
 
-      if (sector) currentSector = sector;
-      if (action === 'category') currentCategory = val;
+  // Node selection event listeners (drill-down & filter)
+  treeContainer.querySelectorAll('.tree-node-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const brand = btn.getAttribute('data-brand') || 'all';
+      const cat = btn.getAttribute('data-category') || 'all';
+      const stage = btn.getAttribute('data-stage') || 'all';
+      const airflow = btn.getAttribute('data-airflow') || 'all';
+      const afue = btn.getAttribute('data-afue') || 'all';
+      const width = btn.getAttribute('data-width') || 'all';
+      const btu = btn.getAttribute('data-btu') || 'all';
 
-      currentStage = 'all';
-      currentAirflow = 'all';
+      currentSector = 'all';
+      currentBrand = brand;
+      currentCategory = cat;
+      currentStage = stage;
+      currentAirflow = airflow;
+      currentAfue = afue;
+      currentWidth = width;
+      currentBtu = btu;
       currentPage = 1;
 
+      // Auto-open this branch and all ancestor branches while closing sibling branches at each level
+      let el = btn.closest('.tree-node');
+      while (el) {
+        closeSiblings(el);
+        el.classList.add('open');
+        openBranches.add(el.id);
+        el = el.parentElement ? el.parentElement.closest('.tree-node') : null;
+      }
+
       syncMobileCatChips();
-      syncFacetedCheckboxes();
       renderBreadcrumbs();
       renderCatalog();
-      updateTreeActiveStyles();
+      initRockAutoTree();
       updateMobileFilterBadge();
     });
   });
 
-  if (resetBtn) resetBtn.addEventListener('click', resetAllFilters);
+  if (resetBtn) {
+    resetBtn.addEventListener('click', resetAllFilters);
+  }
 }
 
 function updateTreeActiveStyles() {
-  const treeContainer = document.querySelector('#rockAutoTree');
-  if (!treeContainer) return;
-
-  const isAllRoot = currentSector === 'all' && currentCategory === 'all' && currentStage === 'all';
-
-  treeContainer.querySelectorAll('.tree-branch-header').forEach(hdr => {
-    const val = hdr.getAttribute('data-val');
-    if (val === currentSector && currentCategory === 'all') {
-      hdr.classList.add('active');
-    } else {
-      hdr.classList.remove('active');
-    }
-  });
-
-  treeContainer.querySelectorAll('.tree-sub-header').forEach(hdr => {
-    const val = hdr.getAttribute('data-val');
-    if (val === currentCategory && currentStage === 'all') {
-      hdr.classList.add('active');
-    } else {
-      hdr.classList.remove('active');
-    }
-  });
-
-  treeContainer.querySelectorAll('.tree-sub-leaf').forEach(leaf => {
-    const val = leaf.getAttribute('data-val');
-    if (val === currentStage) {
-      leaf.classList.add('active');
-    } else {
-      leaf.classList.remove('active');
-    }
-  });
-
-  treeContainer.querySelectorAll('.tree-child-btn').forEach(btn => {
-    const val = btn.getAttribute('data-val');
-    const sec = btn.getAttribute('data-sector');
-    let active = false;
-    if (val === currentCategory) {
-      if (!sec || sec === currentSector) active = true;
-    }
-    if (active) btn.classList.add('active');
-    else btn.classList.remove('active');
-  });
+  // Tree active styles are maintained by isNodeActive inside initRockAutoTree
 }
 
 function initFacetedFilters() {
@@ -569,10 +918,14 @@ function syncFacetedCheckboxes() {
 }
 
 function resetAllFilters() {
+  currentBrand = 'all';
   currentSector = 'all';
   currentCategory = 'all';
   currentStage = 'all';
   currentAirflow = 'all';
+  currentAfue = 'all';
+  currentWidth = 'all';
+  currentBtu = 'all';
   selectedAfue.clear();
   selectedWidths.clear();
   selectedBtus.clear();
@@ -581,6 +934,7 @@ function resetAllFilters() {
   filterRebatesOnly = false;
   currentSort = 'default';
   currentPage = 1;
+  openBranches = new Set(['node-brand-ameristar']);
 
   const sInput = document.querySelector('#catalogSearchInput');
   if (sInput) sInput.value = '';
@@ -600,9 +954,9 @@ function resetAllFilters() {
 
   syncMobileCatChips();
   syncFacetedCheckboxes();
-  updateTreeActiveStyles();
   renderBreadcrumbs();
   renderCatalog();
+  initRockAutoTree();
   updateMobileFilterBadge();
 }
 
@@ -883,11 +1237,11 @@ function initSort() {
 }
 
 function renderBreadcrumbs() {
-  const trailContainer = document.querySelector('#breadcrumbTrail');
+  const trailContainer = document.querySelector('#breadcrumbTrail') || document.querySelector('#rockAutoBreadcrumbs');
   if (!trailContainer) return;
 
   let crumbs = [];
-  crumbs.push({ label: 'Heating & Cooling Equipment', action: 'root' });
+  crumbs.push({ label: 'Catalog Root', action: 'root' });
 
   if (currentSector === 'residential') {
     crumbs.push({ label: 'Residential', action: 'sector', val: 'residential' });
@@ -895,36 +1249,59 @@ function renderBreadcrumbs() {
     crumbs.push({ label: 'Commercial', action: 'sector', val: 'commercial' });
   }
 
+  if (currentBrand !== 'all') {
+    crumbs.push({ label: currentBrand, action: 'brand-tree', val: currentBrand });
+  }
+
   if (currentCategory !== 'all') {
     let catLabel = currentCategory;
     if (currentCategory === 'furnaces') catLabel = 'Furnaces & Heating';
-    if (currentCategory === 'systems') catLabel = 'Air Conditioning & Systems';
+    if (currentCategory === 'systems') catLabel = 'AC & Systems';
     if (currentCategory === 'filters') catLabel = 'Air Filters & IAQ';
     if (currentCategory === 'thermostats') catLabel = 'Controls & Thermostats';
-    if (currentCategory === 'parts') catLabel = 'OEM Replacement Parts';
+    if (currentCategory === 'parts') catLabel = 'OEM Parts';
+    if (currentCategory === 'commercial') catLabel = 'Commercial Systems';
     crumbs.push({ label: catLabel, action: 'category', val: currentCategory });
   }
 
   if (currentStage !== 'all') {
-    let stageLabel = currentStage === 'single' ? 'Single Stage' : currentStage === 'two' ? 'Two Stage' : 'Two Stage Variable';
+    let stageLabel = currentStage === 'single' ? 'Single stage' : currentStage === 'two' ? 'Two stage' : 'Two stage variable';
     crumbs.push({ label: stageLabel, action: 'stage', val: currentStage });
+  }
+
+  if (currentAirflow !== 'all') {
+    let airLabel = currentAirflow === 'upflow' ? 'Up Flow' : 'Downflow';
+    crumbs.push({ label: airLabel, action: 'airflow', val: currentAirflow });
+  }
+
+  if (currentAfue !== 'all') {
+    let afueLabel = currentAfue === '80%' ? '80% AFUE' : '90%+ AFUE';
+    crumbs.push({ label: afueLabel, action: 'afue', val: currentAfue });
+  }
+
+  if (currentWidth !== 'all') {
+    crumbs.push({ label: currentWidth + ' Width', action: 'width', val: currentWidth });
+  }
+
+  if (currentBtu !== 'all') {
+    crumbs.push({ label: Number(currentBtu).toLocaleString() + ' BTU', action: 'btu', val: currentBtu });
   }
 
   if (selectedWidths.size > 0) {
     selectedWidths.forEach(w => {
-      crumbs.push({ label: w + ' Width', action: 'width', val: w });
+      crumbs.push({ label: w + ' Width', action: 'selectedWidth', val: w });
     });
   }
 
   if (selectedBtus.size > 0) {
     selectedBtus.forEach(b => {
-      crumbs.push({ label: Number(b).toLocaleString() + ' BTU', action: 'btu', val: b });
+      crumbs.push({ label: Number(b).toLocaleString() + ' BTU', action: 'selectedBtu', val: b });
     });
   }
 
   if (selectedAfue.size > 0) {
     selectedAfue.forEach(a => {
-      crumbs.push({ label: a === '80%' ? '80% AFUE' : '92%+ AFUE', action: 'afue', val: a });
+      crumbs.push({ label: a === '80%' ? '80% AFUE' : '92%+ AFUE', action: 'selectedAfue', val: a });
     });
   }
 
@@ -943,25 +1320,32 @@ function renderBreadcrumbs() {
   }
 
   let html = '';
-  crumbs.forEach((c, idx) => {
-    const isLast = idx === crumbs.length - 1;
-    if (idx > 0) {
-      html += `<span class="crumb-separator">&rsaquo;</span>`;
-    }
-    if (isLast && crumbs.length > 1) {
-      html += `<span class="crumb-current" aria-current="page">${c.label}</span>`;
-    } else {
-      html += `
-        <button type="button" class="crumb-link" data-action="${c.action}" data-val="${c.val || ''}">
-          ${c.label}
-        </button>
-      `;
-    }
-  });
+  if (crumbs.length === 1) {
+    html = `
+      <span class="crumb-root-indicator">
+        <svg class="svg-icon" style="width:13px; height:13px; color:var(--rich-blue-electric);"><use href="#icon-home"></use></svg>
+        <span>All Equipment Catalog</span>
+      </span>
+    `;
+  } else {
+    crumbs.forEach((c, idx) => {
+      const isLast = idx === crumbs.length - 1;
+      if (idx > 0) {
+        html += `<span class="crumb-separator">&rsaquo;</span>`;
+      }
+      if (isLast) {
+        html += `<span class="crumb-current" aria-current="page">${c.label}</span>`;
+      } else {
+        html += `
+          <button type="button" class="crumb-link" data-action="${c.action}" data-val="${c.val || ''}">
+            ${idx === 0 ? '<svg class="svg-icon" style="width:12px; height:12px;"><use href="#icon-home"></use></svg> ' : ''}${c.label}
+          </button>
+        `;
+      }
+    });
 
-  if (crumbs.length > 1) {
     html += `
-      <button type="button" class="crumb-link" id="crumbClearAllBtn" style="color:var(--electric-salmon); margin-left:6px;" aria-label="Clear All Filters">
+      <button type="button" class="crumb-clear-btn" id="crumbClearAllBtn" aria-label="Clear All Filters">
         Clear All &times;
       </button>
     `;
@@ -969,7 +1353,7 @@ function renderBreadcrumbs() {
 
   trailContainer.innerHTML = html;
 
-  trailContainer.querySelectorAll('.crumb-link').forEach(btn => {
+  trailContainer.querySelectorAll('.crumb-link, #crumbClearAllBtn').forEach(btn => {
     btn.addEventListener('click', () => {
       const act = btn.getAttribute('data-action');
       const val = btn.getAttribute('data-val');
@@ -978,20 +1362,48 @@ function renderBreadcrumbs() {
         resetAllFilters();
         return;
       }
-      if (act === 'sector') {
+      if (act === 'brand-tree') {
         currentCategory = 'all';
         currentStage = 'all';
         currentAirflow = 'all';
+        currentAfue = 'all';
+        currentWidth = 'all';
+        currentBtu = 'all';
+      } else if (act === 'sector') {
+        currentBrand = 'all';
+        currentCategory = 'all';
+        currentStage = 'all';
+        currentAirflow = 'all';
+        currentAfue = 'all';
+        currentWidth = 'all';
+        currentBtu = 'all';
       } else if (act === 'category') {
         currentStage = 'all';
         currentAirflow = 'all';
+        currentAfue = 'all';
+        currentWidth = 'all';
+        currentBtu = 'all';
       } else if (act === 'stage') {
-        currentStage = 'all';
-      } else if (act === 'width') {
-        selectedWidths.delete(val);
-      } else if (act === 'btu') {
-        selectedBtus.delete(val);
+        currentAirflow = 'all';
+        currentAfue = 'all';
+        currentWidth = 'all';
+        currentBtu = 'all';
+      } else if (act === 'airflow') {
+        currentAfue = 'all';
+        currentWidth = 'all';
+        currentBtu = 'all';
       } else if (act === 'afue') {
+        currentWidth = 'all';
+        currentBtu = 'all';
+      } else if (act === 'width') {
+        currentBtu = 'all';
+      } else if (act === 'btu') {
+        currentBtu = 'all';
+      } else if (act === 'selectedWidth') {
+        selectedWidths.delete(val);
+      } else if (act === 'selectedBtu') {
+        selectedBtus.delete(val);
+      } else if (act === 'selectedAfue') {
         selectedAfue.delete(val);
       } else if (act === 'brand') {
         selectedBrands.delete(val);
@@ -1006,9 +1418,9 @@ function renderBreadcrumbs() {
       currentPage = 1;
       syncMobileCatChips();
       syncFacetedCheckboxes();
-      updateTreeActiveStyles();
       renderBreadcrumbs();
       renderCatalog();
+      initRockAutoTree();
       updateMobileFilterBadge();
     });
   });
@@ -1021,10 +1433,20 @@ function filterProducts() {
       return false;
     }
 
+    if (currentBrand !== 'all') {
+      if (p.brand.toLowerCase() !== currentBrand.toLowerCase()) {
+        return false;
+      }
+    }
+
     if (currentCategory !== 'all') {
       if (currentCategory === 'furnaces') {
-        const isFurnace = p.category === 'furnaces' || (p.category === 'systems' && (p.name.toLowerCase().includes('furnace') || p.name.toLowerCase().includes('boiler'))) || (p.category === 'parts' && p.originalCategory.toLowerCase().includes('furnace'));
+        const isFurnace = p.category === 'furnaces' || 
+          (p.category === 'systems' && (p.name.toLowerCase().includes('furnace') || p.name.toLowerCase().includes('boiler'))) || 
+          (p.originalCategory && p.originalCategory.toLowerCase().includes('furnace'));
         if (!isFurnace) return false;
+      } else if (currentCategory === 'commercial') {
+        if (sec !== 'commercial') return false;
       } else if (p.category !== currentCategory) {
         return false;
       }
@@ -1037,10 +1459,14 @@ function filterProducts() {
 
     if (currentAirflow !== 'all') {
       const airflow = getProductAirflow(p);
-      if (airflow !== currentAirflow) return false;
+      if (airflow !== 'multipoise' && airflow !== currentAirflow) return false;
     }
 
-    if (selectedAfue.size > 0) {
+    if (currentAfue !== 'all') {
+      const eff = (p.efficiency || '').toLowerCase();
+      if (currentAfue === '80%' && !eff.includes('80%')) return false;
+      if (currentAfue === 'high' && (eff.includes('80%') || eff.includes('standard'))) return false;
+    } else if (selectedAfue.size > 0) {
       const eff = (p.efficiency || '').toLowerCase();
       let match = false;
       if (selectedAfue.has('80%') && eff.includes('80%')) match = true;
@@ -1048,12 +1474,26 @@ function filterProducts() {
       if (!match) return false;
     }
 
-    if (selectedWidths.size > 0) {
+    if (currentWidth !== 'all') {
       const w = getProductWidth(p);
-      if (!selectedWidths.has(w)) return false;
+      if (normalizeWidth(w) !== normalizeWidth(currentWidth)) return false;
+    } else if (selectedWidths.size > 0) {
+      const wNorm = normalizeWidth(getProductWidth(p));
+      let match = false;
+      for (const sw of selectedWidths) {
+        if (normalizeWidth(sw) === wNorm) {
+          match = true;
+          break;
+        }
+      }
+      if (!match) return false;
     }
 
-    if (selectedBtus.size > 0) {
+    if (currentBtu !== 'all') {
+      const btu = getProductBtu(p);
+      const target = parseInt(currentBtu, 10);
+      if (Math.abs(btu - target) > 5000) return false;
+    } else if (selectedBtus.size > 0) {
       const btu = getProductBtu(p);
       let match = false;
       for (const targetStr of selectedBtus) {

@@ -141,7 +141,7 @@ const HVAC_PRODUCTS = [
       "TextPlaceHolder4": "Dual run capacitor for AC condenser units"
     },
     "specs": {
-      "airflow": "Downflow Airflow Orientation",
+      "airflow": "Upflow / Multi-Poise Orientation",
       "soundLevel": "Precision Silent Component",
       "stages": "Single Stage",
       "dimensions": "17.5\" Width Housing"
@@ -840,7 +840,7 @@ const HVAC_PRODUCTS = [
       "TextPlaceHolder4": "Control transformer for HVAC systems"
     },
     "specs": {
-      "airflow": "Downflow Airflow Orientation",
+      "airflow": "Upflow / Multi-Poise Orientation",
       "soundLevel": "Precision Silent Component",
       "stages": "Single Stage",
       "dimensions": "17.5\" Width Housing"
@@ -1326,7 +1326,7 @@ const HVAC_PRODUCTS = [
       "TextPlaceHolder4": "Universal hot surface ignitor for furnaces"
     },
     "specs": {
-      "airflow": "Downflow Airflow Orientation",
+      "airflow": "Upflow / Multi-Poise Orientation",
       "soundLevel": "Precision Silent Component",
       "stages": "Single Stage",
       "dimensions": "14.5\" Width Housing"

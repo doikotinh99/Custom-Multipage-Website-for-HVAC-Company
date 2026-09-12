@@ -2800,6 +2800,127 @@
   max-width: 100%;
 }
 
+/* Top Full-Width Breadcrumbs Bar */
+.rockauto-top-breadcrumbs {
+  width: 100%;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  padding: 10px 18px;
+  background: rgba(14, 30, 64, 0.7);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+/* Catalog Product Grid Toolbar */
+.rockauto-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 18px;
+  background: rgba(14, 30, 64, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  margin-bottom: 22px;
+}
+
+.rockauto-view-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-trail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.crumb-root-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+.crumb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 4px 9px;
+  color: var(--rich-blue-electric);
+  font-size: 0.77rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+
+.crumb-link:hover {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: var(--rich-blue-electric);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.crumb-separator {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+.crumb-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 101, 80, 0.12);
+  border: 1px solid rgba(255, 101, 80, 0.35);
+  border-radius: 4px;
+  padding: 4px 9px;
+  color: var(--electric-salmon);
+  font-size: 0.77rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.crumb-clear-btn {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 42, 133, 0.12);
+  border: 1px solid rgba(255, 42, 133, 0.35);
+  border-radius: 4px;
+  padding: 4px 9px;
+  color: var(--vibrant-pink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 4px;
+  line-height: 1.2;
+}
+
+.crumb-clear-btn:hover {
+  background: var(--vibrant-pink);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
 .rockauto-sidebar {
   background: rgba(14, 30, 64, 0.8);
   border: 1px solid rgba(0, 212, 255, 0.25);
@@ -2909,229 +3030,230 @@
 .rockauto-tree {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  margin-bottom: 20px;
+  gap: 3px;
+  margin-bottom: 16px;
 }
 
+/* Base Tree Branch / Node */
 .tree-branch {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
   overflow: hidden;
-  background: rgba(8, 17, 38, 0.4);
+  background: rgba(8, 17, 38, 0.35);
+  margin-bottom: 3px;
   transition: var(--transition);
 }
 
 .tree-branch.open {
-  border-color: rgba(0, 212, 255, 0.3);
-  background: rgba(8, 17, 38, 0.7);
+  border-color: rgba(0, 212, 255, 0.25);
+  background: rgba(8, 17, 38, 0.65);
 }
 
-.tree-branch-header {
-  width: 100%;
+/* Tree Row (Flex container for expander + title button) */
+.tree-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 12px;
-  background: transparent;
-  color: var(--text-light);
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-align: left;
-  cursor: pointer;
+  align-items: stretch;
+  width: 100%;
+  min-height: 28px;
   transition: var(--transition);
 }
 
-.tree-branch-header:hover {
-  color: #fff;
-  background: rgba(0, 212, 255, 0.08);
+.tree-row:hover {
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.tree-branch-header.active {
-  color: var(--rich-blue-electric);
-}
-
-.tree-branch-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.tree-branch-indicator {
+.tree-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  font-size: 0.75rem;
-  transition: transform 0.2s ease;
+  width: 22px;
+  min-width: 22px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+  user-select: none;
+  padding: 0;
 }
 
-.tree-branch.open .tree-branch-indicator {
+.tree-toggle-btn:hover {
+  color: var(--rich-blue-electric);
+}
+
+.tree-node.open > .tree-row .tree-toggle-btn,
+.tree-branch.open > .tree-row .tree-toggle-btn {
   transform: rotate(90deg);
-  background: var(--rich-blue-electric);
-  color: #081126;
+  color: var(--rich-blue-electric);
 }
 
-.tree-branch-children {
-  display: none;
-  flex-direction: column;
-  padding: 4px 0 6px 0;
-  background: rgba(5, 11, 24, 0.55);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+.tree-toggle-btn.is-leaf-spacer {
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.tree-branch.open .tree-branch-children {
-  display: flex;
-}
-
-.tree-child-btn {
+/* Tree Node Action Button */
+.tree-node-btn {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 12px 7px 26px;
+  gap: 6px;
+  padding: 4px 8px 4px 2px;
   background: transparent;
-  color: var(--text-muted);
-  font-size: 0.82rem;
+  border: none;
+  color: var(--text-light);
+  font-size: 0.79rem;
   text-align: left;
-  transition: var(--transition);
   cursor: pointer;
-  position: relative;
+  transition: var(--transition);
+  line-height: 1.25;
 }
 
-.tree-child-btn::before {
-  content: '├';
-  position: absolute;
-  left: 14px;
-  color: rgba(255, 255, 255, 0.2);
-  font-family: monospace;
-}
-
-.tree-child-btn:hover {
+.tree-node-btn:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.05);
-  padding-left: 29px;
 }
 
-.tree-child-btn.active {
+.tree-node-btn.active {
   color: var(--electric-salmon);
   font-weight: 700;
-  background: rgba(255, 101, 80, 0.12);
-  border-left: 3px solid var(--electric-salmon);
+  background: rgba(255, 101, 80, 0.14);
+  border-left: 2.5px solid var(--electric-salmon);
+  border-radius: 0 4px 4px 0;
 }
 
+.tree-node-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Badges */
 .tree-badge {
-  font-size: 0.7rem;
-  padding: 2px 6px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 1px 6px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.08);
   color: var(--text-muted);
+  flex-shrink: 0;
+  line-height: 1.2;
 }
 
-.tree-child-btn.active .tree-badge {
+.tree-node-btn.active .tree-badge {
   background: var(--electric-salmon);
   color: #fff;
 }
 
-.tree-root-node {
-  margin-bottom: 8px;
+.tree-badge.is-zero {
+  opacity: 0.35;
 }
 
-.tree-root-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 12px;
-  background: rgba(0, 212, 255, 0.08);
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  border-radius: var(--radius-sm);
-  color: var(--rich-blue-electric);
-  font-size: 0.86rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.tree-root-btn:hover, .tree-root-btn.active {
-  background: rgba(0, 212, 255, 0.18);
-  border-color: var(--rich-blue-electric);
-  color: #fff;
-}
-
-.tree-sub-branch {
-  margin: 2px 0 2px 14px;
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.tree-sub-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 10px 6px 12px;
-  background: transparent;
-  color: var(--text-light);
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  text-align: left;
-}
-
-.tree-sub-header:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.tree-sub-header.active {
-  color: var(--electric-salmon);
-  font-weight: 700;
-}
-
-.tree-sub-children {
+/* Nested Containers with Guide Lines */
+.tree-children {
   display: none;
   flex-direction: column;
-  padding-left: 8px;
-}
-
-.tree-sub-branch.open > .tree-sub-children {
-  display: flex;
-}
-
-.tree-sub-leaf {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 10px 5px 18px;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 0.77rem;
-  cursor: pointer;
-  transition: var(--transition);
   position: relative;
-  text-align: left;
+  border-left: 1px dashed rgba(255, 255, 255, 0.12);
+  margin-left: 11px;
+  padding-left: 3px;
 }
 
-.tree-sub-leaf::before {
-  content: '└';
-  position: absolute;
-  left: 6px;
-  color: rgba(255, 255, 255, 0.2);
-  font-family: monospace;
+.tree-node.open > .tree-children,
+.tree-branch.open > .tree-children {
+  display: flex;
 }
 
-.tree-sub-leaf:hover {
+/* Multi-Tier Nesting Levels ("just much smaller now") */
+/* Multi-Tier Nesting Levels ("Brand-First Engineering Catalog") */
+/* Level 1: Manufacturer / Brand (A-Z) */
+.tree-node-lvl-1 > .tree-row {
+  min-height: 34px;
+  padding: 3px 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  margin-bottom: 2px;
+}
+.tree-node-lvl-1 > .tree-row .tree-node-btn {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
   color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+}
+.tree-node-lvl-1.open > .tree-row {
+  background: rgba(0, 163, 255, 0.08);
+  border-left: 2px solid var(--rich-blue-electric);
 }
 
-.tree-sub-leaf.active {
-  color: var(--electric-salmon);
-  font-weight: 700;
-  background: rgba(255, 101, 80, 0.1);
+/* Level 2: Category */
+.tree-node-lvl-2 > .tree-row {
+  min-height: 28px;
+  padding: 1px 4px;
 }
+.tree-node-lvl-2 > .tree-row .tree-node-btn {
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Level 3: Stages / Subcategories */
+.tree-node-lvl-3 > .tree-row {
+  min-height: 26px;
+}
+.tree-node-lvl-3 > .tree-row .tree-node-btn {
+  font-size: 0.77rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* Level 4: Airflow */
+.tree-node-lvl-4 > .tree-row {
+  min-height: 25px;
+}
+.tree-node-lvl-4 > .tree-row .tree-node-btn {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Level 5: Efficiency */
+.tree-node-lvl-5 > .tree-row {
+  min-height: 24px;
+}
+.tree-node-lvl-5 > .tree-row .tree-node-btn {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+/* Level 6: Width */
+.tree-node-lvl-6 > .tree-row {
+  min-height: 24px;
+}
+.tree-node-lvl-6 > .tree-row .tree-node-btn {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.70);
+}
+
+/* Level 7: BTU */
+.tree-node-lvl-7 > .tree-row {
+  min-height: 22px;
+}
+.tree-node-lvl-7 > .tree-row .tree-node-btn {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.tree-node-lvl-7 > .tree-row .tree-node-btn:hover {
+  color: #fff;
+}
+
+
 
 .rockauto-facets {
   display: flex;
